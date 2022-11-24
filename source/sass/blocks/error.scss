@@ -1,0 +1,66 @@
+.html-not-found {
+  background: #1b2d37 url("../img/bg-404.png") no-repeat center;
+  background-size: cover;
+  height: 100%;
+
+  @media (min-resolution: $retina-dpi), (min-resolution: $retina-dppx) {
+    background-image: url("../img/bg-404@2x.png");
+    background-size: cover;
+  }
+}
+
+.html-server {
+  background: #1b2d37 url("../img/bg-500.png") no-repeat center;
+  background-size: cover;
+  height: 100%;
+
+  @media (min-resolution: $retina-dpi), (min-resolution: $retina-dppx) {
+    background-image: url("../img/bg-500@2x.png");
+    background-size: cover;
+  }
+}
+
+.body-not-found,
+.body-server {
+  background-color: transparent;
+}
+
+.error {
+  @include container;
+  padding-top: 119px;
+  padding-left: 131px;
+  color: $white;
+}
+
+.error__title {
+  @include headline;
+  margin-bottom: 17px;
+}
+
+.error__subtitle {
+  @include subtitle;
+  margin-bottom: 31px;
+}
+
+.error__list {
+  @include reset-list;
+  margin-bottom: 36px;
+}
+
+.error__item:not(:last-child) {
+  margin-bottom: 21px;
+}
+
+.error__item a {
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba($white, 0.66);
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.error__search {
+  margin-bottom: 122px;
+}

@@ -1,0 +1,11 @@
+.comments-list {
+  @include reset-list;
+}
+
+.comments-list li {
+  margin-bottom: 17px;
+}
+
+.comments-list li:last-child {
+  margin-bottom: 0;
+}

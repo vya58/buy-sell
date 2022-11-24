@@ -1,0 +1,62 @@
+.login {
+  @include container;
+  margin-top: 71px;
+}
+
+.login__form {
+  margin: 0 auto;
+  width: 520px;
+  min-height: 380px;
+  padding: 47px 82px 52px 70px;
+  border-radius: 33px;
+}
+
+.login__title {
+  @include subtitle;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.login__title h2 {
+  position: relative;
+  margin: 0;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  font: inherit;
+  color: $white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $white;
+  }
+}
+
+.login__link {
+  margin-right: 32px;
+  color: rgba($white, 0.55);
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.login__field {
+  margin-bottom: 26px;
+  margin-left: 4px;
+
+  &:last-of-type {
+    margin-bottom: 40px;
+  }
+}
+
+.login__button {
+  width: 120px;
+  min-height: 59px;
+  padding: 19px 10px 21px;
+  margin-bottom: 32px;
+}

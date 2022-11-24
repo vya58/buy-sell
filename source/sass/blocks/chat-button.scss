@@ -1,0 +1,12 @@
+.chat-button {
+  @include hover;
+  width: 54px;
+  height: 52px;
+  background: url("../img/chat.svg") no-repeat center;
+  background-size: 54px 52px;
+  cursor: pointer;
+  border: none;
+  position: fixed;
+  bottom: 52px;
+  left: calc(50% + 426px);
+}

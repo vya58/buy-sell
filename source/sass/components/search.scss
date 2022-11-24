@@ -1,0 +1,97 @@
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 431px;
+  height: 47px;
+  padding: 13px 35px 13px 47px;
+  font-size: 16px;
+  line-height: 19px;
+  color: $white;
+  text-align: center;
+  background-color: rgba($white, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.206041);
+  border-radius: 24px;
+  box-shadow: none;
+  -webkit-appearance: none;
+
+  &::placeholder {
+    color: rgba($white, 0.5);
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  &:focus {
+    background-color: rgba($white, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4741);
+    outline: none;
+
+    & + .search__icon {
+      top: 13px;
+      left: 14px;
+    }
+  }
+}
+
+.search__icon {
+  position: absolute;
+  top: 12px;
+  left: 172px;
+  width: 22px;
+  height: 22px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    background: url("../img/search.svg") no-repeat left top;
+  }
+}
+
+.search__close-btn {
+  display: none;
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  top: 15px;
+  right: 13px;
+  cursor: pointer;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 17px;
+    height: 17px;
+    background: url("../img/close.svg") no-repeat left top;
+  }
+
+  &--active {
+    display: block;
+  }
+}
+
+.search--active.search--small .search__icon,
+.search--active .search__icon {
+  top: 13px;
+  left: 14px;
+}
+
+.search--small,
+.search--small input {
+  width: 246px;
+}
+
+.search--small .search__icon {
+  top: 14px;
+  left: 80px;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}

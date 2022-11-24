@@ -1,0 +1,75 @@
+.ui-kit--dark {
+  color: $white;
+  background-color: $blue;
+}
+
+.ui-kit__wrapper {
+  @include container;
+  display: flex;
+}
+
+.ui-kit__col {
+  box-sizing: border-box;
+  flex-grow: 1;
+  padding: 0 20px;
+}
+
+.ui-kit__row {
+  display: flex;
+}
+
+.ui-kit__element {
+  margin: 20px;
+  width: 100%;
+}
+
+.ui-kit__element--select {
+  width: 222px;
+}
+
+.ui-kit__headline {
+  @include headline;
+  color: $blue;
+}
+
+.ui-kit__title {
+  @include title;
+  color: $blue;
+}
+
+.ui-kit__subtitle {
+  @include subtitle;
+  color: $blue;
+}
+
+.ui-kit__lead {
+  @include lead;
+}
+
+.ui-kit__text {
+  @include text;
+}
+
+.ui-kit__note {
+  @include note;
+}
+
+.ui-kit__chat-answer {
+  @include chat-answer;
+}
+
+.ui-kit__label {
+  @include label;
+}
+
+.ui-kit__chat {
+  @include chat;
+}
+
+.ui-kit__highlight {
+  @include highlight;
+}
+
+.ui-kit__chat-time {
+  @include chat-time;
+}

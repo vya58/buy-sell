@@ -1,0 +1,11 @@
+.logo {
+  @include hover;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.logo img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

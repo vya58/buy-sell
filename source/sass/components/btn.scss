@@ -1,0 +1,84 @@
+.btn {
+  @include reset-button;
+  display: inline-block;
+  vertical-align: top;
+  box-sizing: border-box;
+  padding: 14px 26px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 19px;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.206041);
+  border-radius: 25px;
+  transition: all 0.3s ease-out;
+}
+
+.btn:hover {
+  border: 1px solid rgba(255, 255, 255, 0.4741);
+}
+
+.btn:disabled,
+.btn--disabled {
+  opacity: 0.63;
+  pointer-events: none;
+}
+
+.btn:focus {
+  outline: none;
+  opacity: 0.9;
+}
+
+.btn--white {
+  color: $blue;
+  background-color: $white;
+  border-color: $white;
+}
+
+.btn--white:hover {
+  border-color: transparent;
+  opacity: 0.7;
+}
+
+.btn--medium {
+  padding: 19px 33px;
+  color: $blue;
+  background-color: $white;
+  border-color: transparent;
+  border-radius: 30px;
+}
+
+.btn--medium:hover {
+  border-color: transparent;
+  opacity: 0.7;
+}
+
+.btn--big {
+  padding: 24px 38px;
+  font-size: 18px;
+  line-height: 22px;
+  color: $blue;
+  background-color: $white;
+  border-color: $blue;
+  border-radius: 38px;
+  box-shadow: 0 8px 14px rgba(0, 10, 32, 0.0727751);
+}
+
+.btn--big:hover {
+  transform: translateY(-4px);
+  border-color: $blue;
+}
+
+.btn--small {
+  padding: 10px 23px;
+}
+
+.btn--flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn .icon {
+  margin-left: 6px;
+}

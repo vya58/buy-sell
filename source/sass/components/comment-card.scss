@@ -1,0 +1,52 @@
+.comment-card {
+  @include text;
+  padding: 26px 26px 22px;
+  color: $black;
+  background-color: $white;
+  border-radius: 8px;
+}
+
+.comment-card__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.comment-card__avatar {
+  margin-right: 15px;
+  width: 46px;
+  height: 46px;
+}
+
+.comment-card__author {
+  margin: 0;
+}
+
+.comment-card__content p {
+  margin: 0 0 7px;
+}
+
+.comment-card__delete {
+  @include reset-button;
+  @include hover;
+  position: relative;
+  padding: 0 0 0 15px;
+  font-size: 13px;
+  line-height: 24px;
+  color: rgba($black, 0.37);
+}
+
+.comment-card__delete::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  margin-top: 1px;
+  width: 10px;
+  height: 10px;
+  background-image: url("../img/del.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}

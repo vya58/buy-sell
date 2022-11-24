@@ -1,0 +1,163 @@
+.ticket {
+  padding-top: 54px;
+}
+
+.ticket__wrapper {
+  @include container;
+  padding: 0 36px;
+}
+
+.ticket__content {
+  display: flex;
+  padding-bottom: 61px;
+  border-bottom: 1px solid rgba(#2B51A6, 0.23);
+}
+
+.ticket__img {
+  flex: none;
+  margin-right: 48px;
+  width: 385px;
+  height: 482px;
+  background-image: url("../img/blank.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.ticket__img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.ticket__title {
+  @include headline;
+  margin: 0 0 19px;
+  color: $blue;
+}
+
+.ticket__header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ticket__price {
+  @include title;
+  margin-right: 13px;
+}
+
+.ticket__action {
+  @include highlight;
+  padding: 4px 8px;
+  border: 1px solid $black;
+  border-radius: 11px;
+}
+
+.ticket__desc {
+  @include text;
+  max-width: 425px;
+  line-height: 26px;
+}
+
+.ticket__desc p {
+  margin: 0 0 25px;
+}
+
+.ticket__desc p:last-child {
+  margin-bottom: 0;
+}
+
+.ticket__data {
+  margin-bottom: 25px;
+  font-size: 13px;
+  line-height: 26px;
+}
+
+.ticket__data p {
+  margin: 0 0 4px;
+}
+
+.ticket__data p:last-child {
+  margin-bottom: 0;
+}
+
+.ticket__data a {
+  @include hover;
+  color: $blue;
+}
+
+.ticket__tags {
+  @include reset-list;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ticket__tags li {
+  margin: 0 30px 20px 0;
+}
+
+.ticket__comments {
+  margin: 0 auto;
+  padding-top: 45px;
+  width: 580px;
+  position: relative;
+}
+
+.ticket__subtitle {
+  @include subtitle;
+  margin-bottom: 29px;
+  text-align: center;
+  color: $blue;
+}
+
+.ticket__comment-form {
+  margin-bottom: 33px;
+}
+
+.ticket__warning {
+  margin: 0 auto 60px;
+  max-width: 410px;
+  text-align: center;
+}
+
+.ticket__warning p {
+  margin: 0 0 30px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: $blue;
+}
+
+.ticket__warning .btn {
+  padding-top: 26px;
+  padding-bottom: 26px;
+  width: 262px;
+}
+
+.ticket__message {
+  margin: 70px auto;
+  max-width: 235px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 22px;
+  color: $blue;
+}
+
+.ticket__message p {
+  margin: 0;
+}
+
+.ticket .comments-list li {
+  margin-bottom: 28px;
+}
+
+.ticket .comment-card {
+  padding-bottom: 26px;
+}

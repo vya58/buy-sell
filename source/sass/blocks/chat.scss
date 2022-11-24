@@ -1,0 +1,111 @@
+.chat {
+  width: 300px;
+  height: 360px;
+  padding: 10px 7px 19px;
+  background-color: $blue;
+  border: 1px solid $dark-blue;
+  border-radius: 8px;
+  box-shadow: -2px 3px 4px rgba(17, 33, 70, 0.5);
+  position: fixed;
+  bottom: 50px;
+  left: calc(50% + 190px);
+  z-index: 3;
+
+  &--open {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.chat__subtitle {
+  color: $white;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  margin: 0 18px 14px;
+}
+
+.chat__conversation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 176px;
+  background-color: $white;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  padding: 10px 46px 10px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.chat__message {
+  margin-bottom: 17px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.chat__message-title {
+  color: $grey;
+  opacity: .5;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.chat__message-title p {
+  margin: 0;
+}
+
+.chat__message-author {
+  @include chat;
+}
+
+.chat__message-time {
+  @include chat-time;
+}
+
+.chat__message-content p {
+  @include chat-answer;
+  color: $black;
+}
+
+.chat__form {
+  margin: 0;
+  height: 103px;
+  position: relative;
+}
+
+.chat__form-message {
+  @include chat;
+  width: 100%;
+  height: 100%;
+  padding: 10px 46px 9px 20px;
+  border: none;
+  border-radius: 8px;
+  resize: none;
+  color: $black;
+  overflow: auto;
+  outline: 0;
+
+  &::placeholder {
+    color: $grey;
+    opacity: .5;
+  }
+}
+
+.chat__form-button {
+  @include hover;
+  position: absolute;
+  width: 19px;
+  height: 22px;
+  right: 12px;
+  bottom: 12px;
+  background: url("../img/chat-submit.svg") no-repeat left top;
+  background-size: 19px 22px;
+  border: none;
+  cursor: pointer;
+  z-index: 4;
+}

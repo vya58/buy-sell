@@ -1,0 +1,77 @@
+.category-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: inherit;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+.category-tile__image {
+  display: block;
+  margin-bottom: 14px;
+  width: 101px;
+  height: 101px;
+  border-radius: 50%;
+  opacity: 0.58;
+  overflow: hidden;
+  transition: opacity 0.3s ease-out;
+}
+
+.category-tile__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.category-tile__label {
+  opacity: 0.34;
+  transition: opacity 0.3s ease-out;
+}
+
+.category-tile:hover .category-tile__label,
+.category-tile:hover .category-tile__image {
+  opacity: 1;
+}
+
+.category-tile__qty {
+  margin-left: -2px;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.category-tile--small {
+  flex-direction: row;
+  color: $blue;
+  font-size: 17px;
+  line-height: 21px;
+}
+
+.category-tile--small .category-tile__image {
+  margin-bottom: 0;
+  margin-right: 8px;
+  width: 41px;
+  height: 41px;
+}
+
+.category-tile--active .category-tile__image,
+.category-tile--small .category-tile__image {
+  opacity: 1;
+}
+
+.category-tile--active .category-tile__label,
+.category-tile--small .category-tile__label {
+  opacity: 1;
+}
+
+.category-tile--default,
+.category-tile--small {
+  @include hover;
+}
+
+.category-tile--default .category-tile__image {
+  opacity: 1;
+}

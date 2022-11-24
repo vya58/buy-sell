@@ -1,0 +1,320 @@
+.form {
+  background-color: $blue;
+}
+
+.form__field {
+  position: relative;
+  flex-grow: 1;
+}
+
+.form__field label {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba($white, 0.62);
+}
+
+.form__field input {
+  width: 100%;
+  height: 44px;
+  padding: 12px 0;
+  font-size: 16px;
+  line-height: 19px;
+  color: $white;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba($white, 0.26);
+  transition: border-color 0.3s ease-out;
+  -webkit-appearance: none;
+
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid rgba($white, 0.47);
+  }
+
+  &:focus + label {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.form__field input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px $blue inset;
+  -webkit-text-fill-color: $white;
+  padding-left: 10px;
+}
+
+.form__field input[type="password"] {
+  padding-top: 4px;
+  font-size: 22px;
+  letter-spacing: 2px;
+}
+
+.form__field textarea {
+  width: 100%;
+  height: 124px;
+  padding: 0;
+  font-size: 15px;
+  line-height: 25px;
+  color: $white;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba($white, 0.26);
+  transition: border-color 0.3s ease-out;
+  resize: none;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid rgba($white, 0.47);
+  }
+
+  &:focus + label {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.form__field span {
+  display: none;
+}
+
+.form__field--fill label {
+  opacity: 0;
+  pointer-events: none;
+}
+
+// Стили для невалидного поля
+.form__field--invalid {
+  input {
+    color: $invalid;
+    border-color: $invalid;
+  }
+
+  span {
+    display: block;
+    margin-top: 7px;
+    font-size: 10px;
+    line-height: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $invalid;
+  }
+}
+
+input:invalid,
+textarea:invalid {
+  box-shadow: none;
+  outline: none;
+}
+
+.form__switch:not(:first-child) {
+  flex: none;
+  margin-left: 47px;
+}
+
+.form__field--price {
+  position: relative;
+}
+
+.form__field--price::before {
+  content: "₽";
+  position: absolute;
+  top: 12px;
+  left: 0;
+  font-size: 22px;
+  line-height: 26px;
+  opacity: 0;
+}
+
+.form__field--price.form__field--fill::before,
+.form__field--price.form__field--focus::before {
+  opacity: 1;
+}
+
+.form__field--price label {
+  top: 17px;
+}
+
+.form__field--price input[type="number"] {
+  padding-left: 19px;
+  font-size: 22px;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    display: none;
+    -webkit-appearance: none;
+  }
+}
+
+// стили кастомного селекта
+
+.form {
+  .selectr-container {
+    width: 100%;
+  }
+
+  .selectr-selected,
+  .selectr-container.open .selectr-selected,
+  .selectr-container.multiple.has-selected .selectr-selected {
+    box-sizing: border-box;
+    padding: 13px 52px 16px 28px;
+    height: 49px;
+    font-size: 16px;
+    line-height: 19px;
+    color: $white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.206041);
+    border-radius: 25px;
+    overflow: hidden;
+    transition: opacity 0.3s ease-out, border-color 0.3s ease-out;
+  }
+
+  .selectr-selected--hidden,
+  .selectr-container.multiple.has-selected .selectr-selected--hidden,
+  .selectr-container.open .selectr-selected--hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .selectr-selected:focus {
+    outline: none;
+  }
+
+  .selectr-selected::before,
+  .selectr-container.open .selectr-selected::before {
+    border: none;
+    right: 28px;
+    margin-top: -1px;
+    width: 7px;
+    height: 14px;
+    background-image: url("../img/arr.svg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  .selectr-placeholder {
+    color: $white;
+  }
+
+  .selectr-options-container,
+  .selectr-container.inverted .selectr-options-container {
+    margin: 6px 0;
+    background-color: $blue;
+    border: 1px solid rgba(255, 255, 255, 0.21);
+    border-radius: 21px;
+    transition: border-coor 0.3s ease-out;
+  }
+
+  .selectr-options {
+    font-size: 16px;
+    line-height: 19px;
+    overflow-y: auto;
+  }
+
+  .selectr-option {
+    padding: 13px 27px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.21);
+    transition: background-color 0.3s ease-out, border-coor 0.3s ease-out;
+  }
+
+  .selectr-option:first-child {
+    border-radius: 21px 21px 0 0;
+  }
+
+  .selectr-option:last-child {
+    border-bottom: 0;
+    border-radius: 0 0 21px 21px;
+  }
+
+  .selectr-option.active {
+    background-color: transparent;
+  }
+
+  .selectr-option:hover {
+    background-color: rgba(216, 216, 216, 0.21);
+  }
+
+  .selectr-option.selected {
+    position: relative;
+    background-color: transparent;
+  }
+
+  .selectr-option.selected::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: $white;
+    border-radius: 50%;
+  }
+
+  .selectr-tags {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    box-sizing: border-box;
+    padding: 13px 52px 16px 28px;
+    height: 49px;
+    font-size: 16px;
+    line-height: 19px;
+    color: $white;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.206041);
+    border-radius: 25px;
+    overflow: hidden;
+    transition: opacity 0.3s ease-out, border-color 0.3s ease-out;
+  }
+
+  .selectr-tag {
+    margin: 0 4px 0 0;
+    padding: 0;
+    white-space: nowrap;
+    background-color: transparent;
+  }
+
+  .selectr-tag::after {
+    content: ",";
+    display: inline;
+    font-size: 16px;
+    line-height: 19px;
+    color: $white;
+  }
+
+  .selectr-tag:last-child::after {
+    display: none;
+  }
+
+  .selectr-tag-remove {
+    display: none;
+  }
+
+  .selectr-container:hover .selectr-selected:not(.selectr-selected--hidden) {
+    border-color: rgba(255, 255, 255, 0.4741);
+    opacity: 1;
+  }
+
+  .selectr-options-container:hover,
+  .selectr-options-container:hover .selectr-option {
+    border-color: rgba(255, 255, 255, 0.4741);
+  }
+}

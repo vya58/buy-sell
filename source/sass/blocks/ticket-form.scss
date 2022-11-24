@@ -1,0 +1,109 @@
+.ticket-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 53px 0;
+}
+
+.ticket-form__wrapper {
+  @include container;
+}
+
+.ticket-form__title {
+  @include subtitle;
+  margin-bottom: 26px;
+  text-align: center;
+  text-transform: uppercase;
+  color: $blue;
+}
+
+.ticket-form__tile {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 50px 52px 47px;
+  width: 580px;
+  color: $white;
+  background-color: $blue;
+  border-radius: 8px;
+}
+
+.ticket-form__content {
+  margin-bottom: 53px;
+}
+
+.ticket-form__row {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 41px;
+}
+
+.ticket-form__row:last-child {
+  margin-bottom: 0;
+}
+
+.ticket-form__avatar-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 25px;
+}
+
+.ticket-form__avatar-container.uploaded {
+  margin-top: 24px;
+  margin-bottom: 40px;
+}
+
+.ticket-form__avatar,
+.ticket-form__text-another,
+.ticket-form__avatar-container.uploaded .ticket-form__text-upload {
+  display: none;
+}
+
+.ticket-form__avatar-container.uploaded .ticket-form__text-another,
+.ticket-form__avatar-container.uploaded .ticket-form__avatar {
+  display: block;
+}
+
+.ticket-form__field-avatar label {
+  margin-bottom: 4px;
+  display: inline-block;
+  min-width: 178px;
+  min-height: 49px;
+  padding: 14px 19px;
+  color: $white;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.206041);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.ticket-form__field-avatar label:hover,
+.ticket-form__field-avatar input:focus + label {
+  border: 1px solid rgba(255, 255, 255, 0.4741);
+}
+
+.ticket-form__avatar {
+  margin-top: -25px;
+  width: 140px;
+  height: 175px;
+  margin-right: 25px;
+  background-color: #534326;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ticket-form__avatar img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.ticket-form__field {
+  margin-bottom: 26px;
+  margin-left: 4px;
+
+  &:last-of-type {
+    margin-bottom: 40px;
+  }
+}

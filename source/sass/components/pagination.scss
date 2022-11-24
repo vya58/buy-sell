@@ -1,0 +1,33 @@
+.pagination {
+  @include reset-list;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 20px;
+  line-height: 24px;
+  color: $blue;
+}
+
+.pagination li {
+  margin: 0 5px;
+  flex: none;
+}
+
+.pagination a {
+  @include hover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: inherit;
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.pagination a.active {
+  color: $white;
+  background-color: $blue;
+}

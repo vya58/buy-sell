@@ -1,0 +1,31 @@
+.announce-card {
+  @include hover;
+  display: block;
+  padding: 29px 26px;
+  min-height: 154px;
+  color: $black;
+  background-color: $white;
+}
+
+.announce-card__title {
+  @include headline;
+  margin-bottom: 21px;
+}
+
+.announce-card__info {
+  display: flex;
+  align-items: center;
+}
+
+.announce-card__price {
+  @include title;
+  margin-right: 12px;
+}
+
+.announce-card__type {
+  @include highlight;
+  padding: 5px 9px;
+  color: $white;
+  background-color: $black;
+  border-radius: 11px;
+}

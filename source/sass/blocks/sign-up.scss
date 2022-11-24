@@ -1,0 +1,120 @@
+.sign-up {
+  @include container;
+  margin-top: 71px;
+}
+
+.sign-up__form {
+  margin: 0 auto;
+  width: 520px;
+  min-height: 616px;
+  padding: 47px 82px 52px 70px;
+  border-radius: 33px;
+}
+
+.sign-up__title {
+  @include subtitle;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sign-up__title h2 {
+  position: relative;
+  margin: 0;
+  margin-right: 32px;
+  padding-bottom: 12px;
+  font: inherit;
+  color: $white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: $white;
+  }
+}
+
+.sign-up__link {
+  color: rgba($white, 0.55);
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.sign-up__avatar-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 29px;
+  margin-top: 47px;
+}
+
+.sign-up__avatar-container.uploaded {
+  margin-top: 24px;
+  margin-bottom: 12px;
+}
+
+.sign-up__avatar,
+.sign-up__text-another,
+.sign-up__avatar-container.uploaded .sign-up__text-upload {
+  display: none;
+}
+
+.sign-up__avatar-container.uploaded .sign-up__text-another,
+.sign-up__avatar-container.uploaded .sign-up__avatar {
+  display: block;
+}
+
+.sign-up__field-avatar label {
+  display: inline-block;
+  width: 190px;
+  min-height: 49px;
+  padding: 14px 10px;
+  color: $white;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.206041);
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+
+.sign-up__field-avatar label:hover {
+  border: 1px solid rgba(255, 255, 255, 0.4741);
+}
+
+.sign-up__avatar-container.uploaded label {
+  width: 243px;
+}
+
+.sign-up__avatar {
+  width: 88px;
+  height: 88px;
+  margin-right: 25px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.sign-up__avatar img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.sign-up__field {
+  margin-bottom: 26px;
+  margin-left: 4px;
+
+  &:last-of-type {
+    margin-bottom: 40px;
+  }
+}
+
+.sign-up__button {
+  width: 186px;
+  min-height: 59px;
+  padding: 19px 10px 21px;
+  margin-bottom: 32px;
+}

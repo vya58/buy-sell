@@ -1,0 +1,97 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  background-color: $blue;
+}
+
+.header__wrapper {
+  @include container;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  min-height: 89px;
+  padding: 0 36px;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.header__logo {
+  margin-right: 88px;
+  padding-bottom: 10px;
+}
+
+.header__user-menu {
+  display: none;
+  width: 350px;
+  margin-right: 36px;
+}
+
+.header__list {
+  @include reset-list;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.header__item a {
+  padding: 35px 14px;
+  color: rgba($white, 0.47);
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.header__avatar {
+  display: none;
+  width: 58px;
+  height: 58px;
+  margin-left: auto;
+}
+
+.header__input {
+  @include hover;
+  margin-left: auto;
+  margin-top: 4px;
+  color: $white;
+}
+
+// Стили при авторизованном пользователе (класс header--logged)
+.header--logged .header__wrapper {
+  padding-right: 30px;
+}
+
+.header--logged .header__logo {
+  margin-right: 100px;
+}
+
+.header--logged .header__user-menu,
+.header--logged .header__avatar {
+  display: block;
+}
+
+.header--logged .search input {
+  width: 246px;
+  padding-left: 50px;
+  border: none;
+}
+
+.header--logged .search__icon {
+  top: 14px;
+  left: 80px;
+}
+
+.header--logged .search--active .search__icon {
+  top: 13px;
+  left: 14px;
+}
+
+.header--logged .header__input {
+  display: none;
+}
+
+// Активный элемент меню пользователя
+.header__item--active a {
+  color: $white;
+  background-color: rgba($white, 0.05);
+}
