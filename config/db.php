@@ -1,14 +1,16 @@
 <?php
 
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+$config = parse_ini_file('/OpenServ/domains/config/buysell_config.ini', true);
 
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
+return [
+  'class' => 'yii\db\Connection',
+  'dsn' => 'mysql:host=' . $config['mysql_host'] . ';dbname=' . $config['mysql_db'],
+  'username' => $config['mysql_un'],
+  'password' => $config['mysql_pwd'],
+  'charset' => 'utf8',
+
+  // Schema cache options (for production environment)
+  //'enableSchemaCache' => true,
+  //'schemaCacheDuration' => 60,
+  //'schemaCache' => 'cache',
 ];
