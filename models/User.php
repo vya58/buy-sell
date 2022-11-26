@@ -16,41 +16,45 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'user';
-    }
+  // Роли пользователя
+  public const ROLE_MODERATOR = 'moderator';
+  public const ROLE_USER = 'user';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['name', 'email', 'password'], 'required'],
-            [['date_add'], 'safe'],
-            [['name'], 'string', 'max' => 50],
-            [['email', 'password', 'avatar'], 'string', 'max' => 255],
-            [['email'], 'unique'],
-            [['avatar'], 'unique'],
-        ];
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public static function tableName()
+  {
+    return 'user';
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'user_id' => 'ID пользователя',
-            'name' => 'Имя и Фамилия пользователя',
-            'email' => 'Email пользователя',
-            'password' => 'Пароль пользователя',
-            'avatar' => 'Аватар пользователя',
-            'date_add' => 'Дата добавления пользователя',
-        ];
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function rules()
+  {
+    return [
+      [['name', 'email', 'password'], 'required'],
+      [['date_add'], 'safe'],
+      [['name'], 'string', 'max' => 50],
+      [['email', 'password', 'avatar'], 'string', 'max' => 255],
+      [['email'], 'unique'],
+      [['avatar'], 'unique'],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function attributeLabels()
+  {
+    return [
+      'user_id' => 'ID пользователя',
+      'name' => 'Имя и Фамилия пользователя',
+      'email' => 'Email пользователя',
+      'password' => 'Пароль пользователя',
+      'avatar' => 'Аватар пользователя',
+      'date_add' => 'Дата добавления пользователя',
+    ];
+  }
 }
