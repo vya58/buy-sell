@@ -1,0 +1,82 @@
+<?php
+
+namespace app\controllers;
+
+use Yii;
+use app\models\forms\RegistrationForm;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\UploadedFile;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
+
+class RegistrationController extends Controller
+{
+  /**
+   * @inheritDoc
+   */
+
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+
+        'denyCallback' => function () {
+          return $this->redirect(['site/index']);
+        },
+
+        'only' => ['index'],
+        'rules' => [
+          [
+            'allow' => true,
+            'actions' => ['index'],
+            'roles' => ['?']
+          ]
+        ]
+      ]
+    ];
+  }
+
+  /**
+   * Страница с формой регистрации нового пользователя
+   *
+   * @return string cтраница с формой регистрации
+   */
+  public function actionIndex()
+  {
+
+    $registrationForm = new RegistrationForm();
+
+    if (Yii::$app->request->getIsPost()) {
+
+      if (Yii::$app->request->getIsPost()) {
+        $registrationForm->load(Yii::$app->request->post());
+
+        /*
+        echo '<pre>';
+        var_dump($registrationForm->avatar);
+         echo '</pre>';
+        die;
+        */
+        /*
+        if (Yii::$app->request->isAjax) {
+
+          Yii::$app->response->format = Response::FORMAT_JSON;
+          return ActiveForm::validate($registrationForm);
+        }
+        */
+        if ($registrationForm->createUser()) {
+          return $this->goHome();
+        }
+      }
+    }
+
+    return $this->render(
+      'index',
+      [
+        'registrationForm' => $registrationForm,
+      ]
+    );
+  }
+}

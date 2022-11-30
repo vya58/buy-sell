@@ -2,6 +2,8 @@
 
 /** @var yii\web\View $this */
 
+use \yii\helpers\Url;
+
 //$this->title = 'My Yii Application';
 ?>
 <?php if (!$data) : ?>
@@ -9,7 +11,7 @@
     <div class="message__text">
       <p>На сайте еще не опубликовано ни&nbsp;одного объявления.</p>
     </div>
-    <a href="#" class="message__link btn btn--big">Вход и регистрация</a>
+    <a href="<?= Url::to('registration') ?>" class="message__link btn btn--big">Вход и регистрация</a>
   </div>
 <?php endif; ?>
 

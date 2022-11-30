@@ -49,3 +49,9 @@ npm-debug.*
 source/css/*.css
 source/css/*.map
 Thumbs.db
+
+web/uploads/avatars/*
+! web/uploads/avatars/.gitkeep
+
+web/uploads/img/*
+! web/uploads/img/.gitkeep

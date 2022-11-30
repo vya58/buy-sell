@@ -4,10 +4,11 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
+use \yii\helpers\Url;
 
 AppAsset::register($this);
 
-$this->registerCsrfMetaTags();
+//$this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
 $this->registerMetaTag(['name' => 'description', 'content' => 'Доска объявлений — современный веб-сайт, упрощающий продажу или покупку абсолютно любых вещей.']);
@@ -49,7 +50,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       <a class="header__avatar avatar" href="#">
         <img src="img/avatar.jpg" srcset="img/avatar@2x.jpg 2x" alt="Аватар пользователя">
       </a>
-      <a class="header__input" href="sign-up.html">Вход и регистрация</a>
+      <a class="header__input" href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
     </div>
   </header>
 

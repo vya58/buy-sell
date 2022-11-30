@@ -1,10 +1,13 @@
 <?php
-
+$config = parse_ini_file('/OpenServ/domains/config/taskforce_config.ini', true);
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
   'id' => 'basic',
+  'basePath' => dirname(__DIR__),
+  'language' => 'ru-RU',
+  'homeUrl' => '/',
   'basePath' => dirname(__DIR__),
   'bootstrap' => ['log'],
   'aliases' => [
@@ -15,10 +18,11 @@ $config = [
     'request' => [
       // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
       'cookieValidationKey' => 'hOn7x3MB8QE0dRZ15f3W0ruDtTwoo9lh',
+      'baseUrl' => '',
     ],
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
-      'cache' => 'cache',
+      //'cache' => 'cache',
     ],
     'cache' => [
       'class' => 'yii\caching\FileCache',
@@ -46,14 +50,19 @@ $config = [
       ],
     ],
     'db' => $db,
-    /*
+
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                'login' => 'login/index',
+                '/' => 'site',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
-        */
+
   ],
   'params' => $params,
 ];
@@ -64,14 +73,14 @@ if (YII_ENV_DEV) {
   $config['modules']['debug'] = [
     'class' => 'yii\debug\Module',
     // uncomment the following to add your IP if you are not connecting from localhost.
-    //'allowedIPs' => ['127.0.0.1', '::1'],
+    'allowedIPs' => ['*'],
   ];
 
   $config['bootstrap'][] = 'gii';
   $config['modules']['gii'] = [
     'class' => 'yii\gii\Module',
     // uncomment the following to add your IP if you are not connecting from localhost.
-    //'allowedIPs' => ['127.0.0.1', '::1'],
+    'allowedIPs' => ['*'],
   ];
 }
 

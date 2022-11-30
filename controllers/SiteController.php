@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
+//use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -15,6 +15,7 @@ class SiteController extends Controller
   /**
    * {@inheritdoc}
    */
+/*
   public function behaviors()
   {
     return [
@@ -37,7 +38,30 @@ class SiteController extends Controller
       ],
     ];
   }
-
+*/
+/*
+public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'only' => ['login', 'logout', 'signup', 'registration'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['*'],
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['logout'],
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
+    */
   /**
    * {@inheritdoc}
    */
@@ -61,9 +85,10 @@ class SiteController extends Controller
    */
   public function actionIndex()
   {
-    //Временная переменная для подключения статичных вариантов Главной страницы.
-    $data = true;
 
+    //Временная переменная для подключения статичных вариантов Главной страницы.
+    $data = false;
+   // die;
     return $this->render(
       'index',
       [
@@ -79,6 +104,7 @@ class SiteController extends Controller
    *
    * @return Response|string
    */
+  /*
   public function actionLogin()
   {
     if (!Yii::$app->user->isGuest) {
@@ -95,24 +121,26 @@ class SiteController extends Controller
       'model' => $model,
     ]);
   }
-
+*/
   /**
    * Logout action.
    *
    * @return Response
    */
+  /*
   public function actionLogout()
   {
     Yii::$app->user->logout();
 
     return $this->goHome();
   }
-
+*/
   /**
    * Displays contact page.
    *
    * @return Response|string
    */
+  /*
   public function actionContact()
   {
     $model = new ContactForm();
@@ -125,14 +153,16 @@ class SiteController extends Controller
       'model' => $model,
     ]);
   }
-
+*/
   /**
    * Displays about page.
    *
    * @return string
    */
+  /*
   public function actionAbout()
   {
     return $this->render('about');
   }
+  */
 }
