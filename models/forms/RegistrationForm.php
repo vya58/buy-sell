@@ -11,19 +11,11 @@ use app\models\exceptions\DataSaveException;
 
 class RegistrationForm extends Model
 {
-
   public string $name = '';
   public string $email = '';
   public string $avatar = '';
   public string $password = '';
   public string $passwordRepeat = '';
-
-
-  // public string $userName = '';
-  // public string $userEmail = '';
-  // public string $avatar = '';
-  //public string $userPassword = '';
-  //public string $userPasswordAgain = '';
 
   /**
    * @inheritDoc
@@ -31,12 +23,13 @@ class RegistrationForm extends Model
   public function rules(): array
   {
     return [
-      [['name', 'email', 'password', 'passwordRepeat'], 'required'],
+      [['name', 'email', 'password', 'passwordRepeat'], 'required', 'message' => 'Обязательное поле'],
       [['name'], 'string', 'max' => User::MAX_LENGTH_USERNAME],
       [['email'], 'string', 'max' => User::MAX_LENGTH_FILD],
       [['password', 'passwordRepeat'], 'string', 'min' => User::MIN_LENGTH_PASSWORD, 'max' => User::MAX_LENGTH_PASSWORD],
-      [['passwordRepeat'], 'compare', 'compareAttribute' => 'password', 'message' => "Пароли не совпадают"],
-      [['email'], 'email'],
+      [['name'], 'match', 'pattern' => '/^[A-zА-я\s]+$/u', 'message' => 'Не должно быть цифр и специальных символов'],
+      [['passwordRepeat'], 'compare', 'compareAttribute' => 'password', 'message' => 'Пароли не совпадают'],
+      [['email'], 'email', 'message' => 'Неверный email'],
       [['email'], 'unique', 'targetClass' => User::class, 'targetAttribute' => ['email' => 'email'], 'message' => 'Пользователь с таким e-mail уже существует'],
       [['avatar'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => true, 'extensions' => 'jpg, png', 'wrongExtension' => 'Только форматы jpg и png'],
     ];
@@ -67,6 +60,11 @@ class RegistrationForm extends Model
     $user = new User;
 
     $avatar = UploadedFile::getInstance($this, 'avatar');
+
+    if (!$avatar) {
+      $avatar = '';
+    }
+
     $this->avatar = $avatar;
 
     if (!$this->uploadAvatar($user, $avatar) && $this->avatar) {

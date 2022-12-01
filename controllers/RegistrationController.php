@@ -6,9 +6,6 @@ use Yii;
 use app\models\forms\RegistrationForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\UploadedFile;
-use yii\web\Response;
-use yii\widgets\ActiveForm;
 
 class RegistrationController extends Controller
 {
@@ -45,30 +42,13 @@ class RegistrationController extends Controller
    */
   public function actionIndex()
   {
-
     $registrationForm = new RegistrationForm();
 
     if (Yii::$app->request->getIsPost()) {
+      $registrationForm->load(Yii::$app->request->post());
 
-      if (Yii::$app->request->getIsPost()) {
-        $registrationForm->load(Yii::$app->request->post());
-
-        /*
-        echo '<pre>';
-        var_dump($registrationForm->avatar);
-         echo '</pre>';
-        die;
-        */
-        /*
-        if (Yii::$app->request->isAjax) {
-
-          Yii::$app->response->format = Response::FORMAT_JSON;
-          return ActiveForm::validate($registrationForm);
-        }
-        */
-        if ($registrationForm->createUser()) {
-          return $this->goHome();
-        }
+      if ($registrationForm->createUser()) {
+        return $this->goHome();
       }
     }
 

@@ -25,8 +25,8 @@ class AppAsset extends AssetBundle
         'css/style.min.css.map'
     ];
     public $js = [
-      //'js/main.js',
-      //'js/main.js.map',
+      'js/main.js',
+      'js/main.js.map',
       'js/vendor.js'
     ];
     public $depends = [

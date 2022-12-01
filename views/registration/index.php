@@ -1,10 +1,9 @@
 <?php
 
-/** @var yii\web\View $this
- * @var Task[] $tasks
+/**
+ * @var yii\web\View $this
  */
 
-use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 use app\models\forms\RegistrationForm;
 
@@ -13,19 +12,15 @@ use app\models\forms\RegistrationForm;
 ?>
 
 <section class="sign-up">
-
   <h1 class="visually-hidden">Регистрация</h1>
   <?php $form = ActiveForm::begin([
     'id' => 'registration-form',
-    //'enableAjaxValidation' => true,
-
-    //'method' => 'post',
+    'method' => 'post',
     'options' => [
       'class' => 'sign-up__form form',
       'enctype' => 'multipart/form-data',
       'autocomplete' => 'off',
     ],
-    //'template' => '{input}{label}',
   ]); ?>
 
   <div class="sign-up__title">
@@ -35,56 +30,25 @@ use app\models\forms\RegistrationForm;
   <div class="sign-up__avatar-container js-preview-container">
     <div class="sign-up__avatar js-preview"></div>
     <div class="sign-up__field-avatar">
-      <?= $form->field($registrationForm, 'avatar')->fileInput(['multiple' => false, 'class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить аватар…']); ?>
-
-      <!--
-      <input type="file" id="avatar" name="avatar" class="visually-hidden js-file-field">
-
-      <label for="avatar">
-        <span class="sign-up__text-upload">Загрузить аватар…</span>
-        <span class="sign-up__text-another">Загрузить другой аватар…</span>
-      </label>
--->
+      <?= $form->field($registrationForm, 'avatar')->fileInput(['class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить аватар…'])->label('<span class="sign-up__text-upload">Загрузить аватар…</span><span class="sign-up__text-another">Загрузить другой аватар…</span>') ?>
     </div>
   </div>
   <div class="form__field sign-up__field">
-
-    <?= $form->field($registrationForm, 'name', ['options' => ['class' => 'js-field']])->textInput()->label('Имя и фамилия') ?>
-
-    <!--
-    <input type="text" name="user-name" id="user-name" class="js-field" required="">
-    <label for="user-name">Имя и фамилия</label>
-    -->
+    <?= $form->field($registrationForm, 'name')->textInput(['options' => ['class' => 'js-field']])->label('Имя и фамилия') ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'email', ['options' => ['class' => 'js-field']])/*->input('email')->hint('Введите адрес почты')*/->label('Эл. почта') ?>
-
-    <!--
-    <input type="email" name="user-email" id="user-email" class="js-field" required="">
-    <label for="user-email">Эл. почта</label>
-    -->
+    <?= $form->field($registrationForm, 'email')->input(['options' => ['class' => 'js-field']])->label('Эл. почта') ?>
     <span>Неверный email</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'password', ['options' => ['class' => 'js-field']])->passwordInput()->label('Пароль') ?>
-
-    <!--
-    <input type="password" name="user-password" id="user-password" class="js-field" required="">
-    <label for="user-password">Пароль</label>
-    -->
+    <?= $form->field($registrationForm, 'password')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль') ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'passwordRepeat', ['options' => ['class' => 'js-field']])->passwordInput()->label('Пароль еще раз') ?>
-
-    <!--
-    <input type="password" name="user-password-again" id="user-password-again" class="js-field" required="">
-    <label for="user-password-again">Пароль еще раз</label>
-    -->
+    <?= $form->field($registrationForm, 'passwordRepeat')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль еще раз') ?>
     <span>Пароли не совпадают</span>
   </div>
-
 
   <button class="sign-up__button btn btn--medium js-button" type="submit">Создать аккаунт</button>
 

@@ -88,7 +88,7 @@ public function behaviors()
 
     //Временная переменная для подключения статичных вариантов Главной страницы.
     $data = false;
-   // die;
+
     return $this->render(
       'index',
       [
