@@ -7,8 +7,9 @@ use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
+use app\models\forms\LoginForm;
 use app\models\ContactForm;
+use yii\widgets\ActiveForm;
 
 class SiteController extends Controller
 {
@@ -104,24 +105,26 @@ public function behaviors()
    *
    * @return Response|string
    */
-  /*
+
   public function actionLogin()
   {
-    if (!Yii::$app->user->isGuest) {
-      return $this->goHome();
-    }
+    $loginForm = new LoginForm();
 
-    $model = new LoginForm();
-    if ($model->load(Yii::$app->request->post()) && $model->login()) {
-      return $this->goBack();
-    }
+        if (Yii::$app->request->getIsPost()) {
+            $loginForm->load(Yii::$app->request->post());
 
-    $model->password = '';
-    return $this->render('login', [
-      'model' => $model,
-    ]);
+            if ($loginForm->validate()) {
+                $user = $loginForm->getUser();
+                Yii::$app->user->login($user);
+
+                return $this->goHome();
+            }
+        }
+        return $this->render('login', [
+          'loginForm' => $loginForm,
+        ]);
   }
-*/
+
   /**
    * Logout action.
    *

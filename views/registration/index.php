@@ -6,6 +6,7 @@
 
 use yii\widgets\ActiveForm;
 use app\models\forms\RegistrationForm;
+use \yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var RegistrationForm $registrationForm */
@@ -25,7 +26,7 @@ use app\models\forms\RegistrationForm;
 
   <div class="sign-up__title">
     <h2>Регистрация</h2>
-    <a class="sign-up__link" href="login.html">Вход</a>
+    <a class="sign-up__link" href="<?= Url::to('/login') ?>">Вход</a>
   </div>
   <div class="sign-up__avatar-container js-preview-container">
     <div class="sign-up__avatar js-preview"></div>

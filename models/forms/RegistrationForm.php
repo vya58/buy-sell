@@ -42,7 +42,7 @@ class RegistrationForm extends Model
   {
     return [
       'name' => 'Ваше имя и фамилия',
-      'email' => 'Email',
+      'email' => 'Эл. почта',
       'password' => 'Пароль',
       'passwordRepeat' => 'Повтор пароля',
       'avatar' => 'Загрузить аватар',
@@ -73,7 +73,7 @@ class RegistrationForm extends Model
 
     $user->name = $this->name;
     $user->email = $this->email;
-    $user->password = $this->password;
+    $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);;
 
     $transaction = Yii::$app->db->beginTransaction();
 
