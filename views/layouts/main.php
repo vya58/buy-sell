@@ -3,8 +3,10 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
+//use Yii;
 use app\assets\AppAsset;
 use \yii\helpers\Url;
+use yii\helpers\Html;
 
 AppAsset::register($this);
 
@@ -47,10 +49,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="search__icon"></div>
         <div class="search__close-btn"></div>
       </form>
-      <a class="header__avatar avatar" href="#">
-        <img src="img/avatar.jpg" srcset="img/avatar@2x.jpg 2x" alt="Аватар пользователя">
-      </a>
-      <a class="header__input" href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
+      <?php if (Yii::$app->user->isGuest) : ?>
+        <a class="header__input" href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
+      <?php else : ?>
+        <a class="<?= !Yii::$app->user->isGuest ? 'header--logged' : '' ?><?= 'header__avatar avatar' ?>" href="#">
+          <img src="img/avatar.jpg" srcset="img/avatar@2x.jpg 2x" alt="Аватар пользователя">
+        </a>
+        <a class="header__input" href="<?= Url::to('/site/logout') ?>">Выход</a>
+      <?php endif; ?>
     </div>
   </header>
 
@@ -75,12 +81,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       </div>
       <div class="page-footer__col">
         <ul class="page-footer__nav">
-          <li>
-            <a href="sign-up.html">Вход и регистрация</a>
-          </li>
-          <li>
-            <a href="new-ticket.html">Создать объявление</a>
-          </li>
+          <?php if (Yii::$app->user->isGuest) : ?>
+            <li>
+              <a href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
+            </li>
+          <?php else : ?>
+            <li>
+              <a href="<?= Url::to('/site/logout') ?>">Выход</a>
+            </li>
+            <li>
+              <a href="new-ticket.html">Создать объявление</a>
+            </li>
+          <?php endif; ?>
         </ul>
       </div>
     </div>

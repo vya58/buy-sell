@@ -130,14 +130,14 @@ public function behaviors()
    *
    * @return Response
    */
-  /*
+
   public function actionLogout()
   {
     Yii::$app->user->logout();
 
     return $this->goHome();
   }
-*/
+
   /**
    * Displays contact page.
    *
