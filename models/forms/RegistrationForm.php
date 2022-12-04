@@ -72,7 +72,7 @@ class RegistrationForm extends Model
 
     $user->name = $this->name;
     $user->email = $this->email;
-    $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);;
+    $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
 
     $transaction = Yii::$app->db->beginTransaction();
 

@@ -111,9 +111,7 @@ class LoginController extends Controller
 
     if (!$user) {
       $user = new User;
-
       $user->createVkUser($attributes);
-      //throw new NotFoundHttpException('Пользователь не найден');
     }
 
     Yii::$app->user->login($user);

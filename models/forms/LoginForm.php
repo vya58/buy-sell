@@ -51,10 +51,6 @@ class LoginForm extends Model
   {
     if (!$this->hasErrors()) {
       $user = $this->getUser();
-      if ('VKontakte' === $this->password) {
-        $this->password = md5(microtime(true));
-        //throw new BadRequestHttpException('Выполните вход через ВКонтакте');
-      }
 
       if (!$user || !$user->validatePassword($this->password)) {
         $this->addError($attribute, 'Неправильный email или пароль');
