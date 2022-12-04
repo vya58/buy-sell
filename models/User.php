@@ -23,13 +23,16 @@ class User extends ActiveRecord implements IdentityInterface
   public const ROLE_MODERATOR = 'moderator';
   public const ROLE_USER = 'user';
 
+  // Пароль для заполнения обязательного поля 'password'в таблице 'user' БД для зарегистрировавшихся через ВКонтакте
+  // Пароль не действует при авторизации
+  public const VK_USER_PASSWORD = 'VKontakte';
+
   public const MAX_LENGTH_USERNAME = 50;
   public const MAX_LENGTH_FILD = 255;
   public const MIN_LENGTH_PASSWORD = 6;
   public const MAX_LENGTH_PASSWORD = 64;
   public const USER_AVATAR_UPLOAD_PATH = '/uploads/avatars/';
   public $passwordRepeat;
-
 
   /**
    * {@inheritdoc}
@@ -119,5 +122,23 @@ class User extends ActiveRecord implements IdentityInterface
     public function validatePassword($password)
     {
       return Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    /**
+     * Создание нового пользователя через ВКонтакте
+     * @param array $attributes - атрибуты пользователя переданные ВКонтакте
+     *
+     */
+    public function createVkUser(array $attributes)
+    {
+      $this->name = $attributes['first_name'] . $attributes['last_name'];
+      $this->email = $attributes['email'];
+      $this->password = self::VK_USER_PASSWORD;
+
+      if ($this->save()) {
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRole(User::ROLE_USER);
+        $auth->assign($userRole, $this->getId());
+      }
     }
 }

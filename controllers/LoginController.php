@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
+use yii\web\UploadedFile;
 
 
 class LoginController extends Controller
@@ -75,7 +76,7 @@ class LoginController extends Controller
   }
 
   /**
-   * Объявляет внешние действия для контроллера
+   * Авторизация в социальной сети
    *
    * @return array
    */
@@ -90,23 +91,29 @@ class LoginController extends Controller
   }
 
   /**
-   * @param $client - экземпляр класса, реализующего yii\authclient\ClientInterface
+   * Результат успешной регистрации с помощью социальной сети
+   *
+   * @param $client - социальная сеть, через которую происходит авторизация
    *
    * @return Response
    */
   public function onAuthSuccess(ClientInterface $client)
   {
     $attributes = $client->getUserAttributes();
+
     $email = ArrayHelper::getValue($attributes, 'email');
 
     if (!$email) {
       throw new BadRequestHttpException('Email отсутствует');
     }
-
+    // Пытаемся найти пользователя в базе по почте из соц. сети
     $user = User::findOne(['email' => $email]);
 
     if (!$user) {
-      throw new NotFoundHttpException('Пользователь не найден');
+      $user = new User;
+
+      $user->createVkUser($attributes);
+      //throw new NotFoundHttpException('Пользователь не найден');
     }
 
     Yii::$app->user->login($user);

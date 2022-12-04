@@ -58,7 +58,6 @@ class RegistrationForm extends Model
   public function createUser(): bool
   {
     $user = new User;
-
     $avatar = UploadedFile::getInstance($this, 'avatar');
 
     if (!$avatar) {
@@ -78,7 +77,6 @@ class RegistrationForm extends Model
     $transaction = Yii::$app->db->beginTransaction();
 
     try {
-
       if ($user->save()) {
         $auth = Yii::$app->authManager;
         $userRole = $auth->getRole(User::ROLE_USER);

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 
 use app\models\User;
+use yii\web\BadRequestHttpException;
 use app\models\exceptions\FileExistException;
 use app\models\exceptions\DataSaveException;
 
@@ -50,6 +51,10 @@ class LoginForm extends Model
   {
     if (!$this->hasErrors()) {
       $user = $this->getUser();
+      if ('VKontakte' === $this->password) {
+        $this->password = md5(microtime(true));
+        //throw new BadRequestHttpException('Выполните вход через ВКонтакте');
+      }
 
       if (!$user || !$user->validatePassword($this->password)) {
         $this->addError($attribute, 'Неправильный email или пароль');
@@ -71,14 +76,14 @@ class LoginForm extends Model
   }
 
   /**
-     * Logs in a user using the provided username and password.
-     * @return bool whether the user is logged in successfully
-     */
-    public function login()
-    {
-        if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
-        }
-        return false;
+   * Logs in a user using the provided username and password.
+   * @return bool whether the user is logged in successfully
+   */
+  public function login()
+  {
+    if ($this->validate()) {
+      return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
     }
+    return false;
+  }
 }
