@@ -20,6 +20,18 @@ $config = [
       'cookieValidationKey' => 'hOn7x3MB8QE0dRZ15f3W0ruDtTwoo9lh',
       'baseUrl' => '',
     ],
+    'authClientCollection' => [
+      'class' => 'yii\authclient\Collection',
+      'clients' => [
+          'vkontakte' => [
+              'class' => 'yii\authclient\clients\VKontakte',
+              'clientId' => $config['vk_id'],
+              'clientSecret' => $config['vk_key'],
+              'returnUrl' => 'http://buysell/login/auth?authclient=vkontakte',
+              'scope' => 'email',
+          ],
+      ],
+  ],
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
       //'cache' => 'cache',
@@ -56,7 +68,7 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [
-                'login' => 'site/login',
+                'login' => 'login/index',
                 '/' => 'site',
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',

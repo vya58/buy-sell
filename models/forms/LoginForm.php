@@ -62,7 +62,7 @@ class LoginForm extends Model
    *
    * @return User|null $user - объект класса User
    */
-  public function getUser(): User
+  public function getUser(): ?User
   {
     if (null === $this->_user) {
       $this->_user = User::findOne(['email' => $this->email]);

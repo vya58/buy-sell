@@ -2,6 +2,7 @@
 
 use yii\widgets\ActiveForm;
 use app\models\forms\LoginForm;
+use app\models\Auth;
 use yii\helpers\Url;
 
 /** @var yii\web\View $this */
@@ -22,7 +23,7 @@ use yii\helpers\Url;
     ],
   ]); ?>
   <div class="login__title">
-    <a class="login__link" href="<?= Url::to('registration') ?>">Регистрация</a>
+    <a class="login__link" href="<?= Url::to('/registration') ?>">Регистрация</a>
     <h2>Вход</h2>
   </div>
   <div class="form__field login__field">
@@ -34,7 +35,7 @@ use yii\helpers\Url;
     <span>Обязательное поле</span>
   </div>
   <button class="login__button btn btn--medium js-button" type="submit">Войти</button>
-  <a class="btn btn--small btn--flex btn--white" href="#">
+  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(Auth::URL_VK) ?>">
     Войти через
     <span class="icon icon--vk"></span>
   </a>

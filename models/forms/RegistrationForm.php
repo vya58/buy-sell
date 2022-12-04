@@ -78,16 +78,16 @@ class RegistrationForm extends Model
     $transaction = Yii::$app->db->beginTransaction();
 
     try {
-      $user->save();
 
-      $auth = Yii::$app->authManager;
-      $userRole = $auth->getRole(User::ROLE_USER);
-      $auth->assign($userRole, $user->getId());
-
+      if ($user->save()) {
+        $auth = Yii::$app->authManager;
+        $userRole = $auth->getRole(User::ROLE_USER);
+        $auth->assign($userRole, $user->getId());
+      }
       $transaction->commit();
     } catch (DataSaveException $exception) {
       $transaction->rollback();
-      throw new DataSaveException($exception->getMessage());
+      throw new DataSaveException($exception->getMessage('Ошибка регистрации'));
     }
     return true;
   }

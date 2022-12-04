@@ -5,8 +5,10 @@
  */
 
 use yii\widgets\ActiveForm;
+use app\models\Auth;
 use app\models\forms\RegistrationForm;
 use \yii\helpers\Url;
+use yii\authclient\widgets\AuthChoice;
 
 /** @var yii\web\View $this */
 /** @var RegistrationForm $registrationForm */
@@ -53,10 +55,14 @@ use \yii\helpers\Url;
 
   <button class="sign-up__button btn btn--medium js-button" type="submit">Создать аккаунт</button>
 
-  <a class="btn btn--small btn--flex btn--white" href="#">
+  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(Auth::URL_VK) ?>">
     Войти через
     <span class="icon icon--vk"></span>
   </a>
 
   <?php ActiveForm::end(); ?>
+  <?= /*AuthChoice::widget([
+     'baseAuthUrl' => ['site/auth'],
+     'popupMode' => false,
+  ])*/ ''  ?>
 </section>
