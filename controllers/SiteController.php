@@ -103,4 +103,48 @@ public function behaviors()
 
     return $this->goHome();
   }
+
+  public function actionError404()
+  {
+    $this->layout = 'error';
+    $this->view->params['htmlClass'] = 'html-not-found';
+    $this->view->params['bodyClass'] = 'body-not-found';
+    //$exception = Yii::$app->errorHandler->exception;
+    /*
+    if ($exception !== null) {
+      $statusCode = $exception->statusCode;
+      $name = $exception->getName();
+      $message = $exception->getMessage();
+      $this->layout = 'main';
+      return $this->render('error404', [
+        'exception' => $exception,
+        'statusCode' => $statusCode,
+        'name' => false,
+        'message' => $message
+      ]);
+    }*/
+    return $this->render('error404');
+  }
+
+  public function actionError500()
+  {
+    $this->layout = 'error';
+    $this->view->params['htmlClass'] = 'html-server';
+    $this->view->params['bodyClass'] = 'body-server';
+    //$exception = Yii::$app->errorHandler->exception;
+    /*
+    if ($exception !== null) {
+      $statusCode = $exception->statusCode;
+      $name = $exception->getName();
+      $message = $exception->getMessage();
+      $this->layout = 'main';
+      return $this->render('error404', [
+        'exception' => $exception,
+        'statusCode' => $statusCode,
+        'name' => false,
+        'message' => $message
+      ]);
+    }*/
+    return $this->render('error500');
+  }
 }
