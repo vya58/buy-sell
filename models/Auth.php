@@ -18,8 +18,6 @@ use \yii\db\ActiveRecord;
  */
 class Auth extends ActiveRecord
 {
-  public const URL_VK = 'http://buysell/login/auth?authclient=vkontakte';
-
   private const MAX_LENGTH_SOURSE = 255;
 
   /**
