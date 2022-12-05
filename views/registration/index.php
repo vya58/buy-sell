@@ -55,7 +55,7 @@ use yii\authclient\widgets\AuthChoice;
 
   <button class="sign-up__button btn btn--medium js-button" type="submit">Создать аккаунт</button>
 
-  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(Auth::URL_VK) ?>">
+  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(['login/auth', 'authclient' => 'vkontakte']) ?>">
     Войти через
     <span class="icon icon--vk"></span>
   </a>

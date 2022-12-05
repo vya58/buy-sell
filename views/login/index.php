@@ -35,7 +35,7 @@ use yii\helpers\Url;
     <span>Обязательное поле</span>
   </div>
   <button class="login__button btn btn--medium js-button" type="submit">Войти</button>
-  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(Auth::URL_VK) ?>">
+  <a class="btn btn--small btn--flex btn--white" href="<?= Url::to(['login/auth', 'authclient' => 'vkontakte']) ?>">
     Войти через
     <span class="icon icon--vk"></span>
   </a>
