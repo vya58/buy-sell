@@ -70,6 +70,18 @@ public function behaviors()
     }
     */
 
+
+    public function actions()
+{
+  $exception1 = Yii::$app->errorHandler;
+  //\yii\helpers\VarDumper::dump($exception1, 3, true);
+  //  die;
+    return [
+        //'error' => ['class' => 'yii\web\ErrorAction'],
+    ];
+}
+
+
   /**
    * Displays homepage.
    *
@@ -104,26 +116,47 @@ public function behaviors()
     return $this->goHome();
   }
 
-  public function actionError404()
+  public function actionError()
   {
+    // Черновик
     $this->layout = 'error';
     $this->view->params['htmlClass'] = 'html-not-found';
     $this->view->params['bodyClass'] = 'body-not-found';
-    //$exception = Yii::$app->errorHandler->exception;
-    /*
-    if ($exception !== null) {
+    $exception = Yii::$app->errorHandler->exception;
+    $exception1 = Yii::$app->errorHandler;
+    //\yii\helpers\VarDumper::dump($exception1, 3, true);
+    //die;
+    //var_dump($exception->statusCode);
+    //die;
+
+    if ($exception !== null && $exception->statusCode == 404 ) {
       $statusCode = $exception->statusCode;
       $name = $exception->getName();
       $message = $exception->getMessage();
-      $this->layout = 'main';
-      return $this->render('error404', [
-        'exception' => $exception,
-        'statusCode' => $statusCode,
-        'name' => false,
-        'message' => $message
-      ]);
-    }*/
-    return $this->render('error404');
+      //$this->layout = 'main';
+     // return $this->render('error404', [
+        //'exception' => $exception,
+        //'statusCode' => $statusCode,
+        //'name' => false,
+        //'message' => $message
+      //]);
+      return $this->render('error404');
+    }
+    if ($exception !== null && $exception->statusCode == 500 ) {
+      $statusCode = $exception->statusCode;
+      $name = $exception->getName();
+      $message = $exception->getMessage();
+      //$this->layout = 'main';
+     // return $this->render('error404', [
+        //'exception' => $exception,
+        //'statusCode' => $statusCode,
+        //'name' => false,
+        //'message' => $message
+      //]);
+      return $this->redirect(['site/error500']);
+    }
+
+
   }
 
   public function actionError500()
@@ -131,20 +164,22 @@ public function behaviors()
     $this->layout = 'error';
     $this->view->params['htmlClass'] = 'html-server';
     $this->view->params['bodyClass'] = 'body-server';
-    //$exception = Yii::$app->errorHandler->exception;
-    /*
-    if ($exception !== null) {
+    $exception = Yii::$app->errorHandler->exception;
+
+    if ($exception !== null && $exception->statusCode == 500) {
       $statusCode = $exception->statusCode;
       $name = $exception->getName();
       $message = $exception->getMessage();
       $this->layout = 'main';
-      return $this->render('error404', [
-        'exception' => $exception,
-        'statusCode' => $statusCode,
-        'name' => false,
-        'message' => $message
+      return $this->render('error500', [
+        //'exception' => $exception,
+        //'statusCode' => $statusCode,
+        //'name' => false,
+        //'message' => $message
       ]);
-    }*/
-    return $this->render('error500');
+
+
   }
+  return $this->render('error500');
+}
 }

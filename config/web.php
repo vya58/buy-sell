@@ -44,7 +44,7 @@ $config = [
       'enableAutoLogin' => true,
     ],
     'errorHandler' => [
-      'errorAction' => 'site/error404',
+      'errorAction' => 'site/error',
     ],
     'mailer' => [
       'class' => \yii\symfonymailer\Mailer::class,

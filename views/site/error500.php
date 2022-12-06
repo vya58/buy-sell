@@ -11,8 +11,8 @@ use \yii\helpers\Url;
 ?>
 
 <section class="error">
-  <h1 class="error__title">404</h1>
-  <h2 class="error__subtitle">Страница не найдена</h2>
+  <h1 class="error__title">500</h1>
+  <h2 class="error__subtitle">Ошибка cервера</h2>
   <ul class="error__list">
     <li class="error__item">
       <a href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
@@ -33,4 +33,3 @@ use \yii\helpers\Url;
     <img src="img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
   </a>
 </section>
-
