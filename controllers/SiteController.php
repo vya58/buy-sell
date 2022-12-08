@@ -12,11 +12,9 @@ use app\models\ContactForm;
 use yii\widgets\ActiveForm;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
-use yii\web\BadRequestHttpException;
-use yii\web\NotFoundHttpException;
 use app\models\User;
 use yii\authclient\AuthAction;
-use yii\web\ServerErrorHttpException;
+
 
 class SiteController extends Controller
 {
