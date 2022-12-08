@@ -76,7 +76,6 @@ public function behaviors()
    */
   public function actionIndex()
   {
-
     //Временная переменная для подключения статичных вариантов Главной страницы.
     $data = false;
 
