@@ -15,6 +15,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\widgets\ActiveForm;
 use yii\web\UploadedFile;
+use yii\web\ServerErrorHttpException;
 
 
 class LoginController extends Controller
@@ -70,9 +71,12 @@ class LoginController extends Controller
 
     $loginForm->password = null;
 
-    return $this->render('index', [
-      'loginForm' => $loginForm,
-    ]);
+    return $this->render(
+      'index',
+      [
+        'loginForm' => $loginForm,
+      ]
+    );
   }
 
   /**

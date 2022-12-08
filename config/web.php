@@ -23,15 +23,15 @@ $config = [
     'authClientCollection' => [
       'class' => 'yii\authclient\Collection',
       'clients' => [
-          'vkontakte' => [
-              'class' => 'yii\authclient\clients\VKontakte',
-              'clientId' => $config['vk_id'],
-              'clientSecret' => $config['vk_key'],
-              'returnUrl' => 'http://buysell/login/auth?authclient=vkontakte',
-              'scope' => 'email',
-          ],
+        'vkontakte' => [
+          'class' => 'yii\authclient\clients\VKontakte',
+          'clientId' => $config['vk_id'],
+          'clientSecret' => $config['vk_key'],
+          'returnUrl' => 'http://buysell/login/auth?authclient=vkontakte',
+          'scope' => 'email',
+        ],
       ],
-  ],
+    ],
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
       //'cache' => 'cache',
@@ -63,18 +63,17 @@ $config = [
     ],
     'db' => $db,
 
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableStrictParsing' => false,
-            'rules' => [
-                'login' => 'login/index',
-                '/' => 'site',
-                'error500' => 'site/error500',
-                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-            ],
-        ],
+    'urlManager' => [
+      'enablePrettyUrl' => true,
+      'showScriptName' => false,
+      'enableStrictParsing' => false,
+      'rules' => [
+        'login' => 'login/index',
+        '/' => 'site',
+        '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+        '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+      ],
+    ],
 
   ],
   'params' => $params,
