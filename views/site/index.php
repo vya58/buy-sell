@@ -4,7 +4,6 @@
 
 use \yii\helpers\Url;
 
-//$this->title = 'My Yii Application';
 ?>
 <?php if (!$data) : ?>
   <div class="message">
