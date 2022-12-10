@@ -20,6 +20,7 @@ use Yii;
  * @property Comment[] $comments
  * @property OfferCategory[] $offerCategories
  * @property OfferComment[] $offerComments
+ * @property User $owner
  */
 class Offer extends \yii\db\ActiveRecord
 {
@@ -45,6 +46,7 @@ class Offer extends \yii\db\ActiveRecord
             [['offer_image'], 'string', 'max' => 255],
             [['offer_type'], 'string', 'max' => 10],
             [['offer_image'], 'unique'],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['owner_id' => 'user_id']],
         ];
     }
 
@@ -103,5 +105,15 @@ class Offer extends \yii\db\ActiveRecord
     public function getOfferComments()
     {
         return $this->hasMany(OfferComment::class, ['offer_id' => 'offer_id']);
+    }
+
+    /**
+     * Gets query for [[Owner]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwner()
+    {
+        return $this->hasOne(User::class, ['user_id' => 'owner_id']);
     }
 }

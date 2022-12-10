@@ -139,4 +139,24 @@ class User extends ActiveRecord implements IdentityInterface
       $auth->assign($userRole, $this->getId());
     }
   }
+
+    /**
+     * Gets query for [[Auths]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuths()
+    {
+        return $this->hasMany(Auth::class, ['user_id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for [[Offers]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOffers()
+    {
+        return $this->hasMany(Offer::class, ['owner_id' => 'user_id']);
+    }
 }
