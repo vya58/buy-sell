@@ -61,8 +61,4 @@ use yii\authclient\widgets\AuthChoice;
   </a>
 
   <?php ActiveForm::end(); ?>
-  <?= /*AuthChoice::widget([
-     'baseAuthUrl' => ['site/auth'],
-     'popupMode' => false,
-  ])*/ ''  ?>
 </section>

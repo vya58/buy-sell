@@ -24,6 +24,9 @@ use Yii;
  */
 class Offer extends \yii\db\ActiveRecord
 {
+  public const OFFER_TYPE_BUY = 'КУПЛЮ';
+  public const OFFER_TYPE_SELL = 'ПРОДАМ';
+
     /**
      * {@inheritdoc}
      */

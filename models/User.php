@@ -13,9 +13,12 @@ use yii\web\IdentityInterface;
  * @property string $name
  * @property string $email
  * @property string $password
- *
  * @property string|null $avatar
  * @property string $date_add
+ *
+ * @property Auth[] $auths
+ * @property Comment[] $comments
+ * @property Offer[] $offers
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -86,7 +89,7 @@ class User extends ActiveRecord implements IdentityInterface
     return [
       [['name', 'email', 'password'], 'required'],
       [['date_add'], 'safe'],
-      [['name', 'avatar'], 'string', 'max' => self::MAX_LENGTH_USERNAME],
+      [['name'], 'string', 'max' => self::MAX_LENGTH_USERNAME],
       [['password', 'passwordRepeat'], 'string', 'min' => self::MIN_LENGTH_PASSWORD, 'max' => self::MAX_LENGTH_PASSWORD],
       [['email', 'avatar'], 'string', 'max' => self::MAX_LENGTH_FILD],
       [['email'], 'unique'],
@@ -148,6 +151,16 @@ class User extends ActiveRecord implements IdentityInterface
     public function getAuths()
     {
         return $this->hasMany(Auth::class, ['user_id' => 'user_id']);
+    }
+
+    /**
+     * Gets query for [[Comments]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::class, ['owner_id' => 'user_id']);
     }
 
     /**

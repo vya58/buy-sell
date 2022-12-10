@@ -23,7 +23,7 @@ use yii\helpers\Url;
     ],
   ]); ?>
   <div class="login__title">
-    <a class="login__link" href="<?= Url::to('/registration') ?>">Регистрация</a>
+    <a class="login__link" href="<?= Url::to('/registration/index') ?>">Регистрация</a>
     <h2>Вход</h2>
   </div>
   <div class="form__field login__field">

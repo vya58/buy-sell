@@ -13,7 +13,7 @@ class RegistrationController extends Controller
   /**
    * @inheritDoc
    */
-
+/*
   public function behaviors()
   {
     return [
@@ -34,7 +34,7 @@ class RegistrationController extends Controller
         ]
       ]
     ];
-  }
+  }*/
 
   /**
    * Страница с формой регистрации нового пользователя
@@ -43,6 +43,9 @@ class RegistrationController extends Controller
    */
   public function actionIndex()
   {
+    //echo 111;
+    //die;
+    //$this->redirect(['index']);
     $registrationForm = new RegistrationForm();
 
     if (Yii::$app->request->getIsPost()) {

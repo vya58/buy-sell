@@ -2,6 +2,7 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\Html;
 use \yii\helpers\Url;
 
 ?>
@@ -11,48 +12,44 @@ use \yii\helpers\Url;
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-        <img src="img/ticket.jpg" srcset="img/ticket@2x.jpg 2x" alt="Изображение товара">
+        <?php if ($offer->offer_image) : ?>
+          <img src="<?= Html::encode('/uploads/img/' . $offer->offer_image) ?>" alt="Изображение товара">
+        <?php endif; ?>
       </div>
       <div class="ticket__info">
-        <h2 class="ticket__title">Мое старое кресло</h2>
+        <h2 class="ticket__title"><?= Html::encode($offer->offer_title) ?></h2>
         <div class="ticket__header">
-          <p class="ticket__price"><span class="js-sum">4000</span> ₽</p>
-          <p class="ticket__action">ПРОДАМ</p>
+          <p class="ticket__price"><span class="js-sum"><?= Html::encode($offer->offer_price) ?></span> ₽</p>
+          <p class="ticket__action"><?= Html::encode($offer->offer_type) ?></p>
         </div>
         <div class="ticket__desc">
-          <p>Продам свое старое кресло, чтобы сидеть и читать книги зимними вечерами. Ножки мягкие, мой пол не царапают. Кресло почти новое &ndash; продаю, т.к. надоел серый цвет. Можно, конечно, накинуть плед и спасти ситуацию, но я все-таки хочу просто другое кресло. В общем оно на самом деле удобное и с ним все хорошо, просто нам пора расстаться.</p>
+          <p><?= Html::encode($offer->offer_text) ?></p>
         </div>
         <div class="ticket__data">
           <p>
             <b>Дата добавления:</b>
-            <span>20 ноября 2019</span>
+            <span><?= Html::encode(Yii::$app->formatter->asDate($offer->offer_date_create, 'php:j F Y')) ?></span>
           </p>
           <p>
             <b>Автор:</b>
-            <a href="#">Денис Шкатулкин</a>
+            <a href="<?= Url::to(['user/index', 'id' => $owner->user_id]) ?>"><?= Html::encode($owner->name) ?></a>
           </p>
           <p>
             <b>Контакты:</b>
-            <a href="mailto:shkatulkin@ya.ru">shkatulkin@ya.ru</a>
+            <a href="mailto:<?= Html::encode($owner->email) ?>"><?= Html::encode($owner->email) ?></a>
           </p>
         </div>
         <ul class="ticket__tags">
-          <li>
-            <a href="#" class="category-tile category-tile--small">
-              <span class="category-tile__image">
-                <img src="img/cat.jpg" srcset="img/cat@2x.jpg 2x" alt="Иконка категории">
-              </span>
-              <span class="category-tile__label">Дом</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="category-tile category-tile--small">
-              <span class="category-tile__image">
-                <img src="img/cat04.jpg" srcset="img/cat04@2x.jpg 2x" alt="Иконка категории">
-              </span>
-              <span class="category-tile__label">Спорт и отдых</span>
-            </a>
-          </li>
+          <?php foreach ($categories as $category) : ?>
+            <li>
+              <a href="#" class="category-tile category-tile--small">
+                <span class="category-tile__image">
+                  <img src="<?= Html::encode('/web/img/' . $category->category_icon . '.jpg') ?>" srcset="<?= Html::encode('/web/img/' . $category->category_icon . '@2x.jpg') ?> 2x" alt="Иконка категории">
+                </span>
+                <span class="category-tile__label"><?= Html::encode($category->category_name) ?></span>
+              </a>
+            </li>
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>
@@ -60,7 +57,7 @@ use \yii\helpers\Url;
       <div class="ticket__warning">
         <?php if (Yii::$app->user->isGuest) : ?>
           <p>Отправка комментариев доступна <br>только для зарегистрированных пользователей.</p>
-          <a href="<?= Url::to('registration') ?>" class="message__link btn btn--big">Вход и регистрация</a>
+          <a href="<?= Url::to(['/registration/index']) ?>" class="message__link btn btn--big">Вход и регистрация</a>
         <?php endif; ?>
       </div>
       <h2 class="ticket__subtitle">Коментарии</h2>
@@ -69,7 +66,7 @@ use \yii\helpers\Url;
           <form action="#" method="post" class="form comment-form">
             <div class="comment-form__header">
               <a href="#" class="comment-form__avatar avatar">
-                <img src="<?= file_exists(Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar) ? Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar : 'img/avatar.jpg' ?>" srcset="<?= file_exists(Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar) ? '' : 'img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+                <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
               </a>
               <p class="comment-form__author">Вам слово</p>
             </div>
@@ -87,11 +84,26 @@ use \yii\helpers\Url;
       <?php if ($comments) : ?>
         <div class="ticket__comments-list">
           <ul class="comments-list">
+            <?php foreach ($comments as $comment) : ?>
+              <li>
+                <div class="comment-card">
+                  <div class="comment-card__header">
+                    <a href="#" class="comment-card__avatar avatar">
+                      <img src="/img/avatar02.jpg" srcset="/img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
+                    </a>
+                    <p class="comment-card__author">Георгий Шпиц</p>
+                  </div>
+                  <div class="comment-card__content">
+                    <p><?= Html::encode($comment->comment_text) ?></p>
+                  </div>
+                </div>
+              </li>
+            <?php endforeach; ?>
             <li>
               <div class="comment-card">
                 <div class="comment-card__header">
                   <a href="#" class="comment-card__avatar avatar">
-                    <img src="img/avatar02.jpg" srcset="img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
+                    <img src="/img/avatar02.jpg" srcset="/img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
                   </a>
                   <p class="comment-card__author">Георгий Шпиц</p>
                 </div>
@@ -104,7 +116,7 @@ use \yii\helpers\Url;
               <div class="comment-card">
                 <div class="comment-card__header">
                   <a href="#" class="comment-card__avatar avatar">
-                    <img src="img/avatar03.jpg" srcset="img/avatar03@2x.jpg 2x" alt="Аватар пользователя">
+                    <img src="/img/avatar03.jpg" srcset="/img/avatar03@2x.jpg 2x" alt="Аватар пользователя">
                   </a>
                   <p class="comment-card__author">Александр Бурый</p>
                 </div>

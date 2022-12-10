@@ -8,10 +8,12 @@ use Yii;
  * This is the model class for table "comment".
  *
  * @property int $comment_id
+ * @property int $owner_id
  * @property string $comment_text
  *
  * @property OfferComment[] $offerComments
  * @property Offer[] $offers
+ * @property User $owner
  */
 class Comment extends \yii\db\ActiveRecord
 {
@@ -30,7 +32,9 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             [['comment_text'], 'required'],
+            [['owner_id'], 'integer'],
             [['comment_text'], 'string'],
+            [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['owner_id' => 'user_id']],
         ];
     }
 
@@ -41,6 +45,7 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             'comment_id' => 'ID комментария',
+            'owner_id' => 'ID пользователя',
             'comment_text' => 'Текст комментария',
         ];
     }
@@ -63,5 +68,15 @@ class Comment extends \yii\db\ActiveRecord
     public function getOffers()
     {
         return $this->hasMany(Offer::class, ['offer_id' => 'offer_id'])->viaTable('offer_comment', ['comment_id' => 'comment_id']);
+    }
+
+    /**
+     * Gets query for [[Owner]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOwner()
+    {
+        return $this->hasOne(User::class, ['user_id' => 'owner_id']);
     }
 }

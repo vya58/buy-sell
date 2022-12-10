@@ -11,7 +11,7 @@ use \yii\helpers\Url;
       <p>На сайте еще не опубликовано ни&nbsp;одного объявления.</p>
     </div>
     <?php if (Yii::$app->user->isGuest) : ?>
-      <a href="<?= Url::to('registration') ?>" class="message__link btn btn--big">Вход и регистрация</a>
+      <a href="<?= Url::to('/registration/index') ?>" class="message__link btn btn--big">Вход и регистрация</a>
     <?php endif; ?>
   </div>
 <?php endif; ?>

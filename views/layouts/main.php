@@ -32,7 +32,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
   <header class="header <?= !Yii::$app->user->isGuest ? 'header--logged' : '' ?>">
     <div class="header__wrapper">
       <a class="header__logo logo" href="main.html">
-        <img src="img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
+        <img src="/img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
       </a>
       <nav class="header__user-menu">
         <ul class="header__list">
@@ -50,11 +50,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="search__close-btn"></div>
       </form>
       <a class="<?= 'header__avatar avatar' ?>" href="#">
-      <?php if (!Yii::$app->user->isGuest) : ?>
-        <img src="<?= file_exists(Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar) ? Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar : 'img/avatar.jpg' ?>" srcset="<?= file_exists(Yii::$app->request->baseUrl . 'uploads/avatars/' . Yii::$app->user->identity->avatar) ? '' : 'img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+        <?php if (!Yii::$app->user->isGuest) : ?>
+          <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
         <?php endif; ?>
       </a>
-      <a class="header__input" href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
+      <a class="header__input" href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
     </div>
   </header>
 
@@ -74,18 +74,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       </div>
       <div class="page-footer__col">
         <a href="#" class="page-footer__logo logo">
-          <img src="img/logo.svg" width="179" height="35" alt="Логотип Куплю Продам">
+          <img src="/img/logo.svg" width="179" height="35" alt="Логотип Куплю Продам">
         </a>
       </div>
       <div class="page-footer__col">
         <ul class="page-footer__nav">
           <?php if (Yii::$app->user->isGuest) : ?>
             <li>
-              <a href="<?= Url::to('/registration') ?>">Вход и регистрация</a>
+              <a href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
             </li>
           <?php else : ?>
             <li>
-              <a href="<?= Url::to('/site/logout') ?>">Выход</a>
+              <a href="<?= Url::to(['/site/logout']) ?>">Выход</a>
             </li>
             <li>
               <a href="new-ticket.html">Создать объявление</a>
