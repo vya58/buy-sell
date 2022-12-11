@@ -4,6 +4,7 @@
 
 use yii\helpers\Html;
 use \yii\helpers\Url;
+use app\models\User;
 
 ?>
 
@@ -85,13 +86,14 @@ use \yii\helpers\Url;
         <div class="ticket__comments-list">
           <ul class="comments-list">
             <?php foreach ($comments as $comment) : ?>
+              <?php $user = User::findOne($comment->owner_id); ?>
               <li>
                 <div class="comment-card">
                   <div class="comment-card__header">
                     <a href="#" class="comment-card__avatar avatar">
-                      <img src="/img/avatar02.jpg" srcset="/img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
+                      <img src="<?= $user->avatar ? Html::encode('/uploads/avatars/' . $user->avatar) : '/img/avatar.jpg' ?>" srcset="<?= $user->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
                     </a>
-                    <p class="comment-card__author">Георгий Шпиц</p>
+                    <p class="comment-card__author"><?= Html::encode($user->name) ?></p>
                   </div>
                   <div class="comment-card__content">
                     <p><?= Html::encode($comment->comment_text) ?></p>
@@ -99,32 +101,6 @@ use \yii\helpers\Url;
                 </div>
               </li>
             <?php endforeach; ?>
-            <li>
-              <div class="comment-card">
-                <div class="comment-card__header">
-                  <a href="#" class="comment-card__avatar avatar">
-                    <img src="/img/avatar02.jpg" srcset="/img/avatar02@2x.jpg 2x" alt="Аватар пользователя">
-                  </a>
-                  <p class="comment-card__author">Георгий Шпиц</p>
-                </div>
-                <div class="comment-card__content">
-                  <p>Что это за рухлядь? Стыдно такое даже фотографировать, не то, что&nbsp;продавать.</p>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="comment-card">
-                <div class="comment-card__header">
-                  <a href="#" class="comment-card__avatar avatar">
-                    <img src="/img/avatar03.jpg" srcset="/img/avatar03@2x.jpg 2x" alt="Аватар пользователя">
-                  </a>
-                  <p class="comment-card__author">Александр Бурый</p>
-                </div>
-                <div class="comment-card__content">
-                  <p>А можете доставить мне домой? Готов доплатить 300 сверху. <br>Живу в центре прямо рядом с Моховой улицей. Готов купить прямо сейчас. Мой телефон 9032594748</p>
-                </div>
-              </div>
-            </li>
           </ul>
         </div>
       <?php else : ?>
