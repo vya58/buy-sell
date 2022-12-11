@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -17,20 +18,20 @@ use yii\web\AssetBundle;
  */
 class AppAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-        'css/style.min.css',
-        'css/style.min.css.map'
-    ];
-    public $js = [
-      'js/vendor.js',
-      'js/main.js',
-      'js/main.js.map',
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap5\BootstrapAsset'
-    ];
+  public $basePath = '@webroot';
+  public $baseUrl = '@web';
+  public $css = [
+    'css/site.css',
+    'css/style.min.css',
+    'css/style.min.css.map'
+  ];
+  public $js = [
+    'js/vendor.js',
+    'js/main.js',
+    'js/main.js.map'
+  ];
+  public $depends = [
+    'yii\web\YiiAsset',
+    'yii\bootstrap5\BootstrapAsset'
+  ];
 }
