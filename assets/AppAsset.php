@@ -25,9 +25,9 @@ class AppAsset extends AssetBundle
         'css/style.min.css.map'
     ];
     public $js = [
-      'js/main.js',
       'js/vendor.js',
-      'js/main.js.map'
+      'js/main.js',
+      'js/main.js.map',
     ];
     public $depends = [
         'yii\web\YiiAsset',

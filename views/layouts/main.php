@@ -81,7 +81,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <ul class="page-footer__nav">
           <?php if (Yii::$app->user->isGuest) : ?>
             <li>
-              <a href="<?= Url::to(['registration/index']) ?>">Вход и регистрация</a>
+              <a href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
             </li>
           <?php else : ?>
             <li>
