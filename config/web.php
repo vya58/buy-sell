@@ -70,12 +70,14 @@ $config = [
       'rules' => [
         'login' => 'login/index',
         //'logout' => 'site/logout',
-        '/' => 'site',
+        //'/' => 'site',
         //'offers' => 'offers/index',
         //'site' => 'site/index',
+        //'registration' => 'registration/index',
+        //'<action:[-a-zA-Z0-9_]+>' => '<controller>/<action>',
         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
         '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-        '<action:[-a-zA-Z0-9_]+>' => '<controller>/<action>'
+
       ],
     ],
   ],

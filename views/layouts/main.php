@@ -51,10 +51,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       </form>
       <a class="<?= 'header__avatar avatar' ?>" href="#">
         <?php if (!Yii::$app->user->isGuest) : ?>
-          <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+          <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('uploads/avatars/' . Yii::$app->user->identity->avatar) : 'img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
         <?php endif; ?>
       </a>
-      <a class="header__input" href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
+      <a class="header__input" href="<?= Url::to(['registration']) ?>">Вход и регистрация</a>
     </div>
   </header>
 
@@ -81,11 +81,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <ul class="page-footer__nav">
           <?php if (Yii::$app->user->isGuest) : ?>
             <li>
-              <a href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
+              <a href="<?= Url::to(['registration/index']) ?>">Вход и регистрация</a>
             </li>
           <?php else : ?>
             <li>
-              <a href="<?= Url::to(['/site/logout']) ?>">Выход</a>
+              <a href="<?= Url::to(['site/logout']) ?>">Выход</a>
             </li>
             <li>
               <a href="new-ticket.html">Создать объявление</a>
