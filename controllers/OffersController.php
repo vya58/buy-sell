@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\Offer;
+use app\models\forms\OfferAddForm;
 
 class OffersController extends Controller
 {
@@ -41,5 +42,29 @@ class OffersController extends Controller
         'comments' => $comments,
       ]
     );
+  }
+
+  /**
+   * Страница с формой добавления объявления
+   *
+   * @return string - код страницы с формой создания задания
+   */
+  public function actionAdd()
+  {
+    if (Yii::$app->user->isGuest) {
+      return $this->goHome();
+    }
+
+    $offerAddForm = new OfferAddForm();
+
+    if (Yii::$app->request->getIsPost()) {
+      $offerAddForm->load(Yii::$app->request->post());
+      $offerId = $offerAddForm->addOffer();
+
+      if ($offerId) {
+        return $this->redirect(['offers/index', 'id' => $offerId]);
+      }
+    }
+    return $this->render('add', ['offerAddForm' => $offerAddForm]);
   }
 }

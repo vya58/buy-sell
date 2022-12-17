@@ -71,6 +71,7 @@ $config = [
         'login' => 'login/index',
         //'logout' => 'site/logout',
         //'/' => 'site',
+        'offers/<id:\d+>' => 'offers/view',
         //'offers' => 'offers/index',
         //'site' => 'site/index',
         //'registration' => 'registration/index',
