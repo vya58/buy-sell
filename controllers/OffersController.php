@@ -3,14 +3,50 @@
 namespace app\controllers;
 
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\Offer;
+use app\models\User;
 use app\models\forms\OfferAddForm;
 
 class OffersController extends Controller
 {
+  /**
+   * {@inheritdoc}
+   */
+  /*
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+        'only' => ['edit'],
+        'rules' => [
+          [
+            'actions' => ['index'],
+            'allow' => true,
+            'roles' => ['*'],
+          ],
+          [
+            'actions' => ['edit'],
+            'allow' => true,
+            'roles' => ['updateOwnContent'],
+          ],
+        ],
+      ],
+
+      'verbs' => [
+        'class' => VerbFilter::class,
+        'actions' => [
+          'logout' => ['post'],
+        ],
+      ],
+    ];
+  }
+*/
   /**
    * Страница просмотра объявления
    *
@@ -51,6 +87,8 @@ class OffersController extends Controller
    */
   public function actionAdd()
   {
+    $ticketFormTitle = 'Новая публикация';
+
     if (Yii::$app->user->isGuest) {
       return $this->goHome();
     }
@@ -65,6 +103,56 @@ class OffersController extends Controller
         return $this->redirect(['offers/index', 'id' => $offerId]);
       }
     }
-    return $this->render('add', ['offerAddForm' => $offerAddForm]);
+    return $this->render(
+      'add',
+      [
+        'offerAddForm' => $offerAddForm,
+        'ticketFormTitle' => $ticketFormTitle,
+      ]
+    );
+  }
+
+  /**
+   * Страница с формой редактирования объявления
+   *
+   * @param int $id - id объявления
+   */
+  public function actionEdit($id)
+  {
+    $offer = Offer::find()
+      ->with('owner')
+      ->where(['offer_id' => $id])
+      ->one();
+
+    // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
+    // то он переадресуется на страницу просмотра объявления
+    if (!\Yii::$app->user->can('updateOwnContent', ['offer' => $offer])) {
+      return $this->redirect(['offers/index', 'id' => $id]);
+    }
+
+    $ticketFormTitle = 'Редактировать публикацию';
+
+    if (!$offer) {
+      throw new NotFoundHttpException();
+    }
+
+    $offerAddForm = new OfferAddForm();
+    $offerAddForm->autocompleteForm($offerAddForm, $offer);
+
+    if (Yii::$app->request->getIsPost()) {
+      $offerAddForm->load(Yii::$app->request->post());
+      $offerId = $offerAddForm->addOffer($id);
+
+      if ($offerId) {
+        return $this->redirect(['offers/index', 'id' => $offerId]);
+      }
+    }
+    return $this->render(
+      'add',
+      [
+        'offerAddForm' => $offerAddForm,
+        'ticketFormTitle' => $ticketFormTitle,
+      ]
+    );
   }
 }

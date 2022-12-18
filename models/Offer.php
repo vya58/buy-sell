@@ -33,7 +33,7 @@ class Offer extends \yii\db\ActiveRecord
   public const MIN_LENGTH_TICKETCOMMENT = 50;
   public const MAX_LENGTH_TICKETCOMMENT = 1000;
   public const MIN_TICKETPRICE = 100;
-  public const USER_IMAGE_UPLOAD_PATH = '/uploads/img/';
+  public const OFFER_IMAGE_UPLOAD_PATH = '/uploads/img/';
 
   /**
    * {@inheritdoc}
@@ -68,7 +68,7 @@ class Offer extends \yii\db\ActiveRecord
   {
     return [
       'offer_id' => 'ID объявления',
-      'owner_id' => 'ID владельца объявления',
+      'owner_id' => 'ID автора объявления',
       'offer_title' => 'Титл объявления',
       'offer_image' => 'Картинка объявления',
       'offer_price' => 'Цена объявления',

@@ -49,6 +49,26 @@ class OfferAddForm extends Model
       'offerType' => 'Тип публикации',
     ];
   }
+
+  /**
+   * Метод автозаполнения полей формы редактирования объявления данными из БД
+   *
+   * @param object $form - форма настройки профиля пользователя
+   * @param Offer $offer - объект класса Offer
+   */
+  public function autocompleteForm($form, $offer): void
+  {
+    if ($offer->offer_image) {
+      $form->offerImage = $offer->offer_image;
+    }
+
+    $form->offerTitle = $offer->offer_title;
+    $form->offerText = $offer->offer_text;
+    $form->categories = $offer->categories;
+    $form->offerPrice = $offer->offer_price;
+    $form->offerType = $offer->offer_type;
+  }
+
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
@@ -56,9 +76,13 @@ class OfferAddForm extends Model
    * @throws DataSaveException
    * @throws FileExistException
    */
-  public function addOffer(): ?int
+  public function addOffer($id = null): ?int
   {
-    $offer = new Offer;
+    if ($id) {
+      $offer = Offer::findOne($id);
+    } else {
+      $offer = new Offer;
+    }
 
     $offerImage = UploadedFile::getInstance($this, 'offerImage');
 
@@ -116,7 +140,7 @@ class OfferAddForm extends Model
       $addedImageName = md5(microtime(true)) . '.' . $offerImage->getExtension();
       $offer->offer_image = $addedImageName;
 
-      if (!$offerImage->saveAs('@webroot/' . Offer::USER_IMAGE_UPLOAD_PATH . $addedImageName)) {
+      if (!$offerImage->saveAs('@webroot/' . Offer::OFFER_IMAGE_UPLOAD_PATH . $addedImageName)) {
         throw new DataSaveException('Ошибка загрузки изображения');
       }
       return true;

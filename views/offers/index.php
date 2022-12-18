@@ -4,6 +4,7 @@
 
 use yii\helpers\Html;
 use \yii\helpers\Url;
+use app\models\Offer;
 use app\models\User;
 
 ?>
@@ -14,7 +15,7 @@ use app\models\User;
     <div class="ticket__content">
       <div class="ticket__img">
         <?php if ($offer->offer_image) : ?>
-          <img src="<?= Html::encode('/uploads/img/' . $offer->offer_image) ?>" alt="Изображение товара">
+          <img src="<?= Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) ?>" alt="Изображение товара">
         <?php endif; ?>
       </div>
       <div class="ticket__info">
