@@ -6,6 +6,8 @@ use yii\helpers\Html;
 use \yii\helpers\Url;
 use app\models\Offer;
 use app\models\User;
+use yii\widgets\ActiveForm;
+use app\models\forms\CommentAddForm;
 
 ?>
 
@@ -65,22 +67,31 @@ use app\models\User;
       <h2 class="ticket__subtitle">Коментарии</h2>
       <?php if (!Yii::$app->user->isGuest) : ?>
         <div class="ticket__comment-form">
-          <form action="#" method="post" class="form comment-form">
-            <div class="comment-form__header">
-              <a href="#" class="comment-form__avatar avatar">
-                <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
-              </a>
-              <p class="comment-form__author">Вам слово</p>
+
+          <?php $form = ActiveForm::begin([
+            'id' => 'comment-add-form',
+            'method' => 'post',
+            'options' => [
+              'class' => 'form comment-form',
+              //'enctype' => 'multipart/form-data',
+              //'autocomplete' => 'off',
+            ]
+          ]); ?>
+          <div class="comment-form__header">
+            <a href="#" class="comment-form__avatar avatar">
+              <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+            </a>
+            <p class="comment-form__author">Вам слово</p>
+          </div>
+          <div class="comment-form__field">
+            <div class="form__field">
+              <?= $form->field($commentAddForm, 'commentText')->textarea(['cols' => 30, 'rows' => 10, 'options' => ['class' => 'js-field']])->label('Текст комментария') ?>
+              <span>Обязательное поле</span>
             </div>
-            <div class="comment-form__field">
-              <div class="form__field">
-                <textarea name="comment" id="comment-field" cols="30" rows="10" class="js-field">Нормальное вообще кресло! А как насч</textarea>
-                <label for="comment-field">Текст комментария</label>
-                <span>Обязательное поле</span>
-              </div>
-            </div>
-            <button class="comment-form__button btn btn--white js-button" type="submit" disabled="">Отправить</button>
-          </form>
+          </div>
+          <button class="comment-form__button btn btn--white js-button" type="submit">Отправить</button>
+          <?php ActiveForm::end(); ?>
+
         </div>
       <?php endif; ?>
       <?php if ($comments) : ?>

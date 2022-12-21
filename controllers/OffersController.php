@@ -9,8 +9,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\Offer;
-use app\models\User;
 use app\models\forms\OfferAddForm;
+use app\models\forms\CommentAddForm;
 
 class OffersController extends Controller
 {
@@ -69,6 +69,19 @@ class OffersController extends Controller
     $categories = $offer->categories;
     $comments = $offer->comments;
 
+    // Добавление нового комментария. Доступно только зарегистрированным пользователям.
+    if (!Yii::$app->user->isGuest) {
+      $commentAddForm = new CommentAddForm();
+
+      if (Yii::$app->request->getIsPost()) {
+        $commentAddForm->load(Yii::$app->request->post());
+
+        if ($commentAddForm->addComment($id)) {
+          return $this->redirect(['offers/index', 'id' => $id]);
+        }
+      }
+    }
+
     return $this->render(
       'index',
       [
@@ -76,6 +89,7 @@ class OffersController extends Controller
         'owner' => $owner,
         'categories' => $categories,
         'comments' => $comments,
+        'commentAddForm' => $commentAddForm,
       ]
     );
   }

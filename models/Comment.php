@@ -17,6 +17,8 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+  public const MIN_LENGTH_COMMENT = 20;
+
     /**
      * {@inheritdoc}
      */
