@@ -91,7 +91,7 @@ class CommentsController extends Controller
     $ownerId = $offer[0]['owner_id'];
 
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
-    // то он переадресуется на страницу просмотра объявления
+    // то он переадресуется на страницу просмотра объявления без удаления комментария
     if (\Yii::$app->user->can('updateOwnContent', ['resource' => $comment]) || \Yii::$app->user->can('updateOwnContent', ['resource' => $offer[0]])) {
        $comment->delete();
     }
