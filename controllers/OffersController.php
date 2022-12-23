@@ -11,6 +11,7 @@ use yii\web\Response;
 use app\models\Offer;
 use app\models\forms\OfferAddForm;
 use app\models\forms\CommentAddForm;
+use yii\helpers\ArrayHelper;
 
 class OffersController extends Controller
 {
@@ -68,6 +69,8 @@ class OffersController extends Controller
     $owner = $offer->owner;
     $categories = $offer->categories;
     $comments = $offer->comments;
+
+    ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
 
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
     if (!Yii::$app->user->isGuest) {
@@ -140,7 +143,7 @@ class OffersController extends Controller
 
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
     // то он переадресуется на страницу просмотра объявления
-    if (!\Yii::$app->user->can('updateOwnContent', ['offer' => $offer])) {
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
       return $this->redirect(['offers/index', 'id' => $id]);
     }
 

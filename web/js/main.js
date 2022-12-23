@@ -65,7 +65,8 @@
     deletEls[i].addEventListener('click', function() {
       var card = this.closest('.js-card');
       card.parentNode.removeChild(card);
-
+      // Добавлено для работы Pjax
+      $.pjax.reload({container: '#pjaxContent'});
     })
   }
 })();

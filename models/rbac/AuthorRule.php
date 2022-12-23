@@ -16,6 +16,6 @@ class AuthorRule extends Rule
 
   public function execute($user_id, $item, $params)
   {
-    return isset($params['offer']) ? $params['offer']->owner_id === $user_id : false;
+    return isset($params['resource']) ? $params['resource']->owner_id === $user_id : false;
   }
 }

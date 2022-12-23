@@ -2,8 +2,11 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use \yii\helpers\Url;
+use yii\widgets\ActiveForm;
+use yii\widgets\Pjax;
 
 ?>
 
@@ -23,7 +26,9 @@ use \yii\helpers\Url;
           </a>
         </div>
         <ul class="comments-list">
-          <?php $comments = $offer->comments
+          <?php
+          $comments = $offer->comments;
+          ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
           ?>
           <?php foreach ($comments as $comment) :
           ?>
@@ -38,7 +43,12 @@ use \yii\helpers\Url;
                 <div class="comment-card__content">
                   <p><?= Html::encode($comment->comment_text) ?></p>
                 </div>
-                <button class="comment-card__delete js-delete" type="button">Удалить</button>
+                <?php Pjax::begin(); ?>
+                <?= Html::button('Удалить', [
+                  'class' => 'comment-card__delete js-delete',
+                  'onclick' => 'window.location.href = "' . Url::to(['/comments/remove', 'commentId' => $comment->comment_id]) . '";',
+                ]); ?>
+                <?php Pjax::end(); ?>
               </div>
             </li>
           <?php endforeach;

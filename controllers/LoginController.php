@@ -12,8 +12,6 @@ use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
-use yii\widgets\ActiveForm;
-use yii\web\UploadedFile;
 
 
 class LoginController extends Controller
