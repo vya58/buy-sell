@@ -2,7 +2,10 @@
 
 /** @var yii\web\View $this */
 
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 use \yii\helpers\Url;
+use app\models\Offer;
 
 ?>
 <?php if (!$data) : ?>
@@ -20,54 +23,21 @@ use \yii\helpers\Url;
   <section class="categories-list">
     <h1 class="visually-hidden">Сервис объявлений "Куплю - продам"</h1>
     <ul class="categories-list__wrapper">
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat.jpg" srcset="img/cat@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Дом <span class="category-tile__qty js-qty">81</span></span>
-        </a>
-      </li>
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat02.jpg" srcset="img/cat02@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Электроника <span class="category-tile__qty js-qty">62</span></span>
-        </a>
-      </li>
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat03.jpg" srcset="img/cat03@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Одежда <span class="category-tile__qty js-qty">106</span></span>
-        </a>
-      </li>
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat04.jpg" srcset="img/cat04@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Спорт/отдых <span class="category-tile__qty js-qty">86</span></span>
-        </a>
-      </li>
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat05.jpg" srcset="img/cat05@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Авто <span class="category-tile__qty js-qty">34</span></span>
-        </a>
-      </li>
-      <li class="categories-list__item">
-        <a href="#" class="category-tile category-tile--default">
-          <span class="category-tile__image">
-            <img src="img/cat06.jpg" srcset="img/cat06@2x.jpg 2x" alt="Иконка категории">
-          </span>
-          <span class="category-tile__label">Книги <span class="category-tile__qty js-qty">92</span></span>
-        </a>
-      </li>
+      <?php $categoryIds = []; ?>
+      <?php foreach ($offerCategories as $offerCategory) : ?>
+        <?php if (!ArrayHelper::isIn($offerCategory->category->category_id, $categoryIds)) : ?>
+          <?php $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id); ?>
+          <li class="categories-list__item">
+            <a href="#" class="category-tile category-tile--default">
+              <span class="category-tile__image">
+                <img src="<?= Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . Offer::getImageOfRandomOffers($offerCategory)) ?>" alt="Иконка категории">
+              </span>
+              <span class="category-tile__label"><?= Html::encode($offerCategory->category->category_name) ?> <span class="category-tile__qty js-qty"><?= Html::encode($countOffersInCategory) ?></span></span>
+            </a>
+          </li>
+        <?php endif; ?>
+        <?php $categoryIds[] = $offerCategory->category->category_id; ?>
+      <?php endforeach; ?>
     </ul>
   </section>
   <section class="tickets-list">

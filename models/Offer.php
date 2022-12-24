@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "offer".
@@ -126,5 +127,39 @@ class Offer extends \yii\db\ActiveRecord
   public function getOwner()
   {
     return $this->hasOne(User::class, ['user_id' => 'owner_id']);
+  }
+
+  /**
+   * Метод получения случайного изображения, принадлежащего объявлению, относящегося к категории с id, равным $categoryId
+   *
+   * @param OfferCategory $offerCategory модель класса OfferCategory
+   *
+   * @return string $image - изображение случайного объявления
+   */
+  public static function getImageOfRandomOffers(OfferCategory $offerCategory): string
+  {
+    // Вычисляем количество объявлений с данной категорией
+    $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id);
+
+    // Получаем случайное число в диапазоне, не превышающем количество объявлений с данной категорией
+    $range = rand(0, $countOffersInCategory - 1);
+
+    // Выбираем по случайное объявление, соответствующее данной категории
+    $randomOffer = Offer::find()
+      ->rightJoin('offer_category', '`offer_category`.`offer_id` = `offer`.`offer_id`')
+      ->where(['offer_category.category_id' => $offerCategory->category->category_id])
+      ->limit(1)
+      ->offset($range)
+      ->all();
+
+    // Получаем изображение объявления
+    $image = ArrayHelper::getValue($randomOffer, '0.offer_image');
+
+    // Если объявление не имеет изображения, то повторяем процедуру
+    if (!$image) {
+      $image = self::getImageOfRandomOffers($offerCategory);
+    };
+
+    return $image;
   }
 }

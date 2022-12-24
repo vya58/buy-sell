@@ -2,13 +2,15 @@
 
 namespace app\controllers;
 
+use app\models\Category;
 use Yii;
 //use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
-use app\models\ContactForm;
+use app\models\OfferCategory;
+use app\models\Offer;
 use yii\widgets\ActiveForm;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
@@ -77,14 +79,19 @@ public function behaviors()
   public function actionIndex()
   {
     //Временная переменная для подключения статичных вариантов Главной страницы.
-    $data = false;
+    $data = true;
+
+    $offerCategories = OfferCategory::find()
+      ->with('category')
+      ->all();
 
     return $this->render(
       'index',
       [
         //'dataProvider' => $dataProvider,
         //'categories' => $categories,
-        'data' => $data
+        'data' => $data,
+        'offerCategories' => $offerCategories,
       ]
     );
   }
