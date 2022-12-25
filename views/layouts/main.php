@@ -37,7 +37,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       <nav class="header__user-menu">
         <ul class="header__list">
           <li class="header__item">
-            <a href="<?= Url::to(['/site']) ?>">Публикации</a>
+            <a href="<?= Url::to(['/site']) ?>">Публикации</a><!-- TO DO Поменять ссылку, когда будет готова MyTicket -->
           </li>
           <li class="header__item">
             <a href="<?= Url::to(['comments/index/' . Yii::$app->user->id]) ?>">Комментарии</a>
