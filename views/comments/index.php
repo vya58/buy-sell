@@ -5,7 +5,6 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use \yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 ?>
@@ -17,7 +16,7 @@ use yii\widgets\Pjax;
     <?php foreach ($offers as $offer) : ?>
       <div class="comments__block">
         <div class="comments__header">
-          <a href="#" class="announce-card">
+          <a href="<?= Url::to(['offers/index', 'id' => $offer->offer_id]) ?>" class="announce-card">
             <h2 class="announce-card__title"><?= Html::encode($offer->offer_title) ?></h2>
             <span class="announce-card__info">
               <span class="announce-card__price">₽ <?= Html::encode($offer->offer_price) ?></span>

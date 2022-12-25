@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use \yii\db\ActiveQuery;
+use yii\web\Response;
 
 /**
  * This is the model class for table "offer".
@@ -161,5 +163,60 @@ class Offer extends \yii\db\ActiveRecord
     };
 
     return $image;
+  }
+
+  /**
+   * Метод получения объявлений, отсортированных по дате добавления (в начале - самые новые)
+   *
+   * @return array|null массив объектов класса app\models\Offer либо null, если объявлений нет
+   */
+  public static function getNewOffers(): ?array
+  {
+    return Offer::find()
+      ->with('categories')
+      ->orderBy(['offer_date_create' => SORT_DESC])
+      ->limit(Yii::$app->params['newOffersCount'])
+      ->all();
+  }
+
+  /**
+   * Метод получения объявлений, отсортированных по количеству комментариев (в начале - самые комментируемые)
+   *
+   * @return array|null массив объектов класса app\models\Offer либо null, если нет объявлений с комментариями
+   */
+  public static function getMostTalkedOffers(): ?array
+  {
+    return Offer::find()
+      ->alias('o')
+      ->select(['o.*', 'COUNT(oc.offer_id) AS countComments'])
+      ->join('RIGHT JOIN', OfferComment::tableName() . ' oc', 'o.offer_id=oc.offer_id')
+      ->groupBy('o.offer_id')
+      ->orderBy(['countComments' => SORT_DESC])
+      ->limit(Yii::$app->params['mostTalkedOffersCount'])
+      ->all();
+  }
+
+  /**
+   * Метод получения объявлений, отсортированных по дате добавления комментариев (в начале - объявления с новыми комментариями)
+   *
+   * @param int $id - id пользователя, чьи объявления выводятся
+   *
+   * @return array|null массив объектов класса app\models\Offer либо null, если нет объявлений с комментариями
+   */
+  public static function getWithNewCommentsOffers(int $id): ?array
+  {
+    return Offer::find()
+    ->with('owner', 'comments')
+    ->joinWith(
+      [
+        'offerComments' => function (ActiveQuery $query) {
+          $query->orderBy('offer_comment.id DESC');
+        }
+      ],
+      true,
+      'INNER JOIN'
+    )
+    ->where(['owner_id' => $id])
+    ->all();
   }
 }

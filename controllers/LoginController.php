@@ -19,14 +19,14 @@ class LoginController extends Controller
   /**
    * {@inheritdoc}
    */
-  /*
+
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
                 'denyCallback' => function () {
-                    return $this->redirect(['tasks/index']);
+                    return $this->redirect(['site/index']);
                 },
                 'only' => ['index'],
                 'rules' => [
@@ -40,7 +40,7 @@ class LoginController extends Controller
             ]
         ];
     }
-*/
+
   /**
    * Страница входа.
    *

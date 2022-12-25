@@ -31,16 +31,16 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
   <?php $this->beginBody() ?>
   <header class="header <?= !Yii::$app->user->isGuest ? 'header--logged' : '' ?>">
     <div class="header__wrapper">
-      <a class="header__logo logo" href="main.html">
+      <a class="header__logo logo" href="<?= Url::to(['/site']) ?>">
         <img src="/img/logo.svg" width="179" height="34" alt="Логотип Куплю Продам">
       </a>
       <nav class="header__user-menu">
         <ul class="header__list">
           <li class="header__item">
-            <a href="#">Публикации</a>
+            <a href="<?= Url::to(['/site']) ?>">Публикации</a>
           </li>
           <li class="header__item">
-            <a href="#">Комментарии</a>
+            <a href="<?= Url::to(['comments/index/' . Yii::$app->user->id]) ?>">Комментарии</a>
           </li>
         </ul>
       </nav>
@@ -73,7 +73,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <p class="page-footer__copyright">© 2019 Проект Академии</p>
       </div>
       <div class="page-footer__col">
-        <a href="#" class="page-footer__logo logo">
+        <a href="<?= Url::to(['site/index']) ?>" class="page-footer__logo logo">
           <img src="/img/logo.svg" width="179" height="35" alt="Логотип Куплю Продам">
         </a>
       </div>
@@ -81,7 +81,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <ul class="page-footer__nav">
           <?php if (Yii::$app->user->isGuest) : ?>
             <li>
-              <a href="<?= Url::to(['/registration/index']) ?>">Вход и регистрация</a>
+              <a href="<?= Url::to(['/registration']) ?>">Вход и регистрация</a>
             </li>
           <?php else : ?>
             <li>

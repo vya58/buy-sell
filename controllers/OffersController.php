@@ -72,6 +72,8 @@ class OffersController extends Controller
 
     ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
 
+    $commentAddForm = null;
+
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
     if (!Yii::$app->user->isGuest) {
       $commentAddForm = new CommentAddForm();

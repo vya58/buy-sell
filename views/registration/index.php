@@ -5,10 +5,8 @@
  */
 
 use yii\widgets\ActiveForm;
-use app\models\Auth;
 use app\models\forms\RegistrationForm;
 use \yii\helpers\Url;
-use yii\authclient\widgets\AuthChoice;
 
 /** @var yii\web\View $this */
 /** @var RegistrationForm $registrationForm */

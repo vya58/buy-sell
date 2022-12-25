@@ -7,7 +7,6 @@ use \yii\helpers\Url;
 use app\models\Offer;
 use app\models\User;
 use yii\widgets\ActiveForm;
-use app\models\forms\CommentAddForm;
 
 ?>
 

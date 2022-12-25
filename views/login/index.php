@@ -1,8 +1,6 @@
 <?php
 
 use yii\widgets\ActiveForm;
-use app\models\forms\LoginForm;
-use app\models\Auth;
 use yii\helpers\Url;
 
 /** @var yii\web\View $this */

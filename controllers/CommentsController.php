@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use \yii\db\ActiveQuery;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -47,23 +46,11 @@ class CommentsController extends Controller
    */
   public function actionIndex(int $id): Response|string
   {
-    if (!$id) {
+    if (Yii::$app->user->isGuest) {
       throw new NotFoundHttpException();
     }
 
-    $offers = Offer::find()
-      ->with('owner', 'comments')
-      ->joinWith(
-        [
-          'offerComments' => function (ActiveQuery $query) {
-            $query->orderBy('offer_comment.id DESC');
-          }
-        ],
-        true,
-        'INNER JOIN'
-      )
-      ->where(['owner_id' => $id])
-      ->all();
+    $offers = Offer::getWithNewCommentsOffers($id);
 
     return $this->render(
       'index',

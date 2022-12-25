@@ -13,7 +13,7 @@ class RegistrationController extends Controller
   /**
    * @inheritDoc
    */
-  /*
+
   public function behaviors()
   {
     return [
@@ -34,7 +34,7 @@ class RegistrationController extends Controller
         ]
       ]
     ];
-  }*/
+  }
 
   /**
    * Страница с формой регистрации нового пользователя

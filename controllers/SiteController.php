@@ -11,11 +11,15 @@ use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\OfferCategory;
 use app\models\Offer;
+use app\models\OfferComment;
+use \yii\db\ActiveQuery;
 use yii\widgets\ActiveForm;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 use app\models\User;
 use yii\authclient\AuthAction;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
 
 
 class SiteController extends Controller
@@ -78,20 +82,23 @@ public function behaviors()
    */
   public function actionIndex()
   {
-    //Временная переменная для подключения статичных вариантов Главной страницы.
-    $data = true;
-
+    // Категории для section class="categories-list"
     $offerCategories = OfferCategory::find()
       ->with('category')
       ->all();
 
+    // Самые новые предложения
+    $newOffers = Offer::getNewOffers();
+
+    // Самые обсуждаемые предложения
+    $mostTalkedOffers = Offer::getMostTalkedOffers();
+
     return $this->render(
       'index',
       [
-        //'dataProvider' => $dataProvider,
-        //'categories' => $categories,
-        'data' => $data,
         'offerCategories' => $offerCategories,
+        'newOffers' => $newOffers,
+        'mostTalkedOffers' => $mostTalkedOffers,
       ]
     );
   }
