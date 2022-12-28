@@ -6,6 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use \yii\db\ActiveQuery;
 use yii\web\Response;
+use app\models\exceptions\DataSaveException;
 
 /**
  * This is the model class for table "offer".
@@ -206,17 +207,43 @@ class Offer extends \yii\db\ActiveRecord
   public static function getWithNewCommentsOffers(int $id): ?array
   {
     return Offer::find()
-    ->with('owner', 'comments')
-    ->joinWith(
-      [
-        'offerComments' => function (ActiveQuery $query) {
-          $query->orderBy('offer_comment.id DESC');
-        }
-      ],
-      true,
-      'INNER JOIN'
-    )
-    ->where(['owner_id' => $id])
-    ->all();
+      ->with('owner', 'comments')
+      ->joinWith(
+        [
+          'offerComments' => function (ActiveQuery $query) {
+            $query->orderBy('offer_comment.id DESC');
+          }
+        ],
+        true,
+        'INNER JOIN'
+      )
+      ->where(['owner_id' => $id])
+      ->all();
+  }
+
+  /**
+   * Метод удаления объявления с комментариями к нему
+   *
+   * @return bool
+   * @throws DataSaveException
+   */
+  public static function deleteOffer(Offer $offer): bool
+  {
+    $comments = $offer->comments;
+
+    $transaction = Yii::$app->db->beginTransaction();
+
+    try {
+      foreach ($comments as $comment) {
+        $comment->delete();
+      }
+      $offer->delete();
+
+      $transaction->commit();
+    } catch (DataSaveException $exception) {
+      $transaction->rollback();
+      throw new DataSaveException($exception->getMessage('Ошибка удаления объявления'));
+    }
+    return true;
   }
 }

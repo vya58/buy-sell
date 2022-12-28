@@ -29,8 +29,7 @@ use yii\widgets\Pjax;
           $comments = $offer->comments;
           ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
           ?>
-          <?php foreach ($comments as $comment) :
-          ?>
+          <?php foreach ($comments as $comment) : ?>
             <li class="js-card">
               <div class="comment-card">
                 <div class="comment-card__header">

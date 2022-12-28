@@ -61,9 +61,9 @@ class CommentsController extends Controller
   }
 
   /**
-   * Страница просмотра комментариев к объявлениям пользователя
+   * Удаление комментария к объявлению пользователя
    *
-   * @param int $id - id пользователя
+   * @param int $commentId - id комментария
    * @return Response|string - код страницы просмотра страницы комментариев
    * @throws NotFoundHttpException
    */
