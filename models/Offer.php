@@ -149,8 +149,8 @@ class Offer extends \yii\db\ActiveRecord
 
     // Выбираем по случайное объявление, соответствующее данной категории
     $randomOffer = Offer::find()
-      ->rightJoin('offer_category', '`offer_category`.`offer_id` = `offer`.`offer_id`')
-      ->where(['offer_category.category_id' => $offerCategory->category->category_id])
+      ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
+      ->where(['oc.category_id' => $offerCategory->category->category_id])
       ->limit(1)
       ->offset($range)
       ->all();
@@ -245,5 +245,20 @@ class Offer extends \yii\db\ActiveRecord
       throw new DataSaveException($exception->getMessage('Ошибка удаления объявления'));
     }
     return true;
+  }
+
+  /**
+   * Метод запроса всех объявлений отдельной категории для датапровайдера
+   *
+   * @param int $id - id категории, чьи объявления выводятся
+   *
+   * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
+   */
+  public static function getCategoryOffers($id): ?ActiveQuery
+  {
+    return Offer::find()
+    ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
+    ->with('offerCategories', 'categories')
+    ->where(['oc.category_id' => $id]);
   }
 }

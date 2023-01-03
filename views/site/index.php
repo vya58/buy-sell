@@ -6,8 +6,6 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use \yii\helpers\Url;
 use app\models\Offer;
-use yii\widgets\ListView;
-use yii\grid\GridView;
 
 ?>
 <?php if (!$mostTalkedOffers) : ?>
@@ -30,7 +28,7 @@ use yii\grid\GridView;
         <?php if (!ArrayHelper::isIn($offerCategory->category->category_id, $categoryIds)) : ?>
           <?php $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id); ?>
           <li class="categories-list__item">
-            <a href="#" class="category-tile category-tile--default">
+            <a href="<?= Url::to(['categories/index', 'id' => $offerCategory->category->category_id]) ?>" class="category-tile category-tile--default">
               <span class="category-tile__image">
                 <img src="<?= Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . Offer::getImageOfRandomOffers($offerCategory)) ?>" alt="Иконка категории">
               </span>

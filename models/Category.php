@@ -68,4 +68,17 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Offer::class, ['offer_id' => 'offer_id'])->viaTable('offer_category', ['category_id' => 'category_id']);
     }
+
+    /**
+     * Получение категории по её id
+     *
+     * @param int $id - id категории
+     *
+     * @return Category|null
+     */
+    public static function getCategory(int $id): ?Category
+    {
+        return self::findOne($id);
+    }
+
 }
