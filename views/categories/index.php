@@ -53,6 +53,7 @@ use yii\widgets\ListView;
           'class' => 'tickets-list__item',
         ],
         'pager' => [
+          // Подключение кастомного MyLinkPager вместо yii\widgets\LinkPager из "коробки"
           'class' => 'app\widgets\MyLinkPager',
           'prevPageLabel' => false,
           'nextPageLabel' => 'дальше',
