@@ -11,6 +11,7 @@ use yii\filters\VerbFilter;
 use app\models\forms\LoginForm;
 use app\models\OfferCategory;
 use app\models\Offer;
+use app\models\forms\OfferSearchForm;
 use app\models\OfferComment;
 use \yii\db\ActiveQuery;
 use yii\widgets\ActiveForm;
@@ -93,14 +94,7 @@ public function behaviors()
     // Самые обсуждаемые предложения
     $mostTalkedOffers = Offer::getMostTalkedOffers();
 
-    return $this->render(
-      'index',
-      [
-        'offerCategories' => $offerCategories,
-        'newOffers' => $newOffers,
-        'mostTalkedOffers' => $mostTalkedOffers,
-      ]
-    );
+    return $this->render('index', compact('offerCategories', 'newOffers', 'mostTalkedOffers'));
   }
 
   /**
@@ -130,21 +124,45 @@ public function behaviors()
       $this->view->params['bodyClass'] = 'body-server';
       $message = 'Ошибка cервера';
 
-      return $this->render(
-        'error',
-        [
-          'statusCode' => $statusCode,
-          'message' => $message,
-        ]
-      );
+      return $this->render('error', compact('statusCode', 'message'));
     }
 
-    return $this->render(
-      'error',
-      [
-        'statusCode' => $statusCode,
-        'message' => $message,
-      ]
-    );
+    return $this->render('error', compact('statusCode', 'message'));
+  }
+
+  /**
+   * Страница результатов поиска объявлений
+   *
+   * @return string
+   */
+  public function actionSearch()
+  {
+    $foundOffers = false;
+    $model = new OfferSearchForm();
+
+    if (Yii::$app->request->getIsGet()) {
+      $search = Yii::$app->request->get();
+      $model->load($search);
+      $query = $model->search;
+      $this->view->params['query'] = $query;
+      $foundOffers = Offer::searchOffers($query);
+    }
+
+    $dataProvider = new ActiveDataProvider([
+      'query' => $foundOffers,
+      'pagination' => [
+        'pageSize' => Yii::$app->params['pageSize'],
+      ],
+      'sort' => [
+        'defaultOrder' => [
+          'offer_date_create' => SORT_DESC,
+        ]
+      ],
+    ]);
+
+    // Самые новые предложения
+    $newOffers = Offer::getNewOffers();
+
+    return $this->render('search', compact('newOffers', 'dataProvider'/*, 'foundOffers'*/));
   }
 }

@@ -7,6 +7,9 @@
 use app\assets\AppAsset;
 use \yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use app\widgets\OfferSearchWidget;
+use app\models\forms\OfferSearchForm;
 
 AppAsset::register($this);
 
@@ -44,11 +47,35 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
           </li>
         </ul>
       </nav>
-      <form class="search" method="get" action="#" autocomplete="off">
+      <?=/* OfferSearchWidget::widget(['model' =>'search' ?: null])*/ '' ?>
+      <?php
+      $model = new OfferSearchForm();
+
+      if (isset($this->params['query'])) {
+        $model->autocompleteForm($model, $this->params['query']);
+      }
+
+      $form = ActiveForm::begin([
+        'method' => 'get',
+        'action' => ['site/search'],
+        'options' => [
+          'class' => 'search',
+          'autocomplete' => 'off',
+        ],
+      ]); ?>
+      <?= $form->field($model, 'search')->input([/*'class' => 'visually-hidden js-file-field', */'placeholder' => 'Поиск'])->label(false) ?>
+      <div class="search__icon"></div>
+      <div class="search__close-btn"></div>
+      <?php ActiveForm::end();
+      ?>
+
+      <!--
+      <form class="search" method="get" action="<?= Url::to(['site/search']); ?>" autocomplete="off">
         <input type="search" name="query" placeholder="Поиск" aria-label="Поиск">
         <div class="search__icon"></div>
         <div class="search__close-btn"></div>
       </form>
+      -->
       <a class="<?= 'header__avatar avatar' ?>" href="#">
         <?php if (!Yii::$app->user->isGuest) : ?>
           <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">

@@ -62,27 +62,7 @@ class MyOffersController extends Controller
       ->orderBy(['offer_date_create' => SORT_DESC])
       ->all();
 
-    //\yii\helpers\VarDumper::dump($offer, 3, true);
-    //die;
-
-
-   // $owner = $offer->owner;
-   // $categories = $offer->categories;
-    //$comments = $offer->comments;
-
-   // ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
-
-
-    return $this->render(
-      'index',
-      [
-        'offers' => $offers,
-        //'owner' => $owner,
-        //'categories' => $categories,
-        //'comments' => $comments,
-
-      ]
-    );
+    return $this->render('index', compact('offers'));
   }
 
   /**
@@ -101,9 +81,9 @@ class MyOffersController extends Controller
 
     // Если пользователь не обладает правом удаления объявления (не модератор и не автор объявления),
     // то он переадресуется на страницу просмотра объявления без удаления комментария
-    if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer]) ) {
+    if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
 
-       $offer->deleteOffer($offer);
+      $offer->deleteOffer($offer);
     }
     return $this->redirect(['my-offers/index']);
   }

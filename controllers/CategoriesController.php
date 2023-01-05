@@ -46,14 +46,6 @@ class CategoriesController extends Controller
     // Категории для section class="tickets-list"
     $category = Category::getCategory($id);
 
-    return $this->render(
-      'index',
-      [
-        'offerCategories' => $offerCategories,
-        'dataProvider' => $dataProvider,
-        'category' => $category,
-        'countOffers' => $countOffers,
-      ]
-    );
+    return $this->render('index', compact('offerCategories', 'dataProvider', 'category', 'countOffers'));
   }
 }

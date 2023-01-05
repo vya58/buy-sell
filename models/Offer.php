@@ -32,6 +32,7 @@ class Offer extends \yii\db\ActiveRecord
     'buy' => 'КУПЛЮ',
     'sell' => 'ПРОДАМ',
   ];
+  //public const MIN_LENGTH_SEARCH_TICKETPHRASE = 3;
   public const MIN_LENGTH_TICKETNAME = 10;
   public const MAX_LENGTH_TICKETNAME = 100;
   public const MIN_LENGTH_TICKETCOMMENT = 50;
@@ -257,8 +258,24 @@ class Offer extends \yii\db\ActiveRecord
   public static function getCategoryOffers($id): ?ActiveQuery
   {
     return Offer::find()
-    ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
-    ->with('offerCategories', 'categories')
-    ->where(['oc.category_id' => $id]);
+      ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
+      ->with('offerCategories', 'categories')
+      ->where(['oc.category_id' => $id]);
+  }
+
+  /**
+   * Метод поиска объявлений по наименованию
+   *
+   * @param string $query - строка с фразой поиска
+   *
+   * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
+   */
+  public static function searchOffers($query): ?ActiveQuery
+  {
+    return Offer::find()
+      ->with('categories')
+      ->where(['like', 'offer_title', $query]);
+      //->orderBy(['offer_date_create' => SORT_DESC])
+      //->all();
   }
 }

@@ -42,9 +42,6 @@ use yii\widgets\Pjax;
                   'onclick' => 'window.location.href = "' . Url::to(['/my-offers/remove', 'offerId' => $offer->offer_id]) . '";',
                 ]); ?>
                 <?php Pjax::end(); ?>
-                <!--
-            <button class="ticket-card__del js-delete" type="button">Удалить</button>
-              -->
           </div>
         </li>
       <?php endforeach; ?>

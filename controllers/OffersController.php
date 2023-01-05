@@ -87,16 +87,7 @@ class OffersController extends Controller
       }
     }
 
-    return $this->render(
-      'index',
-      [
-        'offer' => $offer,
-        'owner' => $owner,
-        'categories' => $categories,
-        'comments' => $comments,
-        'commentAddForm' => $commentAddForm,
-      ]
-    );
+    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm'));
   }
 
   /**
@@ -122,13 +113,7 @@ class OffersController extends Controller
         return $this->redirect(['offers/index', 'id' => $offerId]);
       }
     }
-    return $this->render(
-      'add',
-      [
-        'offerAddForm' => $offerAddForm,
-        'ticketFormTitle' => $ticketFormTitle,
-      ]
-    );
+    return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
   }
 
   /**
@@ -166,12 +151,6 @@ class OffersController extends Controller
         return $this->redirect(['offers/index', 'id' => $offerId]);
       }
     }
-    return $this->render(
-      'add',
-      [
-        'offerAddForm' => $offerAddForm,
-        'ticketFormTitle' => $ticketFormTitle,
-      ]
-    );
+    return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
   }
 }

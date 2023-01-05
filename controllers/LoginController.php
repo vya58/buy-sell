@@ -20,26 +20,26 @@ class LoginController extends Controller
    * {@inheritdoc}
    */
 
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'denyCallback' => function () {
-                    return $this->redirect(['site/index']);
-                },
-                'only' => ['index'],
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'actions' => ['index'],
-                        'roles' => ['?'],
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+        'denyCallback' => function () {
+          return $this->redirect(['site/index']);
+        },
+        'only' => ['index'],
+        'rules' => [
+          [
+            'allow' => true,
+            'actions' => ['index'],
+            'roles' => ['?'],
 
-                    ],
-                ]
-            ]
-        ];
-    }
+          ],
+        ]
+      ]
+    ];
+  }
 
   /**
    * Страница входа.
@@ -67,12 +67,7 @@ class LoginController extends Controller
 
     $loginForm->password = null;
 
-    return $this->render(
-      'index',
-      [
-        'loginForm' => $loginForm,
-      ]
-    );
+    return $this->render('index', compact('loginForm'));
   }
 
   /**

@@ -57,7 +57,7 @@ use app\models\Offer;
                 <span class="ticket-card__label"><?= Html::encode($newOffer->offer_type) ?></span>
                 <div class="ticket-card__categories">
                   <?php foreach ($newOffer->categories as $category) : ?>
-                    <a href="#"><?= Html::encode($category->category_name) ?></a>
+                    <a href="<?= Url::to(['/categories/index', 'id' => $category->category_id]) ?>"><?= Html::encode($category->category_name) ?></a>
                   <?php endforeach; ?>
                 </div>
                 <div class="ticket-card__header">

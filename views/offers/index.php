@@ -4,6 +4,7 @@
 
 use yii\helpers\Html;
 use \yii\helpers\Url;
+use app\models\Category;
 use app\models\Offer;
 use app\models\User;
 use yii\widgets\ActiveForm;
@@ -15,9 +16,7 @@ use yii\widgets\ActiveForm;
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-        <?php if ($offer->offer_image) : ?>
-          <img src="<?= Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) ?>" alt="Изображение товара">
-        <?php endif; ?>
+          <img src="<?= $offer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
       </div>
       <div class="ticket__info">
         <h2 class="ticket__title"><?= Html::encode($offer->offer_title) ?></h2>
@@ -45,9 +44,9 @@ use yii\widgets\ActiveForm;
         <ul class="ticket__tags">
           <?php foreach ($categories as $category) : ?>
             <li>
-              <a href="#" class="category-tile category-tile--small">
+              <a href="<?= Url::to(['/categories/index', 'id' => $category->category_id]) ?>" class="category-tile category-tile--small">
                 <span class="category-tile__image">
-                  <img src="<?= Html::encode('/web/img/' . $category->category_icon . '.jpg') ?>" srcset="<?= Html::encode('/web/img/' . $category->category_icon . '@2x.jpg') ?> 2x" alt="Иконка категории">
+                  <img src="<?= Html::encode(Category::CATEGORY_ICON_PATH . $category->category_icon . '.jpg') ?>" srcset="<?= Html::encode(Category::CATEGORY_ICON_PATH . $category->category_icon . '@2x.jpg') ?> 2x" alt="Иконка категории">
                 </span>
                 <span class="category-tile__label"><?= Html::encode($category->category_name) ?></span>
               </a>
@@ -72,13 +71,11 @@ use yii\widgets\ActiveForm;
             'method' => 'post',
             'options' => [
               'class' => 'form comment-form',
-              //'enctype' => 'multipart/form-data',
-              //'autocomplete' => 'off',
             ]
           ]); ?>
           <div class="comment-form__header">
             <a href="#" class="comment-form__avatar avatar">
-              <img src="<?= Yii::$app->user->identity->avatar ? Html::encode('/uploads/avatars/' . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+              <img src="<?= Yii::$app->user->identity->avatar ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
             </a>
             <p class="comment-form__author">Вам слово</p>
           </div>
@@ -90,7 +87,6 @@ use yii\widgets\ActiveForm;
           </div>
           <button class="comment-form__button btn btn--white js-button" type="submit">Отправить</button>
           <?php ActiveForm::end(); ?>
-
         </div>
       <?php endif; ?>
       <?php if ($comments) : ?>
@@ -102,7 +98,7 @@ use yii\widgets\ActiveForm;
                 <div class="comment-card">
                   <div class="comment-card__header">
                     <a href="#" class="comment-card__avatar avatar">
-                      <img src="<?= $user->avatar ? Html::encode('/uploads/avatars/' . $user->avatar) : '/img/avatar.jpg' ?>" srcset="<?= $user->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+                      <img src="<?= $user->avatar ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . $user->avatar) : '/img/avatar.jpg' ?>" srcset="<?= $user->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
                     </a>
                     <p class="comment-card__author"><?= Html::encode($user->name) ?></p>
                   </div>

@@ -53,11 +53,6 @@ class RegistrationController extends Controller
       }
     }
 
-    return $this->render(
-      'index',
-      [
-        'registrationForm' => $registrationForm,
-      ]
-    );
+    return $this->render('index', compact('registrationForm'));
   }
 }

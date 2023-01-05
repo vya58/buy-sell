@@ -6,7 +6,7 @@ use app\models\Offer;
 
 ?>
 
-<div class="ticket-card ticket-card--color06">
+<div class="ticket-card ticket-card--color05">
   <div class="ticket-card__img">
     <img src="<?= $model->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $model->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
   </div>
@@ -14,7 +14,7 @@ use app\models\Offer;
     <span class="ticket-card__label"><?= Html::encode($model->offer_type) ?></span>
     <div class="ticket-card__categories">
       <?php foreach ($model->categories as $category) : ?>
-        <a href="<?= Url::to(['categories/index', 'id' => $category['category_id']]) ?>"><?= Html::encode($category['category_name']) ?></a>
+        <a href="<?= Url::to(['/categories/index', 'id' => $category->category_id]) ?>"><?= Html::encode($category->category_name) ?></a>
       <?php endforeach; ?>
     </div>
     <div class="ticket-card__header">
