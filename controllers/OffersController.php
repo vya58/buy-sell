@@ -8,6 +8,8 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use app\models\Firebase;
+use Kreait\Firebase\Factory;
 use app\models\Offer;
 use app\models\forms\OfferAddForm;
 use app\models\forms\CommentAddForm;
@@ -152,5 +154,15 @@ class OffersController extends Controller
       }
     }
     return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
+  }
+
+  public function actionSend()
+  {
+    $factory = (new Factory)
+      ->withServiceAccount('/OpenServ/domains/config/buysellchat-c6e28-firebase-adminsdk-4k4m2-1c314d0e34.json')
+      ->withDatabaseUri(Yii::$app->params['firebase_database_uri']);
+    $database = $factory->createDatabase();
+    //$firebase = new Firebase();
+    \yii\helpers\VarDumper::dump($factory, 3, true);
   }
 }

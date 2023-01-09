@@ -8,7 +8,10 @@ use app\models\Category;
 use app\models\Offer;
 use app\models\User;
 use yii\widgets\ActiveForm;
+use app\assets\FirebaseAsset;
+use yii\widgets\Pjax;
 
+//FirebaseAsset::register($this);
 ?>
 
 <section class="ticket">
@@ -16,7 +19,7 @@ use yii\widgets\ActiveForm;
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-          <img src="<?= $offer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
+        <img src="<?= $offer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
       </div>
       <div class="ticket__info">
         <h2 class="ticket__title"><?= Html::encode($offer->offer_title) ?></h2>
@@ -119,8 +122,8 @@ use yii\widgets\ActiveForm;
     <button class="chat-button" type="button" aria-label="Открыть окно чата"></button>
   </div>
 </section>
-
-<section class="chat visually-hidden">
+<section class="chat">
+<!--<section class="chat visually-hidden">-->
   <h2 class="chat__subtitle">Чат с продавцом</h2>
   <ul class="chat__conversation">
     <li class="chat__message">
@@ -144,9 +147,14 @@ use yii\widgets\ActiveForm;
       </div>
     </li>
   </ul>
-  <form class="chat__form">
+  <form class="chat__form" action="/offers/send" method="post">
     <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
     <textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>
-    <button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>
+    <?php /*Pjax::begin();*/?>
+    <?= Html::submitButton('Отправить', [
+      'class' => 'chat__form-button',
+    ]); ?>
+    <?php /* Pjax::end();*/ ?>
+    <!--<button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>-->
   </form>
 </section>

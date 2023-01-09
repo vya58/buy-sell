@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+//$firedb = require __DIR__ . '/firedb.php';
 
 $config = [
   'id' => 'basic-console',
@@ -26,6 +27,7 @@ $config = [
       ],
     ],
     'db' => $db,
+    //'firedb' => $firedb,
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
       //'cache' => 'cache',

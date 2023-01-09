@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "category".
@@ -14,7 +15,7 @@ use Yii;
  * @property OfferCategory[] $offerCategories
  * @property Offer[] $offers
  */
-class Category extends \yii\db\ActiveRecord
+class Category extends ActiveRecord
 {
   public const CATEGORY_ICON_PATH = '/web/img/';
 

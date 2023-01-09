@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "comment".
@@ -15,7 +16,7 @@ use Yii;
  * @property Offer[] $offers
  * @property User $owner
  */
-class Comment extends \yii\db\ActiveRecord
+class Comment extends ActiveRecord
 {
   public const MIN_LENGTH_COMMENT = 20;
 
