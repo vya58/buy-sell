@@ -20,4 +20,5 @@ return [
     'offerTextLength' => 52,
 
     'firebase_database_uri' => $config['firebase_database_uri'],
+    'firebase_service_account_shape' => $config['firebase_service_account_shape'],
 ];

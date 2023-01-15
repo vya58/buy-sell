@@ -39,14 +39,14 @@ use yii\widgets\Pjax;
                   <p class="comment-card__author"><?= Html::encode($comment->owner->name) ?></p>
                 </div>
                 <div class="comment-card__content">
-                  <p><?= Html::encode($comment->comment_text) ?></p>
+                <?= Html::tag('p', Html::encode($comment->comment_text), ['style' => ['word-wrap' => 'break-word']]) ?>
                 </div>
-                <?php Pjax::begin(); ?>
+                <?php /*Pjax::begin();*/ ?>
                 <?= Html::button('Удалить', [
                   'class' => 'comment-card__delete js-delete',
                   'onclick' => 'window.location.href = "' . Url::to(['/comments/remove', 'commentId' => $comment->comment_id]) . '";',
                 ]); ?>
-                <?php Pjax::end(); ?>
+                <?php /*Pjax::end();*/ ?>
               </div>
             </li>
           <?php endforeach;

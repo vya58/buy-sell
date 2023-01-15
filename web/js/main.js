@@ -1,3 +1,4 @@
+//$(document).pjax('.chat__form-button', '#pjax-container');
 'use strict';
 
 (function () {
@@ -20,7 +21,7 @@
     var userChatField = chat.querySelector('[name="chat-message"]');
 
     document.addEventListener('click', function (evt) {
-      evt.preventDefault();
+     // evt.preventDefault(); // Отключить?
       if (evt.target === buttonToOpenChat) {
         evt.preventDefault();
         openChat();
@@ -59,14 +60,14 @@
 
 'use strict';
 
-(function() {
+(function () {
   var deletEls = document.querySelectorAll('.js-delete');
   for (var i = 0; i < deletEls.length; i++) {
-    deletEls[i].addEventListener('click', function() {
+    deletEls[i].addEventListener('click', function () {
       var card = this.closest('.js-card');
       card.parentNode.removeChild(card);
       // Добавлено для работы Pjax
-      $.pjax.reload({container: '#pjaxContent'});
+      $.pjax.reload({ container: '#pjaxContent' });
     })
   }
 })();
@@ -198,16 +199,16 @@
       var ours = document.createElement('div');
       ours.className = SS.selected.className;
       SS.selected.className += ' selectr-selected--hidden';
-      SS.selected.parentNode.insertBefore(ours,SS.selected);
-      var updateOurs = function(){
+      SS.selected.parentNode.insertBefore(ours, SS.selected);
+      var updateOurs = function () {
         ours.innerText = SS.selected.innerText.trim().replace(/\n/g, ', ') || placeholder;
       };
-      Selectr.prototype.select = function(){
+      Selectr.prototype.select = function () {
         selection.apply(this, arguments);
         updateOurs();
       };
 
-      Selectr.prototype.deselect = function(){
+      Selectr.prototype.deselect = function () {
         deselection.apply(this, arguments);
         updateOurs();
       };
@@ -216,7 +217,7 @@
 
     var priceField = form.querySelector('.js-price');
     if (priceField) {
-      priceField.addEventListener('keydown', function(e) {
+      priceField.addEventListener('keydown', function (e) {
         if (window.event.keyCode >= 65 && window.event.keyCode <= 90 || window.event.keyCode === 189 || window.event.keyCode === 188) {
           e.preventDefault();
         }

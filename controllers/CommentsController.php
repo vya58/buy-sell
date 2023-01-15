@@ -53,11 +53,7 @@ class CommentsController extends Controller
     $offers = Offer::getWithNewCommentsOffers($id);
 
     return $this->render(
-      'index',
-      [
-        'offers' => $offers,
-      ]
-    );
+      'index', compact('offers'));
   }
 
   /**

@@ -12,6 +12,16 @@ use app\assets\FirebaseAsset;
 use yii\widgets\Pjax;
 
 //FirebaseAsset::register($this);
+// Убрать??
+/*
+$this->registerJs(
+  '$("document").ready(function(){
+            $("#chat-form").on("pjax:end", function() {
+            $.pjax.reload({container:"#pjaxContent"});
+        });
+    });'
+);*/
+
 ?>
 
 <section class="ticket">
@@ -74,6 +84,7 @@ use yii\widgets\Pjax;
             'method' => 'post',
             'options' => [
               'class' => 'form comment-form',
+              //'data-pjax' => true,
             ]
           ]); ?>
           <div class="comment-form__header">
@@ -106,7 +117,7 @@ use yii\widgets\Pjax;
                     <p class="comment-card__author"><?= Html::encode($user->name) ?></p>
                   </div>
                   <div class="comment-card__content">
-                    <p><?= Html::encode($comment->comment_text) ?></p>
+                    <?= Html::tag('p', Html::encode($comment->comment_text), ['style' => ['word-wrap' => 'break-word']]) ?>
                   </div>
                 </div>
               </li>
@@ -122,8 +133,8 @@ use yii\widgets\Pjax;
     <button class="chat-button" type="button" aria-label="Открыть окно чата"></button>
   </div>
 </section>
-<section class="chat">
-<!--<section class="chat visually-hidden">-->
+<section class="chat visually-hidden">
+  <!--<section class="chat visually-hidden">-->
   <h2 class="chat__subtitle">Чат с продавцом</h2>
   <ul class="chat__conversation">
     <li class="chat__message">
@@ -147,14 +158,32 @@ use yii\widgets\Pjax;
       </div>
     </li>
   </ul>
-  <form class="chat__form" action="/offers/send" method="post">
-    <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-    <textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение"></textarea>
-    <?php /*Pjax::begin();*/?>
-    <?= Html::submitButton('Отправить', [
-      'class' => 'chat__form-button',
-    ]); ?>
-    <?php /* Pjax::end();*/ ?>
-    <!--<button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>-->
-  </form>
+  <?php Pjax::begin([
+    //'id' => 'chat-form',
+    'timeout' => 4000,
+  ]); ?>
+  <?php $formChat = ActiveForm::begin([
+    'id' => 'chat-form',
+    'method' => 'pjax',
+    //'validateOnSubmit' => false,
+    //'action' => '/offers/index/' . $offer->offer_id,
+    'options' => [
+      'class' => 'chat__form',
+      'data-pjax' => true,
+    ]
+  ]); ?>
+  <!--<form class="chat__form" action="/offers/send" method="post">-->
+  <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
+  <?= $formChat->field($chatForm, 'message')->textarea(['options' => ['class' => 'chat__form-message']]) ?>
+  <!--<textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение в чат"></textarea>-->
+
+  <?php /* Html::submitButton('', [
+    'class' => 'chat__form-button',
+  ]);*/ ?>
+
+  <button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>
+  <!--</form>-->
+  <?php ActiveForm::end(); ?>
+  <?php Pjax::end(); ?>
+
 </section>
