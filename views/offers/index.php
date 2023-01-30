@@ -10,17 +10,9 @@ use app\models\User;
 use yii\widgets\ActiveForm;
 use app\assets\FirebaseAsset;
 use yii\widgets\Pjax;
+use yii\widgets\ListView;
 
-//FirebaseAsset::register($this);
-// Убрать??
-/*
-$this->registerJs(
-  '$("document").ready(function(){
-            $("#chat-form").on("pjax:end", function() {
-            $.pjax.reload({container:"#pjaxContent"});
-        });
-    });'
-);*/
+FirebaseAsset::register($this);
 
 ?>
 
@@ -32,7 +24,7 @@ $this->registerJs(
         <img src="<?= $offer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
       </div>
       <div class="ticket__info">
-        <h2 class="ticket__title"><?= Html::encode($offer->offer_title) ?></h2>
+        <h2 class="ticket__title" data-attr="<?= Html::encode($offer->offer_id) ?>"><?= Html::encode($offer->offer_title) ?></h2>
         <div class="ticket__header">
           <p class="ticket__price"><span class="js-sum"><?= Html::encode($offer->offer_price) ?></span> ₽</p>
           <p class="ticket__action"><?= Html::encode($offer->offer_type) ?></p>
@@ -84,7 +76,6 @@ $this->registerJs(
             'method' => 'post',
             'options' => [
               'class' => 'form comment-form',
-              //'data-pjax' => true,
             ]
           ]); ?>
           <div class="comment-form__header">
@@ -130,60 +121,85 @@ $this->registerJs(
         </div>
       <?php endif; ?>
     </div>
-    <button class="chat-button" type="button" aria-label="Открыть окно чата"></button>
+    <?php if (!Yii::$app->user->isGuest) : ?>
+      <?php if ($buyers) : ?>
+        <?= ListView::widget([
+          'dataProvider' => $dataProvider,
+          'itemView' => '_chat',
+          'layout' => "{items}\n{pager}",
+          'viewParams' => [
+            'offer' => $offer,
+          ],
+          'pager' => [
+            'prevPageLabel' => false,
+            'nextPageLabel' => false,
+            'disableCurrentPageButton' => true,
+            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
+            'options' => [
+              'tag' => 'div',
+              'class' => 'buyer-pagination',
+            ],
+          ],
+        ]); ?>
+      <?php endif; ?>
+      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (!$buyers && Yii::$app->user->id === $owner->user_id) ? '' : '' ?>></button>
+    <?php endif; ?>
   </div>
 </section>
-<section class="chat visually-hidden">
-  <!--<section class="chat visually-hidden">-->
-  <h2 class="chat__subtitle">Чат с продавцом</h2>
-  <ul class="chat__conversation">
-    <li class="chat__message">
-      <div class="chat__message-title">
-        <span class="chat__message-author">Вы</span>
-        <time class="chat__message-time" datetime="2021-11-18T21:15">21:15</time>
-      </div>
-      <div class="chat__message-content">
-        <p>Добрый день!</p>
-        <p>Какова ширина кресла? Из какого оно материала?</p>
-      </div>
-    </li>
-    <li class="chat__message">
-      <div class="chat__message-title">
-        <span class="chat__message-author">Продавец</span>
-        <time class="chat__message-time" datetime="2021-11-18T21:21">21:21</time>
-      </div>
-      <div class="chat__message-content">
-        <p>Добрый день!</p>
-        <p>Ширина кресла 59 см, это хлопковая ткань. кресло очень удобное, и почти новое, без сколов и прочих дефектов</p>
-      </div>
-    </li>
-  </ul>
-  <?php Pjax::begin([
-    //'id' => 'chat-form',
-    'timeout' => 4000,
-  ]); ?>
-  <?php $formChat = ActiveForm::begin([
-    'id' => 'chat-form',
-    'method' => 'pjax',
-    //'validateOnSubmit' => false,
-    //'action' => '/offers/index/' . $offer->offer_id,
-    'options' => [
-      'class' => 'chat__form',
-      'data-pjax' => true,
-    ]
-  ]); ?>
-  <!--<form class="chat__form" action="/offers/send" method="post">-->
-  <label class="visually-hidden" for="chat-field">Ваше сообщение в чат</label>
-  <?= $formChat->field($chatForm, 'message')->textarea(['options' => ['class' => 'chat__form-message']]) ?>
-  <!--<textarea class="chat__form-message" name="chat-message" id="chat-field" placeholder="Ваше сообщение в чат"></textarea>-->
 
-  <?php /* Html::submitButton('', [
-    'class' => 'chat__form-button',
-  ]);*/ ?>
+<?php if (!Yii::$app->user->isGuest) : ?>
+  <section class="chat visually-hidden">
+    <?php if (Yii::$app->user->id === $owner->user_id) : ?>
+      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addressee->user_id) ?>" data-receiver-name="<?= Html::encode($addressee->name) ?>">
+        Чат с покупателем <?= $addressee->user_id === $owner->user_id ? '' : Html::encode($addressee->name) ?>
+      </h2>
+    <?php else : ?>
+      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addressee->user_id) ?>" data-receiver-name="<?= Html::encode($addressee->name) ?>">Чат с продавцом <?= Html::encode($addressee->name) ?></h2>
+    <?php endif; ?>
+    <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
+      <?php if ($messages) : ?>
+        <?php foreach ($messages as $key => $message) : ?>
+          <!-- Подсветка непрочитанных сообщений class="unread" -->
+          <li class="chat__message <?= !$message['read'] ? 'unread' : '' ?>">
+            <div class="chat__message-title">
+              <span class="chat__message-author"><?= $message['fromUserId'] !== $addressee->user_id ? 'Вы' : Html::encode($addressee->name) ?></span>
+              <time class="chat__message-time" datetime="2021-11-18T21:15"><?= Yii::$app->formatter->asDate($message['date'], 'php:j F Y') === Yii::$app->formatter->asDate('now', 'php:j F Y') ? Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:H:i')) : Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:j F Y H:i')) ?></time>
+            </div>
+            <div class="chat__message-content">
+              <p><?= Html::encode($message['message']) ?></p>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      <?php endif; ?>
+    </ul>
+    <?php Pjax::begin([
+      //'timeout' => 2000,
+    ]); ?>
+    <?php $formChat = ActiveForm::begin([
+      'id' => 'chat-form',
+      'method' => 'pjax',
+      'enableAjaxValidation' => false,
+      'options' => [
+        'class' => 'chat__form',
+        'data-pjax' => true,
+      ]
+    ]); ?>
+    <?= $formChat->field($chatForm, 'message', ['options' => ['tag' => false], 'inputOptions' => ['class' => 'chat__form-message']])->textarea(['placeholder' => "Ваше сообщение в чат"])->label(false) ?>
+    <button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>
+    <?php ActiveForm::end(); ?>
+    <?php Pjax::end(); ?>
+  </section>
+<?php endif; ?>
 
-  <button class="chat__form-button" type="submit" aria-label="Отправить сообщение в чат"></button>
-  <!--</form>-->
-  <?php ActiveForm::end(); ?>
-  <?php Pjax::end(); ?>
-
-</section>
+<template id="chat__message">
+  <li class="chat__message">
+    <div class="chat__message-title">
+      <span class="chat__message-author">Вы</span>
+      <time class="chat__message-time" datetime="2021-11-18T21:15">21:15</time>
+    </div>
+    <div class="chat__message-content">
+      <p>Добрый день!</p>
+      <p>Какова ширина кресла? Из какого оно материала?</p>
+    </div>
+  </li>
+</template>

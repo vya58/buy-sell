@@ -8,7 +8,6 @@
 use yii\helpers\Html;
 use \yii\helpers\Url;
 
-
 ?>
 
 <section class="error">

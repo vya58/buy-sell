@@ -2,6 +2,6 @@
 
 namespace app\models\exceptions;
 
-class FileExistException extends \Exception
+class EmailSendException extends \Exception
 {
 }

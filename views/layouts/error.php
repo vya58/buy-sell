@@ -3,10 +3,7 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-//use Yii;
 use app\assets\AppAsset;
-use \yii\helpers\Url;
-use yii\helpers\Html;
 
 AppAsset::register($this);
 

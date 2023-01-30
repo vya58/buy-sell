@@ -34,7 +34,6 @@ class CommentAddForm extends Model
     ];
   }
 
-
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
@@ -57,7 +56,6 @@ class CommentAddForm extends Model
       if (!$comment->save()) {
         throw new DataSaveException('Не удалось создать комментарий');
       }
-
       $offerComment = new OfferComment();
 
       $offerComment->offer_id = $id;

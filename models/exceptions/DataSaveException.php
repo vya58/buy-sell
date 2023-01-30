@@ -6,5 +6,4 @@ use yii\db\Exception;
 
 class DataSaveException extends Exception
 {
-
 }

@@ -92,7 +92,7 @@ use app\models\Offer;
           <li class="tickets-list__item">
             <div class="ticket-card ticket-card--color09">
               <div class="ticket-card__img">
-              <img src="<?= $mostTalkedOffer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $mostTalkedOffer->offer_image) : Html::encode('../img/blank.png') ?>" alt="Изображение товара">
+                <img src="<?= $mostTalkedOffer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $mostTalkedOffer->offer_image) : Html::encode('../img/blank.png') ?>" alt="Изображение товара">
               </div>
               <div class="ticket-card__info">
                 <span class="ticket-card__label"><?= Html::encode($mostTalkedOffer->offer_type) ?></span>

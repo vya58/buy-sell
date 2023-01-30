@@ -5,8 +5,6 @@
 use yii\helpers\Html;
 use \yii\helpers\Url;
 use app\models\Offer;
-use app\models\User;
-use yii\widgets\ActiveForm;
 use yii\widgets\Pjax;
 
 ?>
@@ -27,9 +25,9 @@ use yii\widgets\Pjax;
             <div class="ticket-card__info">
               <span class="ticket-card__label"><?= Html::encode($offer->offer_type) ?></span>
               <div class="ticket-card__categories">
-              <?php foreach ($offer->categories as $category) : ?>
-                    <a href="#"><?= Html::encode($category->category_name) ?></a>
-                  <?php endforeach; ?>
+                <?php foreach ($offer->categories as $category) : ?>
+                  <a href="#"><?= Html::encode($category->category_name) ?></a>
+                <?php endforeach; ?>
               </div>
               <div class="ticket-card__header">
                 <h3 class="ticket-card__title"><a href="<?= Url::to(['offers/edit', 'id' => $offer->offer_id]) ?>"><?= Html::encode($offer->offer_title) ?></a></h3>
@@ -37,11 +35,11 @@ use yii\widgets\Pjax;
               </div>
             </div>
             <?php Pjax::begin(); ?>
-                <?= Html::button('Удалить', [
-                  'class' => 'ticket-card__del js-delete',
-                  'onclick' => 'window.location.href = "' . Url::to(['/my-offers/remove', 'offerId' => $offer->offer_id]) . '";',
-                ]); ?>
-                <?php Pjax::end(); ?>
+            <?= Html::button('Удалить', [
+              'class' => 'ticket-card__del js-delete',
+              'onclick' => 'window.location.href = "' . Url::to(['/my-offers/remove', 'offerId' => $offer->offer_id]) . '";',
+            ]); ?>
+            <?php Pjax::end(); ?>
           </div>
         </li>
       <?php endforeach; ?>

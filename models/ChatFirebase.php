@@ -13,31 +13,31 @@ use Kreait\Firebase\Database\Reference;
 class ChatFirebase extends Model
 {
   private $database;
-  private string $query;
-  // private int $buyerId = null;
 
   public function __construct(
-    private readonly int $offerId,
+    private readonly ?int $offerId = null,
     private readonly ?int $buyerId = null
   ) {
     $this->database = (new Factory)
-      ->withServiceAccount(Yii::$app->params['firebase_service_account_shape'] . 'firebase-adminsdk-4k4m2-1c314d0e34.json')
-      ->withDatabaseUri(Yii::$app->params['firebase_database_uri'])->createDatabase();
+      ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . 'firebase-adminsdk-4k4m2-1c314d0e34.json')
+      ->withDatabaseUri(Yii::$app->params['firebaseDatabaseUri'])->createDatabase();
   }
 
-
   /**
-   * Получение параметра запроса для Kreait\Firebase\Database\Reference в зависимости от наличия и значения id покупателя
+   * Получение параметра запроса для Kreait\Firebase\Database\Reference в зависимости от наличия и значений id объявления и покупателя
    * @return string $path
    */
   private function getQuery(): string
   {
+    if (!$this->offerId) {
+      return '';
+    }
+
     if (!$this->buyerId) {
       return $this->offerId;
     }
     return $this->offerId . '/' . $this->buyerId;
   }
-
 
   /**
    * Получение данных чата
@@ -51,7 +51,7 @@ class ChatFirebase extends Model
   }
 
   /**
-   * Получение данных чата
+   * Получение snapshot'а чата
    */
   public function getSnapshotChat()
   {
@@ -62,44 +62,10 @@ class ChatFirebase extends Model
   }
 
   /**
-   * Создание чата
-   */
-  /*
-  public function setChat()
-  {
-    if (!$this->database) {
-      return false;
-    }
-    return $this->database->getReference($this->query)
-      ->set([
-        [
-          'userId' => 20,
-          'date' => date('d M Y H:i:s'),
-          'message' => 'Привет',
-        ],
-        [
-          'userId' => 15,
-          'date' => date('d M Y H:i:s'),
-          'message' => 'Привет',
-        ],
-        [
-          'userId' => 20,
-          'date' => date('d M Y H:i:s'),
-          'message' => 'Купи слона',
-        ],
-        [
-          'userId' => 15,
-          'date' => date('d M Y H:i:s'),
-          'message' => 'Почём?',
-        ]
-      ]);
-  }
-*/
-  /**
    * Запись сообщения в Firebase
    * @return null|Reference
    */
-  public function sendMessage(int $userId, ?string $message = null): ?Reference
+  public function sendMessage(User $addressee, ?string $message = null): ?Reference
   {
     if (!$this->database || !$message) {
       return false;
@@ -111,9 +77,31 @@ class ChatFirebase extends Model
     $query = $query . '/' . $count;
     return $this->database->getReference($query)
       ->set([
-        'userId' => $userId,
         'date' => date('d M Y H:i:s'),
         'message' => $message,
+        'read' => false,
+        // Ключи ниже добавлены для упрощения выборки непрочитанных сообщений и селекци адресатов
+        'offerId' => $this->offerId,
+        'toUserId' => $addressee->user_id,
+        'fromUserId' => Yii::$app->user->id,
+      ]);
+  }
+
+  /**
+   * Отметка сообщения как прочитанного
+   * @return null|Reference
+   */
+  public function readMessage(int $messageNumber): Reference
+  {
+    if (!$this->database) {
+      return false;
+    }
+
+    $query = $this->getQuery() . '/' . $messageNumber;
+
+    return $this->database->getReference($query)
+      ->update([
+        'read' => true,
       ]);
   }
 }

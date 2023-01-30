@@ -9,15 +9,13 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\ChatFirebase;
-use app\models\FireDatabase;
-//use Kreait\Firebase;
-use Kreait\Firebase\Factory;
-use Kreait\Firebase\ServiceAccount;
 use app\models\Offer;
+use app\models\User;
 use app\models\forms\OfferAddForm;
 use app\models\forms\ChatForm;
 use app\models\forms\CommentAddForm;
 use yii\helpers\ArrayHelper;
+use yii\data\ActiveDataProvider;
 
 class OffersController extends Controller
 {
@@ -58,12 +56,12 @@ class OffersController extends Controller
    * Страница просмотра объявления
    *
    * @param int $id - id объявления
+   * @param int|null $buyerId - id покупателя, null - если страница продавца
    * @return Response|string - код страницы просмотра объявления
    * @throws NotFoundHttpException
    */
-  public function actionIndex(int $id): Response|string
+  public function actionIndex(int $id, int $buyerId = null): Response|string
   {
-    //$answer = 'Нет isPjax';
     $offer = Offer::find()
       ->with('owner', 'categories', 'comments')
       ->where(['offer_id' => $id])
@@ -83,7 +81,6 @@ class OffersController extends Controller
 
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
     if (!Yii::$app->user->isGuest && $commentAddForm->load(Yii::$app->request->post())) {
-
       if ($commentAddForm->addComment($id)) {
         return $this->redirect(['offers/index', 'id' => $id]);
       }
@@ -91,20 +88,83 @@ class OffersController extends Controller
 
     $chatForm = new ChatForm();
 
-    if (Yii::$app->user->id !== $owner->user_id) {
-      $buyerId = Yii::$app->user->id;
+    $buyers = null;
+
+    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что страница покупателя.
+    $addressee = $owner;
+    $dataProvider = null;
+    // Если пользователь - владелец объявления
+    if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+      // Если страница продавца, то адресат сообщения - покупатель с id = $buyerId
+      if ($buyerId) {
+        $addressee = User::findOne($buyerId);
+      }
+      // Выборка всех сообщений объявления с данным id
+      $firebase = new ChatFirebase($id);
+      $firebaseChats = $firebase->getValueChat();
+
+      $userIds = [];
+      if ($firebaseChats) {
+        foreach ($firebaseChats as $key => $value) {
+          $userIds[] = $key;
+        }
+      }
+
+      $buyers = User::find()
+        ->having(['in', 'user_id', $userIds])
+        ->all();
+
+
+
+          $query = User::find()
+          ->having(['in', 'user_id', $userIds]);
+        // \yii\helpers\VarDumper::dump($buyers, 3, true);
+       // die;
+
+        $dataProvider = new ActiveDataProvider([
+          'query' => $query,
+          'pagination' => [
+            'pageSize' => 1,
+          ],
+        ]);
+
+
+
     }
 
-    $chatFirebase = new ChatFirebase($id, $buyerId);
-    // Добавление нового cсообщения в чат. Доступно только зарегистрированным пользователям.
-    if (!Yii::$app->user->isGuest && $chatForm->load(Yii::$app->request->post())) {
-      //\yii\helpers\VarDumper::dump($chatFirebase, 3, true);
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+      $buyerId = \Yii::$app->user->id;
+    }
+
+    $messages = false;
+    $chatFirebase = false;
+
+    // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
+    if ($buyerId) {
+      $chatFirebase = new ChatFirebase($id, $buyerId);
+
       $messages = $chatFirebase->getValueChat();
-      $chatForm->addMessage($chatFirebase);
-      return $this->redirect('/chat/index');
+      if ($messages) {
+        foreach ($messages as $key => $message) {
+          if ($message['fromUserId'] !== Yii::$app->user->id) {
+            $chatFirebase->readMessage($key);
+          }
+        }
+      }
     }
 
-    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm'));
+    // \yii\helpers\VarDumper::dump($chatForm, 3, true);
+    // Добавление нового cообщения в чат. Доступно только зарегистрированным пользователям при наличии заполненного поля ввода сообщения.
+    if (\Yii::$app->user->id !== $addressee->user_id && $chatFirebase && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
+
+      $send = $chatForm->addMessage($addressee, $chatFirebase);
+      $messages = $chatFirebase->getValueChat();
+
+      //обнуляем модель, чтобы очистить форму
+      $chatForm = new ChatForm();
+    }
+    //\yii\helpers\VarDumper::dump($addressee, 3, true);
+    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyers', 'buyerId', 'addressee', 'dataProvider'));
   }
 
   /**

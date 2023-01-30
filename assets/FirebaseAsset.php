@@ -20,16 +20,16 @@ class FirebaseAsset extends AssetBundle
   public $basePath = '@webroot';
   public $baseUrl = '@web';
   public $css = [
-    //'css/index.css',
+    'css/chat.css',
   ];
   public $js = [
-    //'https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js',
-    //'https://www.gstatic.com/firebasejs/8.2.1/firebase-database.js',
-    'js/firebase.js'
+    'js/firebase.js',
+    //'js/slider.js',
+    //'js/slider2.js',
   ];
   public $jsOptions = [
     'type' => 'module',
-];
+  ];
   public $depends = [
     'yii\web\YiiAsset',
     'yii\bootstrap5\BootstrapAsset'

@@ -29,7 +29,6 @@ use \yii\helpers\Html;
           'options' => [
             //'tag' => false,
           ],
-
         ]
       ]); ?>
       <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage ? 'uploaded' : '' ?>">

@@ -1,0 +1,166 @@
+.unread {
+  background-color: #B0E0E6;
+}
+
+.buyer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: space-between;
+  margin:0;
+  padding:0;
+}
+
+.buyer a {
+  line-height: 25px;
+  color:#fff;
+}
+
+.buyer-avatar {
+  display: inline-block;
+  width:40px;
+  height:40px;
+  -webkit-transition:opacity .3s ease-out;
+  transition:opacity .3s ease-out;
+  background-color:#fff;
+  border-radius:50%;
+  overflow:hidden;
+  margin-left:10px;
+}
+
+.buyer-avatar:hover{
+  opacity:.7
+}
+
+.buyer-avatar:active,.buyer-avatar:focus{
+  opacity:.6;
+  outline:0
+}
+
+.buyer-avatar img{
+  width: 100%;
+  height:100%;
+  -o-object-fit:cover;
+  object-fit:cover;
+  -o-object-position:center;
+  object-position:center
+}
+.buyer-link {
+  display: inline-block;
+  height:25px;
+  margin:0;
+
+  padding:0;
+}
+
+.list-view {
+  width: 200px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  align-content: space-around;
+  color: red;
+  background-color: #2b51a6;
+  border-radius: 8px;
+  box-shadow: -2px -3px 4px rgb(17 33 70 / 50%);
+
+  -webkit-transition:opacity .3s ease-out;
+  transition:opacity .3s ease-out;
+  /*background-size:54px 52px;*/
+  cursor:pointer;
+  border:0;
+  position:fixed;
+  bottom:25px;
+  left:calc(50% + 426px)
+}
+
+.buyer-pagination a:hover{
+  opacity:.7
+}
+
+
+.buyer-pagination a:active,.buyer-pagination a:focus{
+  opacity:.6;
+  outline:0
+}
+
+.buyer-pagination,.buyer-pagination a{
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display: flex;
+  -webkit-box-pack:center;
+  -ms-flex-pack:center;
+  justify-content:center;
+  -webkit-box-align:center;
+  -ms-flex-align:center;
+  align-items:center
+}
+
+.buyer-pagination {
+  margin:0;
+  padding:0;
+  height:40px;
+  list-style:none;
+  -ms-flex-wrap:wrap;
+  flex-wrap:wrap;
+  font-size:15px;
+  line-height:24px;
+  color:#FFFFFF;
+}
+
+.buyer-pagination li{
+  margin:0 5px;
+  -webkit-box-flex:0;
+  -ms-flex:none;
+  flex:none
+}
+
+.buyer-pagination a{
+  -webkit-transition:opacity .3s ease-out;
+  transition:opacity .3s ease-out;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -ms-flex-direction:column;
+  flex-direction:column;
+  text-align:center;
+  color:inherit;
+  min-width:20px;
+  height:20px;
+  border-radius:50%;
+
+}
+
+.buyer-pagination a.active{
+  color:#000000;
+  background-color:#2b51a6
+}
+
+.buyer-chat__subtitle{
+  display: none;
+  display: inline-block;
+  max-width:250px;
+  color:#fff;
+  font-weight:400;
+  font-size:16px;
+  line-height:19px;
+  margin:0;
+  padding: 0;
+}
+
+.buyer-chat__subtitle h2 {
+  color:#fff;
+  font-weight:400;
+  font-size:16px;
+  line-height:19px;
+  margin:0;
+}
+
+
+
+.buyer:hover{
+  opacity:.7
+}
+
+.buyer:active,.buyer:focus{
+  opacity:.6;outline:0
+}

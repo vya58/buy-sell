@@ -21,7 +21,7 @@
     var userChatField = chat.querySelector('[name="chat-message"]');
 
     document.addEventListener('click', function (evt) {
-     // evt.preventDefault(); // Отключить?
+      //evt.preventDefault(); // Отключить?
       if (evt.target === buttonToOpenChat) {
         evt.preventDefault();
         openChat();
