@@ -7,8 +7,6 @@
   align-items: center;
   justify-content: center;
   align-content: space-between;
-  margin:0;
-  padding:0;
 }
 
 .buyer a {
@@ -45,39 +43,43 @@
   -o-object-position:center;
   object-position:center
 }
+
 .buyer-link {
   display: inline-block;
   height:25px;
-  margin:0;
-
-  padding:0;
 }
 
 .list-view {
-  width: 200px;
+  width: 240px;
   display: flex;
   align-items: stretch;
   justify-content: center;
   align-content: space-around;
-  color: red;
   background-color: #2b51a6;
   border-radius: 8px;
   box-shadow: -2px -3px 4px rgb(17 33 70 / 50%);
-
   -webkit-transition:opacity .3s ease-out;
   transition:opacity .3s ease-out;
-  /*background-size:54px 52px;*/
   cursor:pointer;
   border:0;
   position:fixed;
-  bottom:25px;
-  left:calc(50% + 426px)
+  bottom:15px;
+  left:calc(50% + 345px)
+}
+
+.prev {
+  position: absolute;
+  left: -25px;
+}
+
+.next {
+  position: absolute;
+  left: 230px;
 }
 
 .buyer-pagination a:hover{
   opacity:.7
 }
-
 
 .buyer-pagination a:active,.buyer-pagination a:focus{
   opacity:.6;
@@ -97,8 +99,6 @@
 }
 
 .buyer-pagination {
-  margin:0;
-  padding:0;
   height:40px;
   list-style:none;
   -ms-flex-wrap:wrap;
@@ -127,12 +127,12 @@
   min-width:20px;
   height:20px;
   border-radius:50%;
-
+  background-color:#2b51a6;
 }
 
 .buyer-pagination a.active{
-  color:#000000;
-  background-color:#2b51a6
+  color:#6e7675;
+  background-color:#2b51a6;
 }
 
 .buyer-chat__subtitle{
@@ -143,8 +143,6 @@
   font-weight:400;
   font-size:16px;
   line-height:19px;
-  margin:0;
-  padding: 0;
 }
 
 .buyer-chat__subtitle h2 {
@@ -152,10 +150,7 @@
   font-weight:400;
   font-size:16px;
   line-height:19px;
-  margin:0;
 }
-
-
 
 .buyer:hover{
   opacity:.7

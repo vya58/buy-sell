@@ -131,8 +131,9 @@ FirebaseAsset::register($this);
             'offer' => $offer,
           ],
           'pager' => [
-            'prevPageLabel' => false,
-            'nextPageLabel' => false,
+            'prevPageLabel' => '<span class="glyphicon glyphicon-chevron-left"></span>',
+            'nextPageLabel' => '<span class="glyphicon glyphicon-chevron-right "></span>',
+            'maxButtonCount' => 0,
             'disableCurrentPageButton' => true,
             'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
             'options' => [

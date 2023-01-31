@@ -109,7 +109,7 @@ use app\models\Offer;
                     <?php if (mb_strlen($mostTalkedOffer->offer_text) > Yii::$app->params['offerTextLength']) : ?>
                       <?= Html::encode(mb_substr($mostTalkedOffer->offer_text, 0, Yii::$app->params['offerTextLength']) . '...') ?>
                     <?php else : ?>
-                      <?= Html::encode($newmostTalkedOfferOffer->offer_text) ?>
+                      <?= Html::encode($mostTalkedOffer->offer_text) ?>
                     <?php endif; ?>
                   </p>
                 </div>

@@ -20,6 +20,9 @@ return [
   // Согласно ТЗ "Анонс, не более 55 символов." 52 - с учётом многоточия в конце оборванной строки
   'offerTextLength' => 52,
 
+  // Максимальная длина имени при выведении в чате продавца
+  'maxNameLength' => 24,
+
   'firebaseDatabaseUri' => $config['firebase_database_uri'],
   'firebaseServiceAccountShape' => $config['firebase_service_account_shape'],
 
