@@ -89,12 +89,21 @@ public function behaviors()
       ->all();
 
     // Самые новые предложения
-    $newOffers = Offer::getNewOffers();
-
+    $newOffersdataProvider = new ActiveDataProvider([
+      'query' => Offer::getNewOffers(),
+      'pagination' => [
+        'pageSize' => Yii::$app->params['newOffersCount'],
+      ],
+      'sort' => [
+        'defaultOrder' => [
+          'offer_date_create' => SORT_DESC,
+        ]
+      ],
+    ]);
     // Самые обсуждаемые предложения
     $mostTalkedOffers = Offer::getMostTalkedOffers();
 
-    return $this->render('index', compact('offerCategories', 'newOffers', 'mostTalkedOffers'));
+    return $this->render('index', compact('offerCategories', 'newOffersdataProvider', 'mostTalkedOffers'));
   }
 
   /**
@@ -126,7 +135,6 @@ public function behaviors()
 
       return $this->render('error', compact('statusCode', 'message'));
     }
-
     return $this->render('error', compact('statusCode', 'message'));
   }
 
@@ -161,8 +169,18 @@ public function behaviors()
     ]);
 
     // Самые новые предложения
-    $newOffers = Offer::getNewOffers();
+    $newOffersdataProvider = new ActiveDataProvider([
+      'query' => Offer::getNewOffers(),
+      'pagination' => [
+        'pageSize' => Yii::$app->params['newOffersCount'],
+      ],
+      'sort' => [
+        'defaultOrder' => [
+          'offer_date_create' => SORT_DESC,
+        ]
+      ],
+    ]);
 
-    return $this->render('search', compact('newOffers', 'dataProvider'/*, 'foundOffers'*/));
+    return $this->render('search', compact('newOffersdataProvider', 'dataProvider'));
   }
 }

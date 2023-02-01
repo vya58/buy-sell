@@ -168,17 +168,14 @@ class Offer extends \yii\db\ActiveRecord
   }
 
   /**
-   * Метод получения объявлений, отсортированных по дате добавления (в начале - самые новые)
+   * Получение объявлений, отсортированных по дате добавления (в начале - самые новые)
    *
-   * @return array|null массив объектов класса app\models\Offer либо null, если объявлений нет
+   * @return ActiveQuery|null ActiveQuery либо null, если объявлений нет
    */
-  public static function getNewOffers(): ?array
+  public static function getNewOffers(): ?ActiveQuery
   {
     return Offer::find()
-      ->with('categories')
-      ->orderBy(['offer_date_create' => SORT_DESC])
-      ->limit(Yii::$app->params['newOffersCount'])
-      ->all();
+      ->with('categories');
   }
 
   /**
@@ -275,7 +272,5 @@ class Offer extends \yii\db\ActiveRecord
     return Offer::find()
       ->with('categories')
       ->where(['like', 'offer_title', $query]);
-      //->orderBy(['offer_date_create' => SORT_DESC])
-      //->all();
   }
 }
