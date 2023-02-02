@@ -3,8 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -19,39 +17,6 @@ use yii\data\ActiveDataProvider;
 
 class OffersController extends Controller
 {
-  /**
-   * {@inheritdoc}
-   */
-  /*
-  public function behaviors()
-  {
-    return [
-      'access' => [
-        'class' => AccessControl::class,
-        'only' => ['edit'],
-        'rules' => [
-          [
-            'actions' => ['index'],
-            'allow' => true,
-            'roles' => ['*'],
-          ],
-          [
-            'actions' => ['edit'],
-            'allow' => true,
-            'roles' => ['updateOwnContent'],
-          ],
-        ],
-      ],
-
-      'verbs' => [
-        'class' => VerbFilter::class,
-        'actions' => [
-          'logout' => ['post'],
-        ],
-      ],
-    ];
-  }
-*/
   /**
    * Страница просмотра объявления
    *
@@ -114,22 +79,15 @@ class OffersController extends Controller
         ->having(['in', 'user_id', $userIds])
         ->all();
 
+      $query = User::find()
+        ->having(['in', 'user_id', $userIds]);
 
-
-          $query = User::find()
-          ->having(['in', 'user_id', $userIds]);
-        // \yii\helpers\VarDumper::dump($buyers, 3, true);
-       // die;
-
-        $dataProvider = new ActiveDataProvider([
-          'query' => $query,
-          'pagination' => [
-            'pageSize' => 1,
-          ],
-        ]);
-
-
-
+      $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+        'pagination' => [
+          'pageSize' => 1,
+        ],
+      ]);
     }
 
     if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
@@ -153,7 +111,6 @@ class OffersController extends Controller
       }
     }
 
-    // \yii\helpers\VarDumper::dump($chatForm, 3, true);
     // Добавление нового cообщения в чат. Доступно только зарегистрированным пользователям при наличии заполненного поля ввода сообщения.
     if (\Yii::$app->user->id !== $addressee->user_id && $chatFirebase && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
 
@@ -163,7 +120,6 @@ class OffersController extends Controller
       //обнуляем модель, чтобы очистить форму
       $chatForm = new ChatForm();
     }
-    //\yii\helpers\VarDumper::dump($addressee, 3, true);
     return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyers', 'buyerId', 'addressee', 'dataProvider'));
   }
 

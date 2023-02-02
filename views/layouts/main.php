@@ -3,17 +3,14 @@
 /** @var yii\web\View $this */
 /** @var string $content */
 
-//use Yii;
 use app\assets\AppAsset;
 use \yii\helpers\Url;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\widgets\OfferSearchWidget;
 use app\models\forms\OfferSearchForm;
 
 AppAsset::register($this);
 
-//$this->registerCsrfMetaTags();
 $this->registerMetaTag(['charset' => Yii::$app->charset], 'charset');
 $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
 $this->registerMetaTag(['name' => 'description', 'content' => 'Доска объявлений — современный веб-сайт, упрощающий продажу или покупку абсолютно любых вещей.']);
@@ -41,7 +38,7 @@ $this->registerLinkTag(['rel' => "stylesheet", 'href' => 'https://maxcdn.bootstr
       <nav class="header__user-menu">
         <ul class="header__list">
           <li class="header__item">
-            <a href="<?= Url::to(['/site']) ?>">Публикации</a><!-- TO DO Поменять ссылку, когда будет готова MyTicket -->
+            <a href="<?= Url::to(['/my-offers/index']) ?>">Публикации</a>
           </li>
           <li class="header__item">
             <a href="<?= Url::to(['comments/index/' . Yii::$app->user->id]) ?>">Комментарии</a>
@@ -64,7 +61,7 @@ $this->registerLinkTag(['rel' => "stylesheet", 'href' => 'https://maxcdn.bootstr
           'autocomplete' => 'off',
         ],
       ]); ?>
-      <?= $form->field($model, 'search')->input([/*'class' => 'visually-hidden js-file-field', */'placeholder' => 'Поиск'])->label(false) ?>
+      <?= $form->field($model, 'search')->input(['placeholder' => 'Поиск'])->label(false) ?>
       <div class="search__icon"></div>
       <div class="search__close-btn"></div>
       <?php ActiveForm::end();

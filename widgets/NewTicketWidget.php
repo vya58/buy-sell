@@ -10,10 +10,10 @@ use yii\base\Widget;
  */
 class NewTicketWidget extends Widget
 {
-    public $dataProvider;
+  public $dataProvider;
 
-    public function run()
-    {
-        return $this->render('new-ticket', ['dataProvider' => $this->dataProvider]);
-    }
+  public function run()
+  {
+    return $this->render('new-ticket', ['dataProvider' => $this->dataProvider]);
+  }
 }

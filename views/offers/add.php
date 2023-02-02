@@ -25,11 +25,6 @@ use \yii\helpers\Html;
           'enctype' => 'multipart/form-data',
           'autocomplete' => 'off',
         ],
-        'fieldConfig' => [
-          'options' => [
-            //'tag' => false,
-          ],
-        ]
       ]); ?>
       <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage ? 'uploaded' : '' ?>">
         <div class="ticket-form__avatar js-preview">
@@ -42,13 +37,13 @@ use \yii\helpers\Html;
       <div class="ticket-form__content">
         <div class="ticket-form__row">
           <div class="form__field">
-            <?= $form->field($offerAddForm, 'offerTitle')->textInput(['class' => 'js-field'])->label('Название') ?>
+            <?= $form->field($offerAddForm, 'offerTitle')->textInput(['class' => 'js-field', 'placeholder' => 'Название'])->label(false) ?>
             <span>Обязательное поле</span>
           </div>
         </div>
         <div class="ticket-form__row">
           <div class="form__field">
-            <?= $form->field($offerAddForm, 'offerText')->textarea(['cols' => 30, 'rows' => 10, 'class' => 'js-field'])->label('Описание') ?>
+            <?= $form->field($offerAddForm, 'offerText')->textarea(['cols' => 30, 'rows' => 10, 'class' => 'js-field', 'placeholder' => 'Описание'])->label(false) ?>
             <span>Обязательное поле</span>
           </div>
         </div>
@@ -57,10 +52,10 @@ use \yii\helpers\Html;
           Category::find()->all(),
           'category_id',
           'category_name'
-        ), ['class' => 'form__select js-multiple-select', 'placeholder' => "Выбрать категорию публикации", 'multiple' => true])->label(false); ?>
+        ), ['class' => 'form__select js-multiple-select', 'placeholder' => 'Выбрать категорию публикации', 'multiple' => true])->label(false); ?>
 
         <div class="ticket-form__row">
-          <?= $form->field($offerAddForm, 'offerPrice', ['options' => ['tag' => 'div', 'class' => 'form__field form__field--price']])->input('number', ['class' => 'js-field', 'min' => 1, 'template' => "{input}<span>Обязательное поле</span>",])->label('Цена') ?>
+          <?= $form->field($offerAddForm, 'offerPrice', ['options' => ['tag' => 'div', 'class' => 'form__field form__field--price']])->input('number', ['class' => 'js-field', 'min' => 1, 'template' => "{input}<span>Обязательное поле</span>", 'placeholder' => 'Цена'])->label(false) ?>
           <div class="form__switch switch">
             <?= $form->field($offerAddForm, 'offerType')->radioList(
               [

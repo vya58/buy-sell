@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\User;
 use app\models\forms\RegistrationForm;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -52,7 +51,6 @@ class RegistrationController extends Controller
         return $this->goHome();
       }
     }
-
     return $this->render('index', compact('registrationForm'));
   }
 }

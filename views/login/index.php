@@ -25,11 +25,11 @@ use yii\helpers\Url;
     <h2>Вход</h2>
   </div>
   <div class="form__field login__field">
-    <?= $form->field($loginForm, 'email')->input(['options' => ['class' => 'js-field']])->label('Эл. почта') ?>
+    <?= $form->field($loginForm, 'email')->input(['options' => ['class' => 'js-field'], ['placeholder' => 'Эл. почта']])->label(false) ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field login__field">
-    <?= $form->field($loginForm, 'password')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль') ?>
+    <?= $form->field($loginForm, 'password')->passwordInput(['options' => ['class' => 'js-field'], 'placeholder' => 'Пароль'])->label(false) ?>
     <span>Обязательное поле</span>
   </div>
   <button class="login__button btn btn--medium js-button" type="submit">Войти</button>

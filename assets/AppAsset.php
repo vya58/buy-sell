@@ -24,7 +24,6 @@ class AppAsset extends AssetBundle
     'css/site.css',
     'css/style.min.css',
     'css/style.min.css.map',
-    //'css/chat.css',
   ];
   public $js = [
     'js/vendor.js',

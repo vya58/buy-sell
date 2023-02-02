@@ -27,9 +27,9 @@ class OfferAddForm extends Model
   {
     return [
       [['offerTitle', 'offerText', 'categories', 'offerPrice', 'offerType'], 'required', 'message' => 'Обязательное поле'],
-      [['offerTitle'], 'string', 'min' => Offer::MIN_LENGTH_TICKETNAME, 'max' => Offer::MAX_LENGTH_TICKETNAME],
-      [['offerText'], 'string', 'min' => Offer::MIN_LENGTH_TICKETCOMMENT, 'max' => Offer::MAX_LENGTH_TICKETCOMMENT],
-      [['offerPrice'], 'integer', 'min' => Offer::MIN_TICKETPRICE],
+      [['offerTitle'], 'string', 'min' => Offer::MIN_LENGTH_TICKET_NAME, 'max' => Offer::MAX_LENGTH_TICKET_NAME],
+      [['offerText'], 'string', 'min' => Offer::MIN_LENGTH_TICKET_COMMENT, 'max' => Offer::MAX_LENGTH_TICKET_COMMENT],
+      [['offerPrice'], 'integer', 'min' => Offer::MIN_TICKET_PRICE],
       [['categories'], 'each', 'rule' => ['exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['categories' => 'category_id']]],
       [['offerImage'], 'file', 'skipOnEmpty' => true, 'checkExtensionByMimeType' => true, 'extensions' => 'jpg, png', 'wrongExtension' => 'Только форматы jpg и png'],
     ];

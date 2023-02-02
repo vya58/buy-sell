@@ -3,51 +3,13 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use app\models\Offer;
-use app\models\forms\OfferAddForm;
-use app\models\forms\CommentAddForm;
-use yii\helpers\ArrayHelper;
 
 class MyOffersController extends Controller
 {
-  /**
-   * {@inheritdoc}
-   */
-  /*
-  public function behaviors()
-  {
-    return [
-      'access' => [
-        'class' => AccessControl::class,
-        'only' => ['edit'],
-        'rules' => [
-          [
-            'actions' => ['index'],
-            'allow' => true,
-            'roles' => ['*'],
-          ],
-          [
-            'actions' => ['edit'],
-            'allow' => true,
-            'roles' => ['updateOwnContent'],
-          ],
-        ],
-      ],
-
-      'verbs' => [
-        'class' => VerbFilter::class,
-        'actions' => [
-          'logout' => ['post'],
-        ],
-      ],
-    ];
-  }
-*/
   /**
    * Страница просмотра объявления бъявлений пользователя
    *

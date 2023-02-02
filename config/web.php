@@ -1,8 +1,6 @@
 <?php
-//$config = parse_ini_file('/OpenServ/domains/config/taskforce_config.ini', true);
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
-//$firedb = require __DIR__ . '/firedb.php';
 
 $config = [
   'id' => 'basic',
@@ -63,7 +61,6 @@ $config = [
       ],
     ],
     'db' => $db,
-    //'firedb' => $firedb,
     'urlManager' => [
       'enablePrettyUrl' => true,
       'showScriptName' => false,
@@ -71,10 +68,8 @@ $config = [
       'rules' => [
         'login' => 'login/index',
         'offers/<id:\d+>' => 'offers/view',
-        //'<action:[-a-zA-Z0-9_]+>' => '<controller>/<action>',
         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
         '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
-
       ],
     ],
   ],

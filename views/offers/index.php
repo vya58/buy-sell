@@ -173,9 +173,7 @@ FirebaseAsset::register($this);
         <?php endforeach; ?>
       <?php endif; ?>
     </ul>
-    <?php Pjax::begin([
-      //'timeout' => 2000,
-    ]); ?>
+    <?php Pjax::begin([]); ?>
     <?php $formChat = ActiveForm::begin([
       'id' => 'chat-form',
       'method' => 'pjax',

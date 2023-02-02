@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -22,11 +21,6 @@ class CommentsController extends Controller
     return [
       'access' => [
         'class' => AccessControl::class,
-        /*
-        'denyCallback' => function () {
-            return $this->redirect(['login/index']);
-        },
-        */
         'rules' => [
           [
             'allow' => true,

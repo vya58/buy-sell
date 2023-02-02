@@ -5,7 +5,6 @@ namespace app\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 use \yii\db\ActiveQuery;
-use yii\web\Response;
 use app\models\exceptions\DataSaveException;
 
 /**
@@ -32,13 +31,15 @@ class Offer extends \yii\db\ActiveRecord
     'buy' => 'КУПЛЮ',
     'sell' => 'ПРОДАМ',
   ];
-  //public const MIN_LENGTH_SEARCH_TICKETPHRASE = 3;
-  public const MIN_LENGTH_TICKETNAME = 10;
-  public const MAX_LENGTH_TICKETNAME = 100;
-  public const MIN_LENGTH_TICKETCOMMENT = 50;
-  public const MAX_LENGTH_TICKETCOMMENT = 1000;
-  public const MIN_TICKETPRICE = 100;
+
+  public const MIN_LENGTH_TICKET_NAME = 10;
+  public const MAX_LENGTH_TICKET_NAME = 50;
+  public const MIN_LENGTH_TICKET_COMMENT = 50;
+  public const MAX_LENGTH_TICKET_COMMENT = 1000;
+  public const MIN_TICKET_PRICE = 100;
+  public const MAX_OFFER_TYPE = 10;
   public const OFFER_IMAGE_UPLOAD_PATH = '/uploads/img/';
+  public const MAX_LENGTH_OFFER_IMAGE_UPLOAD_PATH = 255;
 
   /**
    * {@inheritdoc}
@@ -58,9 +59,9 @@ class Offer extends \yii\db\ActiveRecord
       [['owner_id', 'offer_price'], 'integer'],
       [['offer_text'], 'string'],
       [['offer_date_create'], 'safe'],
-      [['offer_title'], 'string', 'max' => 50],
-      [['offer_image'], 'string', 'max' => 255],
-      [['offer_type'], 'string', 'max' => 10],
+      [['offer_title'], 'string', 'max' => self::MAX_LENGTH_TICKET_NAME],
+      [['offer_image'], 'string', 'max' => self::MAX_LENGTH_OFFER_IMAGE_UPLOAD_PATH],
+      [['offer_type'], 'string', 'max' => self::MAX_OFFER_TYPE],
       [['offer_image'], 'unique'],
       [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['owner_id' => 'user_id']],
     ];

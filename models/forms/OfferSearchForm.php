@@ -16,7 +16,7 @@ class OfferSearchForm extends Model
   {
     return [
       [['search'], 'required'],
-      [['search'], 'string', 'max' => Offer::MAX_LENGTH_TICKETNAME],
+      [['search'], 'string', 'max' => Offer::MAX_LENGTH_TICKET_NAME],
     ];
   }
 

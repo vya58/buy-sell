@@ -2,26 +2,43 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\console\Controller;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mailer\Mailer;
-use Symfony\Component\Mime\Email;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 use app\models\ChatFirebase;
 use app\models\Notification;
-use app\models\exceptions\EmailSendException;
-use yii\base\ErrorException;
-use app\models\User;
 
 /*
 * Запуск сбора неполученных сообщений пользователям в чате и отправка им e-mail-уведомлений об этом
-* через web-страницу
+* через web-страницу.
+* Действие возможно только пользователю с правами модератора.
 *
 */
 
 class NotificationsController extends Controller
 {
-  // TODO: сделать доступ только пользователю с правами администратора
+  /**
+   * {@inheritdoc}
+   */
+
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+        'denyCallback' => function () {
+          return $this->redirect(['site/index']);
+        },
+        'only' => ['index'],
+        'rules' => [
+          [
+            'allow' => true,
+            'actions' => ['index'],
+            'roles' => [\Yii::$app->user->can('moderator')],
+          ],
+        ]
+      ]
+    ];
+  }
 
   /**
    * Действие по получению непрочитанных сообщений в Firebase и e-mail-рассылке писем их получателям с количеством непрочтенных сообщений
@@ -47,6 +64,6 @@ class NotificationsController extends Controller
       Notification::sendEmail($key, $countMessages);
     }
 
-    return $this->render('index'); // Не забыть убрать
+    return $this->render('index');
   }
 }

@@ -1,7 +1,5 @@
 <?php
 
-
-
 use yii\helpers\Html;
 use \yii\helpers\Url;
 
@@ -10,7 +8,7 @@ use \yii\helpers\Url;
 <div class="buyer">
   <div class="buyer-link">
     <a href="<?= Url::to(['offers/index', 'id' => $offer->offer_id, 'buyerId' => $model->user_id]); ?>">
-    // Чтобы имя покупателя не вылезало за пределы элемента
+      // Условие, чтобы имя покупателя не вылезало за пределы элемента
       <?php if (mb_strlen($model->name) > Yii::$app->params['maxNameLength']) : ?>
         <?= Html::encode(mb_substr($model->name, 0, Yii::$app->params['maxNameLength']) . '...') ?>
       <?php else : ?>

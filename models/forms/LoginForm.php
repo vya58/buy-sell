@@ -6,9 +6,6 @@ use Yii;
 use yii\base\Model;
 
 use app\models\User;
-use yii\web\BadRequestHttpException;
-use app\models\exceptions\FileExistException;
-use app\models\exceptions\DataSaveException;
 
 class LoginForm extends Model
 {

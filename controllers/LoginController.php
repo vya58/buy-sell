@@ -44,9 +44,6 @@ class LoginController extends Controller
   /**
    * Страница входа.
    *
-   *
-   *
-   *
    * @return Response|string
    */
 

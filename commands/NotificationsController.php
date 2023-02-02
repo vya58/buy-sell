@@ -5,7 +5,6 @@ namespace app\commands;
 use yii\console\Controller;
 use app\models\ChatFirebase;
 use app\models\Notification;
-use app\models\User;
 
 /*
 * Запуск сбора неполученных сообщений пользователям в чате и отправка им e-mail-уведомлений об этом
@@ -38,7 +37,5 @@ class NotificationsController extends Controller
       $countMessages = count($users[$key]);
       Notification::sendEmail($key, $countMessages);
     }
-
-    echo "cron service running"; // Не забыть убрать
   }
 }

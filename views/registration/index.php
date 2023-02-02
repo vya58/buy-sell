@@ -35,19 +35,19 @@ use \yii\helpers\Url;
     </div>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'name')->textInput(['options' => ['class' => 'js-field']])->label('Имя и фамилия') ?>
+    <?= $form->field($registrationForm, 'name')->textInput(['options' => ['class' => 'js-field'], 'placeholder' => 'Имя и фамилия'])->label(false) ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'email')->input(['options' => ['class' => 'js-field']])->label('Эл. почта') ?>
+    <?= $form->field($registrationForm, 'email')->input(['options' => ['class' => 'js-field'], 'placeholder' => 'Эл. почта'])->label(false) ?>
     <span>Неверный email</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'password')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль') ?>
+    <?= $form->field($registrationForm, 'password')->passwordInput(['options' => ['class' => 'js-field'], 'placeholder' => 'Пароль'])->label(false) ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field sign-up__field">
-    <?= $form->field($registrationForm, 'passwordRepeat')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль еще раз') ?>
+    <?= $form->field($registrationForm, 'passwordRepeat')->passwordInput(['options' => ['class' => 'js-field'], 'placeholder' => 'Пароль еще раз'])->label('Пароль еще раз') ?>
     <span>Пароли не совпадают</span>
   </div>
 

@@ -24,8 +24,6 @@ class FirebaseAsset extends AssetBundle
   ];
   public $js = [
     'js/firebase.js',
-    //'js/slider.js',
-    //'js/slider2.js',
   ];
   public $jsOptions = [
     'type' => 'module',

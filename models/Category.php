@@ -18,6 +18,8 @@ use \yii\db\ActiveRecord;
 class Category extends ActiveRecord
 {
   public const CATEGORY_ICON_PATH = '/web/img/';
+  private const MAX_LENGTH_CATEGORY_ICON_PATH = 255;
+  private const MAX_LENGTH_CATEGORY_NAME = 30;
 
   /**
    * {@inheritdoc}
@@ -34,8 +36,8 @@ class Category extends ActiveRecord
   {
     return [
       [['category_name'], 'required'],
-      [['category_name'], 'string', 'max' => 30],
-      [['category_icon'], 'string', 'max' => 255],
+      [['category_name'], 'string', 'max' => self::MAX_LENGTH_CATEGORY_NAME],
+      [['category_icon'], 'string', 'max' => self::MAX_LENGTH_CATEGORY_ICON_PATH],
       [['category_icon'], 'unique'],
     ];
   }

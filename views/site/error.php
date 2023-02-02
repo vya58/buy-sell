@@ -20,9 +20,9 @@ use \yii\helpers\Url;
       </li>
     <?php endif; ?>
     <?php if (!Yii::$app->user->isGuest) : ?>
-    <li class="error__item">
-      <a href="<?= Url::to(['offers/add']) ?>">Новая публикация</a>
-    </li>
+      <li class="error__item">
+        <a href="<?= Url::to(['offers/add']) ?>">Новая публикация</a>
+      </li>
     <?php endif; ?>
     <li class="error__item">
       <a href="<?= Url::to('/site') ?>">Главная страница</a>
