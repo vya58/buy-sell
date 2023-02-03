@@ -22,16 +22,20 @@ class Auth extends ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return string
    */
-  public static function tableName()
+  public static function tableName(): string
   {
     return 'auth';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       [['user_id', 'source', 'source_id'], 'required'],
@@ -43,8 +47,10 @@ class Auth extends ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'id' => 'ID',

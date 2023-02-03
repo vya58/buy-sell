@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use \yii\db\ActiveQuery;
 
 /**
  * This is the model class for table "offer_category".
@@ -18,16 +18,20 @@ class OfferCategory extends \yii\db\ActiveRecord
 {
   /**
    * {@inheritdoc}
+   *
+   * @return string
    */
-  public static function tableName()
+  public static function tableName(): string
   {
     return 'offer_category';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       [['offer_id', 'category_id'], 'required'],
@@ -40,8 +44,10 @@ class OfferCategory extends \yii\db\ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'id' => 'ID',
@@ -53,9 +59,9 @@ class OfferCategory extends \yii\db\ActiveRecord
   /**
    * Gets query for [[Category]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getCategory()
+  public function getCategory(): ActiveQuery
   {
     return $this->hasOne(Category::class, ['category_id' => 'category_id']);
   }
@@ -63,9 +69,9 @@ class OfferCategory extends \yii\db\ActiveRecord
   /**
    * Gets query for [[Offer]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOffer()
+  public function getOffer(): ActiveQuery
   {
     return $this->hasOne(Offer::class, ['offer_id' => 'offer_id']);
   }

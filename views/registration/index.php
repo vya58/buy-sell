@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @var yii\web\View $this
- */
-
-use yii\widgets\ActiveForm;
 use app\models\forms\RegistrationForm;
-use \yii\helpers\Url;
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var RegistrationForm $registrationForm */

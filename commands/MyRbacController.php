@@ -3,9 +3,9 @@
 namespace app\commands;
 
 use Yii;
-use yii\console\Controller;
-use app\models\User;
 use app\models\rbac\AuthorRule;
+use app\models\User;
+use yii\console\Controller;
 
 /**
  * Инициализатор RBAC выполняется в консоли php yii my-rbac/init

@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use Yii;
+use \yii\db\ActiveQuery;
+use \yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "offer_comment".
@@ -14,20 +15,24 @@ use Yii;
  * @property Comment $comment
  * @property Offer $offer
  */
-class OfferComment extends \yii\db\ActiveRecord
+class OfferComment extends ActiveRecord
 {
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'offer_comment';
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['offer_id', 'comment_id'], 'required'],
@@ -40,8 +45,10 @@ class OfferComment extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
@@ -53,9 +60,9 @@ class OfferComment extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Comment]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getComment()
+    public function getComment(): ActiveQuery
     {
         return $this->hasOne(Comment::class, ['comment_id' => 'comment_id']);
     }
@@ -63,9 +70,9 @@ class OfferComment extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Offer]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOffer()
+    public function getOffer(): ActiveQuery
     {
         return $this->hasOne(Offer::class, ['offer_id' => 'offer_id']);
     }

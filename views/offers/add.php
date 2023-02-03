@@ -4,8 +4,8 @@ use app\models\Category;
 use app\models\Offer;
 use app\models\forms\OfferAddForm;
 use yii\helpers\ArrayHelper;
-use yii\widgets\ActiveForm;
 use \yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var OfferAddForm $offerAddForm */

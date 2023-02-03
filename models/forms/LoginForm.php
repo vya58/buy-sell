@@ -2,10 +2,9 @@
 
 namespace app\models\forms;
 
+use app\models\User;
 use Yii;
 use yii\base\Model;
-
-use app\models\User;
 
 class LoginForm extends Model
 {
@@ -16,6 +15,8 @@ class LoginForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function rules(): array
   {
@@ -30,8 +31,10 @@ class LoginForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'email' => 'Эл. почта',
@@ -43,8 +46,10 @@ class LoginForm extends Model
    * Метод валидации пароля при входе пользователя
    *
    * @param string $attribute - строка из поля 'password' формы входа
+   *
+   * @return void
    */
-  public function validatePassword($attribute)
+  public function validatePassword($attribute): void
   {
     if (!$this->hasErrors()) {
       $user = $this->getUser();
@@ -72,7 +77,7 @@ class LoginForm extends Model
    * Logs in a user using the provided username and password.
    * @return bool whether the user is logged in successfully
    */
-  public function login()
+  public function login(): bool
   {
     if ($this->validate()) {
       return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);

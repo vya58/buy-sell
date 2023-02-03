@@ -2,8 +2,9 @@
 
 namespace app\models\forms;
 
-use yii\base\Model;
 use app\models\ChatFirebase;
+use app\models\User;
+use yii\base\Model;
 
 class ChatForm extends Model
 {
@@ -11,6 +12,7 @@ class ChatForm extends Model
 
   /**
    * @inheritDoc
+   * @return array
    */
   public function rules(): array
   {
@@ -21,8 +23,9 @@ class ChatForm extends Model
 
   /**
    * @inheritDoc
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'message' => 'Ваше сообщение в чат',
@@ -32,12 +35,13 @@ class ChatForm extends Model
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
-   * @param int $id - id объявления
+   * @param User $addressee - объект класса User - адресат отправляемого сообщения
+   * @param ChatFirebase|null $chatFirebase объект класса ChatFirebase или null
    *
    * @return bool
    */
 
-  public function addMessage($addressee, ?ChatFirebase $chatFirebase = null): bool
+  public function addMessage(User $addressee, ?ChatFirebase $chatFirebase = null): bool
   {
     if (!$this->message || !$chatFirebase) {
       return false;

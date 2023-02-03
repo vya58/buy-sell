@@ -2,16 +2,16 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\Response;
 use app\models\forms\LoginForm;
 use app\models\User;
+use Yii;
 use yii\authclient\AuthAction;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
+use yii\web\Controller;
 use yii\web\BadRequestHttpException;
+use yii\web\Response;
 
 
 class LoginController extends Controller
@@ -19,7 +19,6 @@ class LoginController extends Controller
   /**
    * {@inheritdoc}
    */
-
   public function behaviors()
   {
     return [
@@ -34,7 +33,6 @@ class LoginController extends Controller
             'allow' => true,
             'actions' => ['index'],
             'roles' => ['?'],
-
           ],
         ]
       ]
@@ -46,8 +44,7 @@ class LoginController extends Controller
    *
    * @return Response|string
    */
-
-  public function actionIndex()
+  public function actionIndex(): Response|string
   {
     $loginForm = new LoginForm();
 
@@ -61,7 +58,6 @@ class LoginController extends Controller
         return $this->goHome();
       }
     }
-
     $loginForm->password = null;
 
     return $this->render('index', compact('loginForm'));
@@ -85,11 +81,12 @@ class LoginController extends Controller
   /**
    * Результат успешной регистрации с помощью социальной сети
    *
-   * @param $client - социальная сеть, через которую происходит авторизация
+   * @param ClientInterface $client - социальная сеть, через которую происходит авторизация
    *
    * @return Response
+   * @throws BadRequestHttpException
    */
-  public function onAuthSuccess(ClientInterface $client)
+  public function onAuthSuccess(ClientInterface $client): Response|string
   {
     $attributes = $client->getUserAttributes();
 

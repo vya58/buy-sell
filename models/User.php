@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use \yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
@@ -75,16 +76,20 @@ class User extends ActiveRecord implements IdentityInterface
 
   /**
    * {@inheritdoc}
+   *
+   * @return string
    */
-  public static function tableName()
+  public static function tableName(): string
   {
     return 'user';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       [['name', 'email', 'password'], 'required'],
@@ -99,8 +104,10 @@ class User extends ActiveRecord implements IdentityInterface
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'user_id' => 'ID пользователя',
@@ -118,7 +125,7 @@ class User extends ActiveRecord implements IdentityInterface
    * @param string $password password to validate
    * @return bool if password provided is valid for current user
    */
-  public function validatePassword($password)
+  public function validatePassword($password): bool
   {
     return Yii::$app->security->validatePassword($password, $this->password);
   }
@@ -126,9 +133,8 @@ class User extends ActiveRecord implements IdentityInterface
   /**
    * Создание нового пользователя через ВКонтакте
    * @param array $attributes - атрибуты пользователя переданные ВКонтакте
-   *
    */
-  public function createVkUser(array $attributes)
+  public function createVkUser(array $attributes): void
   {
     $this->name = $attributes['first_name'] . $attributes['last_name'];
     $this->email = $attributes['email'];
@@ -146,9 +152,9 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Gets query for [[Auths]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getAuths()
+    public function getAuths(): ActiveQuery
     {
         return $this->hasMany(Auth::class, ['user_id' => 'user_id']);
     }
@@ -156,9 +162,9 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Gets query for [[Comments]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getComments()
+    public function getComments(): ActiveQuery
     {
         return $this->hasMany(Comment::class, ['owner_id' => 'user_id']);
     }
@@ -166,9 +172,9 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * Gets query for [[Offers]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOffers()
+    public function getOffers(): ActiveQuery
     {
         return $this->hasMany(Offer::class, ['owner_id' => 'user_id']);
     }

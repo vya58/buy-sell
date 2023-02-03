@@ -2,11 +2,10 @@
 
 namespace app\controllers;
 
+use app\models\Offer;
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use app\models\Offer;
 
 class MyOffersController extends Controller
 {
@@ -14,7 +13,6 @@ class MyOffersController extends Controller
    * Страница просмотра объявления бъявлений пользователя
    *
    * @return Response|string - код страницы
-   * @throws NotFoundHttpException
    */
   public function actionIndex(): Response|string
   {
@@ -32,7 +30,6 @@ class MyOffersController extends Controller
    *
    * @param int $offerId - id объявления
    * @return Response|string - код страницы просмотра страницы комментариев
-   * @throws NotFoundHttpException
    */
   public function actionRemove($offerId): Response|string
   {

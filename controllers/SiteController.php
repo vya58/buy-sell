@@ -2,22 +2,22 @@
 
 namespace app\controllers;
 
+use app\models\Offer;
+use app\models\OfferCategory;
+use app\models\forms\OfferSearchForm;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\Response;
-use app\models\OfferCategory;
-use app\models\Offer;
-use app\models\forms\OfferSearchForm;
-use yii\data\ActiveDataProvider;
 
 class SiteController extends Controller
 {
   /**
    * Displays homepage.
    *
-   * @return string
+   * @return Response|string
    */
-  public function actionIndex()
+  public function actionIndex(): Response|string
   {
     // Категории для section class="categories-list"
     $offerCategories = OfferCategory::find()
@@ -45,10 +45,10 @@ class SiteController extends Controller
   /**
    * Logout action.
    *
-   * @return Response
+   * @return Response|string
    */
 
-  public function actionLogout()
+  public function actionLogout(): Response|string
   {
     Yii::$app->user->logout();
 
@@ -77,9 +77,9 @@ class SiteController extends Controller
   /**
    * Страница результатов поиска объявлений
    *
-   * @return string
+   * @return Response|string
    */
-  public function actionSearch()
+  public function actionSearch(): Response|string
   {
     $foundOffers = false;
     $model = new OfferSearchForm();

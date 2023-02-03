@@ -2,10 +2,10 @@
 
 namespace app\models;
 
-use Yii;
-use yii\helpers\ArrayHelper;
-use \yii\db\ActiveQuery;
 use app\models\exceptions\DataSaveException;
+use Yii;
+use \yii\db\ActiveQuery;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "offer".
@@ -43,16 +43,20 @@ class Offer extends \yii\db\ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return string
    */
-  public static function tableName()
+  public static function tableName(): string
   {
     return 'offer';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       [['owner_id', 'offer_title', 'offer_price', 'offer_type', 'offer_text'], 'required'],
@@ -69,8 +73,10 @@ class Offer extends \yii\db\ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'offer_id' => 'ID объявления',
@@ -87,9 +93,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Gets query for [[Categories]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getCategories()
+  public function getCategories(): ActiveQuery
   {
     return $this->hasMany(Category::class, ['category_id' => 'category_id'])->viaTable('offer_category', ['offer_id' => 'offer_id']);
   }
@@ -97,9 +103,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Gets query for [[Comments]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getComments()
+  public function getComments(): ActiveQuery
   {
     return $this->hasMany(Comment::class, ['comment_id' => 'comment_id'])->viaTable('offer_comment', ['offer_id' => 'offer_id']);
   }
@@ -107,9 +113,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Gets query for [[OfferCategories]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOfferCategories()
+  public function getOfferCategories(): ActiveQuery
   {
     return $this->hasMany(OfferCategory::class, ['offer_id' => 'offer_id']);
   }
@@ -117,9 +123,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Gets query for [[OfferComments]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOfferComments()
+  public function getOfferComments(): ActiveQuery
   {
     return $this->hasMany(OfferComment::class, ['offer_id' => 'offer_id']);
   }
@@ -127,9 +133,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Gets query for [[Owner]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOwner()
+  public function getOwner(): ActiveQuery
   {
     return $this->hasOne(User::class, ['user_id' => 'owner_id']);
   }

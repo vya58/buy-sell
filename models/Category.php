@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use \yii\db\ActiveQuery;
 use \yii\db\ActiveRecord;
 
 /**
@@ -23,16 +23,20 @@ class Category extends ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return string
    */
-  public static function tableName()
+  public static function tableName(): string
   {
     return 'category';
   }
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function rules()
+  public function rules(): array
   {
     return [
       [['category_name'], 'required'],
@@ -44,8 +48,10 @@ class Category extends ActiveRecord
 
   /**
    * {@inheritdoc}
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'category_id' => 'ID категории',
@@ -57,9 +63,9 @@ class Category extends ActiveRecord
   /**
    * Gets query for [[OfferCategories]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOfferCategories()
+  public function getOfferCategories(): ActiveQuery
   {
     return $this->hasMany(OfferCategory::class, ['category_id' => 'category_id']);
   }
@@ -67,9 +73,9 @@ class Category extends ActiveRecord
   /**
    * Gets query for [[Offers]].
    *
-   * @return \yii\db\ActiveQuery
+   * @return ActiveQuery
    */
-  public function getOffers()
+  public function getOffers(): ActiveQuery
   {
     return $this->hasMany(Offer::class, ['offer_id' => 'offer_id'])->viaTable('offer_category', ['category_id' => 'category_id']);
   }

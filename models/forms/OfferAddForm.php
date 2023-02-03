@@ -2,14 +2,14 @@
 
 namespace app\models\forms;
 
-use Yii;
-use yii\base\Model;
-use yii\web\UploadedFile;
 use app\models\Category;
 use app\models\Offer;
 use app\models\OfferCategory;
-use app\models\exceptions\FileExistException;
 use app\models\exceptions\DataSaveException;
+use app\models\exceptions\FileExistException;
+use Yii;
+use yii\base\Model;
+use yii\web\UploadedFile;
 
 class OfferAddForm extends Model
 {
@@ -17,11 +17,13 @@ class OfferAddForm extends Model
   public string $offerTitle = '';
   public string $offerText = '';
   public string $offerType = '';
-  public $categories;
-  public $offerPrice;
+  public array $categories;
+  public int $offerPrice;
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function rules(): array
   {
@@ -37,8 +39,10 @@ class OfferAddForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'offerImage' => 'Загрузить аватар',
@@ -72,7 +76,8 @@ class OfferAddForm extends Model
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
-   * @param Offer $offer - объект класса Offer
+   * @param int|null $id - id публикации
+   *
    * @throws DataSaveException
    * @throws FileExistException
    */
@@ -130,13 +135,14 @@ class OfferAddForm extends Model
    *
    * @param Offer $offer - объект класса Offer
    * @param UploadedFile $offerImage - объект класса UploadedFile
+   *
    * @return bool
    * @throws DataSaveException
    */
   public function uploadImage($offer, $offerImage): bool
   {
     if ($this->validate() && $this->offerImage) {
-      // Уникальное имя файла в БД
+      // Создаем уникальное имя файла в БД
       $addedImageName = md5(microtime(true)) . '.' . $offerImage->getExtension();
       $offer->offer_image = $addedImageName;
 

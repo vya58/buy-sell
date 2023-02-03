@@ -45,8 +45,6 @@ window.addEventListener('focus', function () {
 // Если нет buyerId, значит продавец отправляет сообщение сам себе
 function firebaseChangeListener(starCountRef, buyerId = null) {
   if (buyerId) {
-
-    console.log(buyerId);
     // Прослушиватель изменений в Firebase
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
@@ -78,7 +76,6 @@ function firebaseChangeListener(starCountRef, buyerId = null) {
       }
     });
   }
-
 }
 
 // Создаём пустой DocumentFragment и получаем шаблон миниатюр

@@ -8,7 +8,40 @@ use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database\Reference;
 
 /**
+ * Класс модели для чата в Firebase Realtime Database
+ * https://firebase-php.readthedocs.io/en/stable/realtime-database.html
  *
+ * Схема базы данных чата в Firebase Realtime Database:
+ *
+ * Проект BuysellChat => [
+ *    'id объявления' => [
+ *        'id покупателя' => [
+ *            0 => [
+ *                'date' - дата и время сообщения в формате: 'd M Y H:i:s',
+ *                 'message' - текст сообщения,
+ *                 'read' - метка о прочтении получателем сообщения true/false,
+ *
+ *                  Ключи ниже добавлены для упрощения выборки непрочитанных сообщений и селекци адресатов
+ *                  'offerId' - id объявления,
+ *                  'toUserId' - id получателя сообщения,
+ *                  'fromUserId' - id отправителя сообщения,
+ *              ],
+ *            1 => [
+ *                ...
+ *              ],
+ *            ...
+ *            ...
+ *            n => [
+ *                ...
+ *              ],
+ *          ]
+ *      ]
+ * ]
+ *
+ * @property int|null $offerId - id публикации
+ * @property int|null $buyerId - id покупателя
+ *
+ * @property $database - \Kreait\Firebase\Contract\Database
  */
 class ChatFirebase extends Model
 {
@@ -25,6 +58,7 @@ class ChatFirebase extends Model
 
   /**
    * Получение параметра запроса для Kreait\Firebase\Database\Reference в зависимости от наличия и значений id объявления и покупателя
+   *
    * @return string $path
    */
   private function getQuery(): string
@@ -41,8 +75,10 @@ class ChatFirebase extends Model
 
   /**
    * Получение данных чата
+   *
+   * @return array|null
    */
-  public function getValueChat()
+  public function getValueChat(): ?array
   {
     if (!$this->database) {
       return false;
@@ -52,8 +88,10 @@ class ChatFirebase extends Model
 
   /**
    * Получение snapshot'а чата
+   *
+   * @return false|\Kreait\Firebase\Database\Snapshot
    */
-  public function getSnapshotChat()
+  public function getSnapshotChat(): false|\Kreait\Firebase\Database\Snapshot
   {
     if (!$this->database) {
       return false;
@@ -63,6 +101,7 @@ class ChatFirebase extends Model
 
   /**
    * Запись сообщения в Firebase
+   *
    * @return null|Reference
    */
   public function sendMessage(User $addressee, ?string $message = null): ?Reference
@@ -89,6 +128,7 @@ class ChatFirebase extends Model
 
   /**
    * Отметка сообщения как прочитанного
+   *
    * @return null|Reference
    */
   public function readMessage(int $messageNumber): Reference

@@ -2,12 +2,11 @@
 
 namespace app\models\forms;
 
+use app\models\Comment;
+use app\models\OfferComment;
+use app\models\exceptions\DataSaveException;
 use Yii;
 use yii\base\Model;
-use app\models\OfferComment;
-use app\models\Comment;
-use app\models\exceptions\FileExistException;
-use app\models\exceptions\DataSaveException;
 
 class CommentAddForm extends Model
 {
@@ -15,6 +14,8 @@ class CommentAddForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function rules(): array
   {
@@ -26,6 +27,8 @@ class CommentAddForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function attributeLabels()
   {
@@ -41,7 +44,6 @@ class CommentAddForm extends Model
    *
    * @return bool
    * @throws DataSaveException
-   * @throws FileExistException
    */
   public function addComment($id): bool
   {

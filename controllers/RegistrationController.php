@@ -2,17 +2,17 @@
 
 namespace app\controllers;
 
-use Yii;
 use app\models\forms\RegistrationForm;
+use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\Response;
 
 class RegistrationController extends Controller
 {
   /**
    * @inheritDoc
    */
-
   public function behaviors()
   {
     return [
@@ -40,7 +40,7 @@ class RegistrationController extends Controller
    *
    * @return string cтраница с формой регистрации
    */
-  public function actionIndex()
+  public function actionIndex(): Response|string
   {
     $registrationForm = new RegistrationForm();
 

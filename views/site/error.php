@@ -1,12 +1,9 @@
 <?php
 
-/** @var yii\web\View $this */
-/** @var string $name */
-/** @var string $message */
-/** @var Exception$exception */
-
 use yii\helpers\Html;
-use \yii\helpers\Url;
+use yii\helpers\Url;
+
+/** @var yii\web\View $this */
 
 ?>
 

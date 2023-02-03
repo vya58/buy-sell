@@ -2,14 +2,14 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 use app\models\Category;
 use app\models\Offer;
 use app\models\OfferCategory;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\web\Controller;
+use yii\web\Response;
+
 
 class CategoriesController extends Controller
 {
@@ -18,7 +18,6 @@ class CategoriesController extends Controller
    *
    * @param int $id - id категории
    * @return Response|string - код страницы
-   * @throws NotFoundHttpException
    */
   public function actionIndex(int $id): Response|string
   {

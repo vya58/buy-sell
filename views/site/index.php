@@ -2,11 +2,11 @@
 
 /** @var yii\web\View $this */
 
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;
-use \yii\helpers\Url;
 use app\models\Offer;
 use app\widgets\NewTicketWidget;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 ?>
 <?php if (!$mostTalkedOffers) : ?>

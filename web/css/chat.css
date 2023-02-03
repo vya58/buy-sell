@@ -1,7 +1,10 @@
+/*Выделение непрочитанных сообщений чата*/
+
 .unread {
   background-color: #B0E0E6;
 }
 
+/*Стилизация элементов выбора чата покупателя*/
 .buyer {
   display: flex;
   align-items: center;

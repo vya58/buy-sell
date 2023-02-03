@@ -2,15 +2,15 @@
 
 /** @var yii\web\View $this */
 
-use yii\helpers\Html;
-use \yii\helpers\Url;
 use app\models\Category;
+use app\assets\FirebaseAsset;
 use app\models\Offer;
 use app\models\User;
+use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
-use app\assets\FirebaseAsset;
-use yii\widgets\Pjax;
 use yii\widgets\ListView;
+use yii\widgets\Pjax;
 
 FirebaseAsset::register($this);
 
@@ -122,7 +122,7 @@ FirebaseAsset::register($this);
       <?php endif; ?>
     </div>
     <?php if (!Yii::$app->user->isGuest) : ?>
-      <?php if ($buyers) : ?>
+      <?php if ($dataProvider->count) : ?>
         <?= ListView::widget([
           'dataProvider' => $dataProvider,
           'itemView' => '_chat',
@@ -141,9 +141,10 @@ FirebaseAsset::register($this);
               'class' => 'buyer-pagination',
             ],
           ],
-        ]); ?>
+        ]);
+        ?>
       <?php endif; ?>
-      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (!$buyers && Yii::$app->user->id === $owner->user_id) ? '' : '' ?>></button>
+      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (!$buyerId && Yii::$app->user->id === $owner->user_id) ? 'disabled' : '' ?>></button>
     <?php endif; ?>
   </div>
 </section>

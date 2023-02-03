@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use Yii;
+use \yii\db\ActiveQuery;
 use \yii\db\ActiveRecord;
 
 /**
@@ -22,16 +22,20 @@ class Comment extends ActiveRecord
 
     /**
      * {@inheritdoc}
+     *
+     * @return string
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'comment';
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['comment_text'], 'required'],
@@ -43,8 +47,10 @@ class Comment extends ActiveRecord
 
     /**
      * {@inheritdoc}
+     *
+     * @return array
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'comment_id' => 'ID комментария',
@@ -56,9 +62,9 @@ class Comment extends ActiveRecord
     /**
      * Gets query for [[OfferComments]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOfferComments()
+    public function getOfferComments(): ActiveQuery
     {
         return $this->hasMany(OfferComment::class, ['comment_id' => 'comment_id']);
     }
@@ -66,9 +72,9 @@ class Comment extends ActiveRecord
     /**
      * Gets query for [[Offers]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOffers()
+    public function getOffers(): ActiveQuery
     {
         return $this->hasMany(Offer::class, ['offer_id' => 'offer_id'])->viaTable('offer_comment', ['comment_id' => 'comment_id']);
     }
@@ -76,9 +82,9 @@ class Comment extends ActiveRecord
     /**
      * Gets query for [[Owner]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return ActiveQuery
      */
-    public function getOwner()
+    public function getOwner(): ActiveQuery
     {
         return $this->hasOne(User::class, ['user_id' => 'owner_id']);
     }

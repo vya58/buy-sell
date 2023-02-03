@@ -2,10 +2,10 @@
 
 /** @var yii\web\View $this */
 
-use yii\helpers\Html;
-use \yii\helpers\Url;
 use app\models\Offer;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
+use yii\helpers\Url;
 
 ?>
 

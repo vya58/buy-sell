@@ -2,8 +2,8 @@
 
 namespace app\models\forms;
 
-use yii\base\Model;
 use app\models\Offer;
+use yii\base\Model;
 
 class OfferSearchForm extends Model
 {
@@ -11,6 +11,8 @@ class OfferSearchForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function rules(): array
   {
@@ -22,8 +24,10 @@ class OfferSearchForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'search' => 'Поиск',

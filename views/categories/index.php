@@ -2,10 +2,10 @@
 
 /** @var yii\web\View $this */
 
+use app\models\Offer;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use \yii\helpers\Url;
-use app\models\Offer;
+use yii\helpers\Url;
 use yii\widgets\ListView;
 
 ?>

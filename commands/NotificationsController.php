@@ -2,9 +2,9 @@
 
 namespace app\commands;
 
-use yii\console\Controller;
 use app\models\ChatFirebase;
 use app\models\Notification;
+use yii\console\Controller;
 
 /*
 * Запуск сбора неполученных сообщений пользователям в чате и отправка им e-mail-уведомлений об этом

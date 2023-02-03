@@ -2,12 +2,12 @@
 
 namespace app\models\forms;
 
+use app\models\User;
+use app\models\exceptions\DataSaveException;
+use app\models\exceptions\FileExistException;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;
-use app\models\User;
-use app\models\exceptions\FileExistException;
-use app\models\exceptions\DataSaveException;
 
 class RegistrationForm extends Model
 {
@@ -19,6 +19,8 @@ class RegistrationForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
   public function rules(): array
   {
@@ -37,8 +39,10 @@ class RegistrationForm extends Model
 
   /**
    * @inheritDoc
+   *
+   * @return array
    */
-  public function attributeLabels()
+  public function attributeLabels(): array
   {
     return [
       'name' => 'Ваше имя и фамилия',
@@ -51,7 +55,6 @@ class RegistrationForm extends Model
   /**
    * Метод сохранения данных из формы настройки профиля пользователя в БД
    *
-   * @param User $user - объект класса User
    * @throws DataSaveException
    * @throws FileExistException
    */
@@ -95,6 +98,7 @@ class RegistrationForm extends Model
    *
    * @param User $user - объект класса User
    * @param UploadedFile $avatar - объект класса UploadedFile
+   *
    * @return bool
    * @throws DataSaveException
    */

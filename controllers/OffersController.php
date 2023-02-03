@@ -2,18 +2,18 @@
 
 namespace app\controllers;
 
-use Yii;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 use app\models\ChatFirebase;
 use app\models\Offer;
 use app\models\User;
-use app\models\forms\OfferAddForm;
 use app\models\forms\ChatForm;
 use app\models\forms\CommentAddForm;
-use yii\helpers\ArrayHelper;
+use app\models\forms\OfferAddForm;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class OffersController extends Controller
 {
@@ -75,10 +75,6 @@ class OffersController extends Controller
         }
       }
 
-      $buyers = User::find()
-        ->having(['in', 'user_id', $userIds])
-        ->all();
-
       $query = User::find()
         ->having(['in', 'user_id', $userIds]);
 
@@ -120,15 +116,15 @@ class OffersController extends Controller
       //обнуляем модель, чтобы очистить форму
       $chatForm = new ChatForm();
     }
-    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyers', 'buyerId', 'addressee', 'dataProvider'));
+    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyerId', 'addressee', 'dataProvider'));
   }
 
   /**
    * Страница с формой добавления объявления
    *
-   * @return string - код страницы с формой создания задания
+   * @return Response|string - код страницы с формой создания задания
    */
-  public function actionAdd()
+  public function actionAdd(): Response|string
   {
     $ticketFormTitle = 'Новая публикация';
 
@@ -153,8 +149,9 @@ class OffersController extends Controller
    * Страница с формой редактирования объявления
    *
    * @param int $id - id объявления
+   * @throws NotFoundHttpException
    */
-  public function actionEdit($id)
+  public function actionEdit($id): Response|string
   {
     $offer = Offer::find()
       ->with('owner')

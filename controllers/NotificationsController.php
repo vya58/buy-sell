@@ -2,10 +2,11 @@
 
 namespace app\controllers;
 
-use yii\filters\AccessControl;
-use yii\web\Controller;
 use app\models\ChatFirebase;
 use app\models\Notification;
+use yii\filters\AccessControl;
+use yii\web\Controller;
+use yii\web\Response;
 
 /*
 * Запуск сбора неполученных сообщений пользователям в чате и отправка им e-mail-уведомлений об этом
@@ -45,7 +46,7 @@ class NotificationsController extends Controller
    *
    * @return Response|string - код страницы
    */
-  public function actionIndex()
+  public function actionIndex(): Response|string
   {
     $firebase = new ChatFirebase();
     $firebaseAllOffersChats = $firebase->getValueChat();

@@ -2,9 +2,10 @@
 
 /** @var yii\web\View $this */
 
+use app\widgets\NewTicketWidget;
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use app\widgets\NewTicketWidget;
+
 
 ?>
 
