@@ -22,7 +22,6 @@ class RegistrationController extends Controller
         'denyCallback' => function () {
           return $this->redirect(['site/index']);
         },
-
         'only' => ['index'],
         'rules' => [
           [
