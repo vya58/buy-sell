@@ -2,6 +2,7 @@
 
 /** @var yii\web\View $this */
 
+use app\models\helpers\CalculatePageHelper;
 use app\widgets\NewTicketWidget;
 use yii\helpers\Html;
 use yii\widgets\ListView;
@@ -10,7 +11,6 @@ use yii\widgets\ListView;
 ?>
 
 <section class="search-results">
-
   <h1 class="visually-hidden">Результаты поиска</h1>
   <div class="search-results__wrapper">
     <?php if ($dataProvider->totalCount === 0) : ?>
@@ -18,22 +18,22 @@ use yii\widgets\ListView;
         <p>Не найдено <br>ни&nbsp;одной публикации</p>
       </div>
     <?php else : ?>
-      <p class="search-results__label">Найдено <span class="js-results"><?= Html::encode($dataProvider->totalCount) ?> публикации</span></p>
+      <p class="search-results__label"><?= $dataProvider->totalCount !== 1 ? 'Найдено ' : 'Найдена ' ?><span class="js-results"><?= Html::encode($dataProvider->totalCount) ?> публикации</span></p>
       <?= ListView::widget(
         [
           'dataProvider' => $dataProvider,
           'itemView' => '_search',
-          'layout' => "{pager}\n<ul class='search-results__list'>{items}</ul>",
+          'layout' => "<div class='tickets-list__header'>{pager}</div>\n<ul class='search-results__list'>{items}</ul>",
           'itemOptions' => [
             'tag' => 'li',
-            'class' => 'search-results__item',
+            'class' => 'tickets-list__item',
           ],
           'pager' => [
-            'prevPageLabel' => 'Предыдущие 8',
-            'nextPageLabel' => 'Еще ' . Yii::$app->params['pageSize'],
-            'pageCssClass' => 'visually-hidden',
+            'prevPageLabel' => 'Предыдущие ' . Yii::$app->params['pageSize'],
+            'nextPageLabel' => 'Еще ' . CalculatePageHelper::numberModelsTheNextPage($dataProvider, 'page-search'),
+            'pageCssClass' => 'visually-hidden tickets-list__link',
             'prevPageCssClass' => 'tickets-list__link',
-            'nextPageCssClass' => 'tickets-list__link',
+            'nextPageCssClass' => 'tickets-list__title',
             'disableCurrentPageButton' => true,
             'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'visually-hidden'],
             'linkContainerOptions' => [
@@ -41,8 +41,7 @@ use yii\widgets\ListView;
               'class' => 'tickets-list__title',
             ],
             'options' => [
-              'tag' => 'a',
-              'class' => 'tickets-list__link',
+              'tag' => false,
             ],
           ],
         ]

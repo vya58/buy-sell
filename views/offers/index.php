@@ -2,10 +2,10 @@
 
 /** @var yii\web\View $this */
 
-use app\models\Category;
 use app\assets\FirebaseAsset;
 use app\models\Offer;
 use app\models\User;
+use app\widgets\CategoryWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -46,25 +46,14 @@ FirebaseAsset::register($this);
             <a href="mailto:<?= Html::encode($owner->email) ?>"><?= Html::encode($owner->email) ?></a>
           </p>
         </div>
-        <ul class="ticket__tags">
-          <?php foreach ($categories as $category) : ?>
-            <li>
-              <a href="<?= Url::to(['/categories/index', 'id' => $category->category_id]) ?>" class="category-tile category-tile--small">
-                <span class="category-tile__image">
-                  <img src="<?= Html::encode(Category::CATEGORY_ICON_PATH . $category->category_icon . '.jpg') ?>" srcset="<?= Html::encode(Category::CATEGORY_ICON_PATH . $category->category_icon . '@2x.jpg') ?> 2x" alt="Иконка категории">
-                </span>
-                <span class="category-tile__label"><?= Html::encode($category->category_name) ?></span>
-              </a>
-            </li>
-          <?php endforeach; ?>
-        </ul>
+        <?= CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) ?>
       </div>
     </div>
     <div class="ticket__comments">
       <div class="ticket__warning">
         <?php if (Yii::$app->user->isGuest) : ?>
           <p>Отправка комментариев доступна <br>только для зарегистрированных пользователей.</p>
-          <a href="<?= Url::to(['/registration/index']) ?>" class="message__link btn btn--big">Вход и регистрация</a>
+          <a href="<?= Url::to(['/registration']) ?>" class="message__link btn btn--big">Вход и регистрация</a>
         <?php endif; ?>
       </div>
       <h2 class="ticket__subtitle">Коментарии</h2>
@@ -122,17 +111,18 @@ FirebaseAsset::register($this);
       <?php endif; ?>
     </div>
     <?php if (!Yii::$app->user->isGuest) : ?>
-      <?php if ($dataProvider->count) : ?>
+      <?php if ($dataProvider && $dataProvider->count !== 0) : ?>
         <?= ListView::widget([
           'dataProvider' => $dataProvider,
           'itemView' => '_chat',
           'layout' => "{items}\n{pager}",
           'viewParams' => [
             'offer' => $offer,
+            'dataProvider' => $dataProvider,
           ],
           'pager' => [
-            'prevPageLabel' => '<span class="glyphicon glyphicon-chevron-left"></span>',
-            'nextPageLabel' => '<span class="glyphicon glyphicon-chevron-right "></span>',
+            'prevPageLabel' => '&lt',
+            'nextPageLabel' => '&gt',
             'maxButtonCount' => 0,
             'disableCurrentPageButton' => true,
             'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'active'],
@@ -141,7 +131,7 @@ FirebaseAsset::register($this);
               'class' => 'buyer-pagination',
             ],
           ],
-        ]);
+        ])
         ?>
       <?php endif; ?>
       <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (!$buyerId && Yii::$app->user->id === $owner->user_id) ? 'disabled' : '' ?>></button>
@@ -189,6 +179,7 @@ FirebaseAsset::register($this);
     <?php ActiveForm::end(); ?>
     <?php Pjax::end(); ?>
   </section>
+
 <?php endif; ?>
 
 <template id="chat__message">

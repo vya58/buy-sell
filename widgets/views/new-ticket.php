@@ -1,5 +1,6 @@
 <?php
 
+use app\models\helpers\CalculatePageHelper;
 use yii\widgets\ListView;
 
 ?>
@@ -15,8 +16,8 @@ use yii\widgets\ListView;
       'class' => 'tickets-list__item',
     ],
     'pager' => [
-      'prevPageLabel' => 'Предыдущие 8',
-      'nextPageLabel' => 'Еще ' . Yii::$app->params['newOffersCount'],
+      'prevPageLabel' => 'Предыдущие ' . Yii::$app->params['pageSize'],
+      'nextPageLabel' => 'Еще ' . CalculatePageHelper::numberModelsTheNextPage($dataProvider, 'page-new'),
       'pageCssClass' => 'visually-hidden tickets-list__link',
       'prevPageCssClass' => 'tickets-list__link',
       'nextPageCssClass' => 'tickets-list__title',

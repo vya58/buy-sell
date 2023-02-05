@@ -25,10 +25,10 @@ class OffersController extends Controller
    * @return Response|string - код страницы просмотра объявления
    * @throws NotFoundHttpException
    */
-  public function actionIndex(int $id, int $buyerId = null): Response|string
+  public function actionIndex(int $id, int $buyerId = null, $currentPage = null): Response|string
   {
     $offer = Offer::find()
-      ->with('owner', 'categories', 'comments')
+      ->with('owner', 'categories', 'offerCategories', 'comments')
       ->where(['offer_id' => $id])
       ->one();
 
@@ -39,6 +39,7 @@ class OffersController extends Controller
     $owner = $offer->owner;
     $categories = $offer->categories;
     $comments = $offer->comments;
+    $offerCategories = $offer->offerCategories;
 
     ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
 
@@ -47,7 +48,7 @@ class OffersController extends Controller
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
     if (!Yii::$app->user->isGuest && $commentAddForm->load(Yii::$app->request->post())) {
       if ($commentAddForm->addComment($id)) {
-        return $this->redirect(['offers/index', 'id' => $id]);
+        return $this->redirect(['/offers', 'id' => $id]);
       }
     }
 
@@ -75,6 +76,11 @@ class OffersController extends Controller
         }
       }
 
+      // Установка начала пагинации, чтобы в меню выбора пользователя для чата отображался выбранный
+      if (isset(Yii::$app->request->queryParams['page'])) {
+        $currentPage = Yii::$app->request->queryParams['page'] - 1;
+      }
+
       $query = User::find()
         ->having(['in', 'user_id', $userIds]);
 
@@ -82,6 +88,7 @@ class OffersController extends Controller
         'query' => $query,
         'pagination' => [
           'pageSize' => 1,
+          'page' => $currentPage,
         ],
       ]);
     }
@@ -116,7 +123,7 @@ class OffersController extends Controller
       //обнуляем модель, чтобы очистить форму
       $chatForm = new ChatForm();
     }
-    return $this->render('index', compact('offer', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyerId', 'addressee', 'dataProvider'));
+    return $this->render('index', compact('offer', 'offerCategories', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyerId', 'addressee', 'dataProvider'));
   }
 
   /**
@@ -129,7 +136,7 @@ class OffersController extends Controller
     $ticketFormTitle = 'Новая публикация';
 
     if (Yii::$app->user->isGuest) {
-      return $this->goHome();
+      return $this->redirect(['/login']);
     }
 
     $offerAddForm = new OfferAddForm();
@@ -139,7 +146,7 @@ class OffersController extends Controller
       $offerId = $offerAddForm->addOffer();
 
       if ($offerId) {
-        return $this->redirect(['offers/index', 'id' => $offerId]);
+        return $this->redirect(['/site/search']);
       }
     }
     return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
@@ -153,6 +160,10 @@ class OffersController extends Controller
    */
   public function actionEdit($id): Response|string
   {
+    if (Yii::$app->user->isGuest) {
+      return $this->redirect(['/login']);
+    }
+
     $offer = Offer::find()
       ->with('owner')
       ->where(['offer_id' => $id])
@@ -161,7 +172,7 @@ class OffersController extends Controller
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
     // то он переадресуется на страницу просмотра объявления
     if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-      return $this->redirect(['offers/index', 'id' => $id]);
+      return $this->redirect(['offers/', 'id' => $id]);
     }
 
     $ticketFormTitle = 'Редактировать публикацию';
@@ -178,7 +189,7 @@ class OffersController extends Controller
       $offerId = $offerAddForm->addOffer($id);
 
       if ($offerId) {
-        return $this->redirect(['offers/index', 'id' => $offerId]);
+        return $this->redirect(['offers/', 'id' => $offerId]);
       }
     }
     return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));

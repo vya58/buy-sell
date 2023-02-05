@@ -66,8 +66,8 @@ $config = [
       'showScriptName' => false,
       'enableStrictParsing' => false,
       'rules' => [
-        'login' => 'login/index',
-        'offers/<id:\d+>' => 'offers/view',
+        'offers/<id:\d+>' => 'offers/index',
+        'comments/<id:\d+>' => 'comments/index',
         '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
         '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
       ],

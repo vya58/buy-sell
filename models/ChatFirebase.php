@@ -144,4 +144,15 @@ class ChatFirebase extends Model
         'read' => true,
       ]);
   }
+
+  public function deleteChat(): Reference
+  {
+    if (!$this->database) {
+      return false;
+    }
+    $query = $this->getQuery();
+
+    return $this->database->getReference($query)
+      ->remove();
+  }
 }

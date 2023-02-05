@@ -3,6 +3,7 @@
 namespace app\models\forms;
 
 use app\models\ChatFirebase;
+use app\models\Offer;
 use app\models\User;
 use yii\base\Model;
 

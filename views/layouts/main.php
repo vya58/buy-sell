@@ -16,7 +16,6 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => 'Доска объявлений — современный веб-сайт, упрощающий продажу или покупку абсолютно любых вещей.']);
 $this->registerMetaTag(['http-equiv' => 'X-UA-Compatible', 'content' => 'ie=edge']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/img/favicon.ico')]);
-$this->registerLinkTag(['rel' => "stylesheet", 'href' => 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css']);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -38,10 +37,10 @@ $this->registerLinkTag(['rel' => "stylesheet", 'href' => 'https://maxcdn.bootstr
       <nav class="header__user-menu">
         <ul class="header__list">
           <li class="header__item">
-            <a href="<?= Url::to(['/my-offers/index']) ?>">Публикации</a>
+            <a href="<?= Url::to(['/my-offers']) ?>">Публикации</a>
           </li>
           <li class="header__item">
-            <a href="<?= Url::to(['comments/index/' . Yii::$app->user->id]) ?>">Комментарии</a>
+            <a href="<?= Url::to(['comments/' . Yii::$app->user->id]) ?>">Комментарии</a>
           </li>
         </ul>
       </nav>

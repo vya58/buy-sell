@@ -66,18 +66,18 @@
   cursor:pointer;
   border:0;
   position:fixed;
-  bottom:15px;
+  bottom:25px; /*Высота расположения пагинатора чата "<div class="buyer">". Оптимально - 15px, но чтобы не закрывалось дебаг-панелью Yii2 поднято выше*/
   left:calc(50% + 345px)
 }
 
 .prev {
   position: absolute;
-  left: -25px;
+  left: -13px;
 }
 
 .next {
   position: absolute;
-  left: 230px;
+  left: 222px;
 }
 
 .buyer-pagination a:hover{
@@ -108,7 +108,7 @@
   flex-wrap:wrap;
   font-size:15px;
   line-height:24px;
-  color:#FFFFFF;
+  color:#f7fce4;
 }
 
 .buyer-pagination li{
@@ -143,7 +143,7 @@
   display: inline-block;
   max-width:250px;
   color:#fff;
-  font-weight:400;
+  /*font-weight:400;*/
   font-size:16px;
   line-height:19px;
 }

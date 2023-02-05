@@ -21,15 +21,15 @@ use yii\widgets\ActiveForm;
     ],
   ]); ?>
   <div class="login__title">
-    <a class="login__link" href="<?= Url::to('/registration/index') ?>">Регистрация</a>
+    <a class="login__link" href="<?= Url::to('/registration') ?>">Регистрация</a>
     <h2>Вход</h2>
   </div>
   <div class="form__field login__field">
-    <?= $form->field($loginForm, 'email')->input(['options' => ['class' => 'js-field'], ['placeholder' => 'Эл. почта']])->label(false) ?>
+    <?= $form->field($loginForm, 'email')->input(['options' => ['class' => 'js-field']])->label('Эл. почта') ?>
     <span>Обязательное поле</span>
   </div>
   <div class="form__field login__field">
-    <?= $form->field($loginForm, 'password')->passwordInput(['options' => ['class' => 'js-field'], 'placeholder' => 'Пароль'])->label(false) ?>
+    <?= $form->field($loginForm, 'password')->passwordInput(['options' => ['class' => 'js-field']])->label('Пароль') ?>
     <span>Обязательное поле</span>
   </div>
   <button class="login__button btn btn--medium js-button" type="submit">Войти</button>

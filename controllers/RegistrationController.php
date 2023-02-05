@@ -48,7 +48,7 @@ class RegistrationController extends Controller
       $registrationForm->load(Yii::$app->request->post());
 
       if ($registrationForm->createUser()) {
-        return $this->goHome();
+        return $this->redirect('login');
       }
     }
     return $this->render('index', compact('registrationForm'));

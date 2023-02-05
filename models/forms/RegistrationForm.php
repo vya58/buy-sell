@@ -69,28 +69,31 @@ class RegistrationForm extends Model
 
     $this->avatar = $avatar;
 
-    if (!$this->uploadAvatar($user, $avatar) && $this->avatar) {
-      throw new FileExistException('Загрузить файл не удалось');
-    }
-
-    $user->name = $this->name;
-    $user->email = $this->email;
-    $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
-
-    $transaction = Yii::$app->db->beginTransaction();
-
-    try {
-      if ($user->save()) {
-        $auth = Yii::$app->authManager;
-        $userRole = $auth->getRole(User::ROLE_USER);
-        $auth->assign($userRole, $user->getId());
+    if ($this->validate()) {
+      if (!$this->uploadAvatar($user, $avatar) && $this->avatar) {
+        throw new FileExistException('Загрузить файл не удалось');
       }
-      $transaction->commit();
-    } catch (DataSaveException $exception) {
-      $transaction->rollback();
-      throw new DataSaveException($exception->getMessage('Ошибка регистрации'));
+
+      $user->name = $this->name;
+      $user->email = $this->email;
+      $user->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
+
+      $transaction = Yii::$app->db->beginTransaction();
+
+      try {
+        if ($user->save()) {
+          $auth = Yii::$app->authManager;
+          $userRole = $auth->getRole(User::ROLE_USER);
+          $auth->assign($userRole, $user->getId());
+        }
+        $transaction->commit();
+      } catch (DataSaveException $exception) {
+        $transaction->rollback();
+        throw new DataSaveException($exception->getMessage('Ошибка регистрации'));
+      }
+      return true;
     }
-    return true;
+    return false;
   }
 
   /**

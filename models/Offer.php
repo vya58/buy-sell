@@ -234,15 +234,21 @@ class Offer extends \yii\db\ActiveRecord
    */
   public static function deleteOffer(Offer $offer): bool
   {
+    // Получение комментариев, связанных с этим объявлением
     $comments = $offer->comments;
+    // Получение чатов, связанных с этим объявлением
+    $firebase = new ChatFirebase($offer->offer_id);
 
     $transaction = Yii::$app->db->beginTransaction();
 
     try {
+      //Удаление комментариев к объявлению
       foreach ($comments as $comment) {
         $comment->delete();
       }
       $offer->delete();
+      //Удаление чатов объявления
+      $firebase->deleteChat();
 
       $transaction->commit();
     } catch (DataSaveException $exception) {

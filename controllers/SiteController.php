@@ -95,6 +95,7 @@ class SiteController extends Controller
     $dataProvider = new ActiveDataProvider([
       'query' => $foundOffers,
       'pagination' => [
+        'pageParam' => 'page-search',
         'pageSize' => Yii::$app->params['pageSize'],
       ],
       'sort' => [
@@ -108,6 +109,7 @@ class SiteController extends Controller
     $newOffersdataProvider = new ActiveDataProvider([
       'query' => Offer::getNewOffers(),
       'pagination' => [
+        'pageParam' => 'page-new',
         'pageSize' => Yii::$app->params['newOffersCount'],
       ],
       'sort' => [
@@ -116,6 +118,7 @@ class SiteController extends Controller
         ]
       ],
     ]);
+
     return $this->render('search', compact('newOffersdataProvider', 'dataProvider'));
   }
 }

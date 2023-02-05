@@ -4,11 +4,36 @@ namespace app\controllers;
 
 use app\models\Offer;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 
 class MyOffersController extends Controller
 {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function behaviors()
+  {
+    return [
+      'access' => [
+        'class' => AccessControl::class,
+        'denyCallback' => function () {
+          return $this->redirect(['/login']);
+        },
+        'rules' => [
+          [
+            'allow' => true,
+            'actions' => ['index', 'remove'],
+            'roles' => ['@'],
+          ],
+        ]
+      ]
+    ];
+  }
+
   /**
    * Страница просмотра объявления бъявлений пользователя
    *
@@ -39,11 +64,12 @@ class MyOffersController extends Controller
       ->one();
 
     // Если пользователь не обладает правом удаления объявления (не модератор и не автор объявления),
-    // то он переадресуется на страницу просмотра объявления без удаления комментария
-    if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-
-      $offer->deleteOffer($offer);
+    // то в случае попытки удаления, сервер возвращает код 403 без удаления объявления
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+      throw new ForbiddenHttpException();
     }
-    return $this->redirect(['my-offers/index']);
+    $offer->deleteOffer($offer);
+
+    return $this->redirect(['/my-offers']);
   }
 }

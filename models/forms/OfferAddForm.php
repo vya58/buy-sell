@@ -17,8 +17,8 @@ class OfferAddForm extends Model
   public string $offerTitle = '';
   public string $offerText = '';
   public string $offerType = '';
-  public array $categories;
-  public int $offerPrice;
+  public $categories;
+  public $offerPrice;
 
   /**
    * @inheritDoc

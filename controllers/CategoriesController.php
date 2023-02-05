@@ -25,6 +25,10 @@ class CategoriesController extends Controller
 
     $countOffers = $query->count();
 
+    if (!$countOffers) {
+      return $this->goHome();
+    }
+
     $dataProvider = new ActiveDataProvider([
       'query' => $query,
       'pagination' => [

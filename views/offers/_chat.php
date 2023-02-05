@@ -7,7 +7,7 @@ use yii\helpers\Url;
 
 <div class="buyer">
   <div class="buyer-link">
-    <a href="<?= Url::to(['offers/index', 'id' => $offer->offer_id, 'buyerId' => $model->user_id]); ?>">
+    <a href="<?= Url::to(['offers/index', 'id' => $offer->offer_id, 'buyerId' => $model->user_id, 'currentPage' => $dataProvider->pagination->getPage()]); ?>">
       <!--Условие, чтобы имя покупателя не вылезало за пределы элемента-->
       <?php if (mb_strlen($model->name) > Yii::$app->params['maxNameLength']) : ?>
         <?= Html::encode(mb_substr($model->name, 0, Yii::$app->params['maxNameLength']) . '...') ?>

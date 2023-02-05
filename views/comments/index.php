@@ -40,10 +40,11 @@ use yii\helpers\Url;
                 <div class="comment-card__content">
                   <?= Html::tag('p', Html::encode($comment->comment_text), ['style' => ['word-wrap' => 'break-word']]) ?>
                 </div>
-                <?= Html::button('Удалить', [
+                <!-- Кнопка "Удалить" появляется только для владельца комментария, владельца объявления и модератора -->
+                <?= ($comment->owner->user_id === \Yii::$app->user->id || \Yii::$app->user->can('moderator') || \Yii::$app->user->id === $offer->owner_id) ? Html::button('Удалить', [
                   'class' => 'comment-card__delete js-delete',
                   'onclick' => 'window.location.href = "' . Url::to(['/comments/remove', 'commentId' => $comment->comment_id]) . '";',
-                ]); ?>
+                ]) : '' ?>
               </div>
             </li>
           <?php endforeach;
