@@ -84,7 +84,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       <div class="page-footer__col">
         <a href="#" class="page-footer__logo-academy" aria-label="Ссылка на сайт HTML-Академии">
           <svg width="132" height="46">
-            <use xlink:href="img/sprite_auto.svg#logo-htmlac"></use>
+            <use xlink:href="/img/sprite_auto.svg#logo-htmlac"></use>
           </svg>
         </a>
         <p class="page-footer__copyright">© 2019 Проект Академии</p>

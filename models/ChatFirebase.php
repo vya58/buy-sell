@@ -52,7 +52,7 @@ class ChatFirebase extends Model
     private readonly ?int $buyerId = null
   ) {
     $this->database = (new Factory)
-      ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . 'firebase-adminsdk-4k4m2-1c314d0e34.json')
+      ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . '.json')
       ->withDatabaseUri(Yii::$app->params['firebaseDatabaseUri'])->createDatabase();
   }
 

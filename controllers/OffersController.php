@@ -105,6 +105,7 @@ class OffersController extends Controller
       $chatFirebase = new ChatFirebase($id, $buyerId);
 
       $messages = $chatFirebase->getValueChat();
+
       if ($messages) {
         foreach ($messages as $key => $message) {
           if ($message['fromUserId'] !== Yii::$app->user->id) {

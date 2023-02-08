@@ -1,4 +1,3 @@
-//$(document).pjax('.chat__form-button', '#pjax-container');
 'use strict';
 
 (function () {
@@ -9,7 +8,7 @@
   function openChat() {
     chat.classList.remove('visually-hidden');
     chat.classList.add('chat--open');
-    userChatField.focus();
+    //userChatField.focus(); // Мешает работе чата
   }
 
   function closeChat() {
@@ -18,7 +17,7 @@
   }
 
   if (chat && buttonToOpenChat && pageFooter) {
-    var userChatField = chat.querySelector('[name="chat-message"]');
+   // var userChatField = chat.querySelector('[name="chat-message"]');// Мешает работе чата
 
     document.addEventListener('click', function (evt) {
       //evt.preventDefault(); // Отключить?

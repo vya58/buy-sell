@@ -29,7 +29,5 @@ class FirebaseAsset extends AssetBundle
     'type' => 'module',
   ];
   public $depends = [
-    'yii\web\YiiAsset',
-    'yii\bootstrap5\BootstrapAsset'
   ];
 }

@@ -120,6 +120,36 @@ class User extends ActiveRecord implements IdentityInterface
   }
 
   /**
+   * Gets query for [[Auths]].
+   *
+   * @return ActiveQuery
+   */
+  public function getAuths(): ActiveQuery
+  {
+    return $this->hasMany(Auth::class, ['user_id' => 'user_id']);
+  }
+
+  /**
+   * Gets query for [[Comments]].
+   *
+   * @return ActiveQuery
+   */
+  public function getComments(): ActiveQuery
+  {
+    return $this->hasMany(Comment::class, ['owner_id' => 'user_id']);
+  }
+
+  /**
+   * Gets query for [[Offers]].
+   *
+   * @return ActiveQuery
+   */
+  public function getOffers(): ActiveQuery
+  {
+    return $this->hasMany(Offer::class, ['owner_id' => 'user_id']);
+  }
+
+  /**
    * Validates password
    *
    * @param string $password password to validate
@@ -148,34 +178,4 @@ class User extends ActiveRecord implements IdentityInterface
       $auth->assign($userRole, $this->getId());
     }
   }
-
-    /**
-     * Gets query for [[Auths]].
-     *
-     * @return ActiveQuery
-     */
-    public function getAuths(): ActiveQuery
-    {
-        return $this->hasMany(Auth::class, ['user_id' => 'user_id']);
-    }
-
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return ActiveQuery
-     */
-    public function getComments(): ActiveQuery
-    {
-        return $this->hasMany(Comment::class, ['owner_id' => 'user_id']);
-    }
-
-    /**
-     * Gets query for [[Offers]].
-     *
-     * @return ActiveQuery
-     */
-    public function getOffers(): ActiveQuery
-    {
-        return $this->hasMany(Offer::class, ['owner_id' => 'user_id']);
-    }
 }

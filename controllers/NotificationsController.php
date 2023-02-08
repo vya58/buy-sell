@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\ChatFirebase;
 use app\models\Notification;
+use app\models\helpers\CalculateHelper;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -54,7 +55,7 @@ class NotificationsController extends Controller
     $result = [];
 
     // Выборка всех сообщений из Firebase, у которых ключ 'read' = false, т.е. сообщение не прочитано
-    Notification::searchKey('read', $firebaseAllOffersChats, $result);
+    CalculateHelper::searchKey('read', $firebaseAllOffersChats, $result);
 
     // Сортировка всех непрочитанных сообщений в многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
     $users = Notification::sortMessagesByRecipients($result);

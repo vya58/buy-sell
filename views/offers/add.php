@@ -16,7 +16,6 @@ use yii\widgets\ActiveForm;
   <div class="ticket-form__wrapper">
     <h1 class="ticket-form__title"><?= $ticketFormTitle ?></h1>
     <div class="ticket-form__tile">
-
       <?php $form = ActiveForm::begin([
         'id' => 'offer-add-form',
         'method' => 'post',
@@ -66,7 +65,6 @@ use yii\widgets\ActiveForm;
                 'class' => 'form__switch switch',
                 'item' => function ($index, $label, $name, $checked, $value) {
                   return
-
                     Html::beginTag('div', ['class' => 'switch__item']) .
                     Html::radio($name, $checked, ['value' => $value, 'id' => $index, 'class' => 'visually-hidden']) .
                     Html::label($label, $index, ['class' => 'switch__button']) .
@@ -77,10 +75,8 @@ use yii\widgets\ActiveForm;
           </div>
         </div>
       </div>
-
       <button class="form__button btn btn--medium js-button" type="submit">Опубликовать</button>
       <?php ActiveForm::end(); ?>
-
     </div>
   </div>
 </section>

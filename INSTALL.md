@@ -23,11 +23,11 @@
 9) Инициализация Firebase Realtime Database при использовании Firebase SDK для PHP происходит в конструкторе ChatFirebase.php:
 
 $this->database = (new Kreait\Firebase\Factory)
-      ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . 'firebase-adminsdk-4k4m2-1c314d0e34.json')
+      ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . '.json')
       ->withDatabaseUri(Yii::$app->params['firebaseDatabaseUri'])->createDatabase();
 
 Где параметр withServiceAccount() - json-файл закрытого ключа для Вашей учетной записи проекта в Firebase
-Вы должны хранить файл JSON за пределами вашего репозитория кода, чтобы избежать случайного раскрытия его внешнему миру. Поэтому он вынесен за пределы проекта и подключён через Yii::$app->params['firebaseServiceAccountShape'], где Yii::$app->params['firebaseServiceAccountShape'] . 'firebase-adminsdk-4k4m2-1c314d0e34.json' составляет полное наименование вайла от корневого пути.
+Вы должны хранить файл JSON за пределами вашего репозитория кода, чтобы избежать случайного раскрытия его внешнему миру. Поэтому он вынесен за пределы проекта и подключён через Yii::$app->params['firebaseServiceAccountShape'], где Yii::$app->params['firebaseServiceAccountShape'] . '.json' составляет полное наименование файла от корневого пути.
 
 Параметр withDatabaseUri() - URI базы данных реального времени тоже подключён через Yii::$app->params['firebaseDatabaseUri']
 Вы можете найти URI для вашей базы данных реального времени по адресу https://console.firebase.google.com/project/_/database . При входе в свой проект он будет представлен в виде:
