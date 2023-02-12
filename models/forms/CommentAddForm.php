@@ -3,7 +3,6 @@
 namespace app\models\forms;
 
 use app\models\Comment;
-use app\models\OfferComment;
 use app\models\exceptions\DataSaveException;
 use Yii;
 use yii\base\Model;
@@ -50,27 +49,11 @@ class CommentAddForm extends Model
     $comment = new Comment();
 
     $comment->owner_id = Yii::$app->user->id;
+    $comment->offer_id = $offerId;
     $comment->comment_text = $this->commentText;
 
-    $transaction = Yii::$app->db->beginTransaction();
-
-    try {
-      if (!$comment->save()) {
-        throw new DataSaveException('Не удалось создать комментарий');
-      }
-      $offerComment = new OfferComment();
-
-      $offerComment->offer_id = $offerId;
-      $offerComment->comment_id = $comment->comment_id;
-
-      if (!$offerComment->save()) {
-        throw new DataSaveException('Не удалось сохранить комментарий');
-      }
-
-      $transaction->commit();
-    } catch (DataSaveException $exception) {
-      $transaction->rollback();
-      throw new DataSaveException($exception->getMessage());
+    if (!$comment->save()) {
+      throw new DataSaveException('Не удалось создать комментарий');
     }
     return true;
   }

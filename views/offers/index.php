@@ -149,7 +149,7 @@ FirebaseAsset::register($this);
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addressee->user_id) ?>" data-receiver-name="<?= Html::encode($addressee->name) ?>">Чат с продавцом <?= Html::encode($addressee->name) ?></h2>
     <?php endif; ?>
     <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
-      <?php if ($messages) : ?>
+      <?php if (isset($messages)) : ?>
         <?php foreach ($messages as $key => $message) : ?>
           <!-- Подсветка непрочитанных сообщений class="unread" -->
           <li class="chat__message <?= !$message['read'] ? 'unread' : '' ?>">

@@ -39,7 +39,6 @@ class OffersController extends Controller
     $owner = $offer->owner;
     $categories = $offer->categories;
     $comments = $offer->comments;
-    $offerCategories = $offer->offerCategories;
 
     ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
 

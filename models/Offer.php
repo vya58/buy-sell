@@ -22,7 +22,6 @@ use yii\helpers\ArrayHelper;
  * @property Category[] $categories
  * @property Comment[] $comments
  * @property OfferCategory[] $offerCategories
- * @property OfferComment[] $offerComments
  * @property User $owner
  */
 class Offer extends \yii\db\ActiveRecord
@@ -107,7 +106,7 @@ class Offer extends \yii\db\ActiveRecord
    */
   public function getComments(): ActiveQuery
   {
-    return $this->hasMany(Comment::class, ['comment_id' => 'comment_id'])->viaTable('offer_comment', ['offer_id' => 'offer_id']);
+    return $this->hasMany(Comment::class, ['offer_id' => 'offer_id']);
   }
 
   /**
@@ -118,16 +117,6 @@ class Offer extends \yii\db\ActiveRecord
   public function getOfferCategories(): ActiveQuery
   {
     return $this->hasMany(OfferCategory::class, ['offer_id' => 'offer_id']);
-  }
-
-  /**
-   * Gets query for [[OfferComments]].
-   *
-   * @return ActiveQuery
-   */
-  public function getOfferComments(): ActiveQuery
-  {
-    return $this->hasMany(OfferComment::class, ['offer_id' => 'offer_id']);
   }
 
   /**
@@ -195,7 +184,7 @@ class Offer extends \yii\db\ActiveRecord
     return Offer::find()
       ->alias('o')
       ->select(['o.*', 'COUNT(oc.offer_id) AS countComments'])
-      ->join('RIGHT JOIN', OfferComment::tableName() . ' oc', 'o.offer_id=oc.offer_id')
+      ->join('RIGHT JOIN', Comment::tableName() . ' oc', 'o.offer_id=oc.offer_id')
       ->groupBy('o.offer_id')
       ->orderBy(['countComments' => SORT_DESC])
       ->limit(Yii::$app->params['mostTalkedOffersCount'])
@@ -212,17 +201,18 @@ class Offer extends \yii\db\ActiveRecord
   public static function getWithNewCommentsOffers(int $userId): ?array
   {
     return Offer::find()
-      ->with('owner', 'comments')
+      ->alias('o')
+      ->with('owner')
       ->joinWith(
         [
-          'offerComments' => function (ActiveQuery $query) {
-            $query->orderBy('offer_comment.id DESC');
+          'comments' => function (ActiveQuery $query) {
+            $query->orderBy('comment.comment_id DESC');
           }
         ],
         true,
         'INNER JOIN'
       )
-      ->where(['owner_id' => $userId])
+      ->where(['o.owner_id' => $userId])
       ->all();
   }
 
