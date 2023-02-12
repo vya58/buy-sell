@@ -45,17 +45,17 @@ class LoginForm extends Model
   /**
    * Метод валидации пароля при входе пользователя
    *
-   * @param string $attribute - строка из поля 'password' формы входа
+   * @param string $password - строка из поля 'password' формы входа
    *
    * @return void
    */
-  public function validatePassword($attribute): void
+  public function validatePassword($password): void
   {
     if (!$this->hasErrors()) {
       $user = $this->getUser();
 
       if (!$user || !$user->validatePassword($this->password)) {
-        $this->addError($attribute, 'Неправильный email или пароль');
+        $this->addError($password, 'Неправильный email или пароль');
       }
     }
   }

@@ -20,16 +20,16 @@ class OffersController extends Controller
   /**
    * Страница просмотра объявления
    *
-   * @param int $id - id объявления
+   * @param int $offerId - id объявления
    * @param int|null $buyerId - id покупателя, null - если страница продавца
    * @return Response|string - код страницы просмотра объявления
    * @throws NotFoundHttpException
    */
-  public function actionIndex(int $id, int $buyerId = null, $currentPage = null): Response|string
+  public function actionIndex(int $offerId, int $buyerId = null, $currentPage = null): Response|string
   {
     $offer = Offer::find()
       ->with('owner', 'categories', 'offerCategories', 'comments')
-      ->where(['offer_id' => $id])
+      ->where(['offer_id' => $offerId])
       ->one();
 
     if (!$offer) {
@@ -47,8 +47,8 @@ class OffersController extends Controller
 
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
     if (!Yii::$app->user->isGuest && $commentAddForm->load(Yii::$app->request->post())) {
-      if ($commentAddForm->addComment($id)) {
-        return $this->redirect(['/offers', 'id' => $id]);
+      if ($commentAddForm->addComment($offerId)) {
+        return $this->redirect(['/offers', 'id' => $offerId]);
       }
     }
 
@@ -66,7 +66,7 @@ class OffersController extends Controller
         $addressee = User::findOne($buyerId);
       }
       // Выборка всех сообщений объявления с данным id
-      $firebase = new ChatFirebase($id);
+      $firebase = new ChatFirebase($offerId);
       $firebaseChats = $firebase->getValueChat();
 
       $userIds = [];
@@ -102,7 +102,7 @@ class OffersController extends Controller
 
     // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
     if ($buyerId) {
-      $chatFirebase = new ChatFirebase($id, $buyerId);
+      $chatFirebase = new ChatFirebase($offerId, $buyerId);
 
       $messages = $chatFirebase->getValueChat();
 
@@ -156,10 +156,10 @@ class OffersController extends Controller
   /**
    * Страница с формой редактирования объявления
    *
-   * @param int $id - id объявления
+   * @param int $offerId - id объявления
    * @throws NotFoundHttpException
    */
-  public function actionEdit($id): Response|string
+  public function actionEdit($offerId): Response|string
   {
     if (Yii::$app->user->isGuest) {
       return $this->redirect(['/login']);
@@ -167,13 +167,13 @@ class OffersController extends Controller
 
     $offer = Offer::find()
       ->with('owner')
-      ->where(['offer_id' => $id])
+      ->where(['offer_id' => $offerId])
       ->one();
 
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
     // то он переадресуется на страницу просмотра объявления
     if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-      return $this->redirect(['offers/', 'id' => $id]);
+      return $this->redirect(['offers/', 'id' => $offerId]);
     }
 
     $ticketFormTitle = 'Редактировать публикацию';
@@ -187,7 +187,7 @@ class OffersController extends Controller
 
     if (Yii::$app->request->getIsPost()) {
       $offerAddForm->load(Yii::$app->request->post());
-      $offerId = $offerAddForm->addOffer($id);
+      $offerId = $offerAddForm->addOffer($offerId);
 
       if ($offerId) {
         return $this->redirect(['offers/', 'id' => $offerId]);

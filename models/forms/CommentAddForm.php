@@ -40,12 +40,12 @@ class CommentAddForm extends Model
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
-   * @param int $id - id объявления
+   * @param int $offerId - id объявления
    *
    * @return bool
    * @throws DataSaveException
    */
-  public function addComment($id): bool
+  public function addComment($offerId): bool
   {
     $comment = new Comment();
 
@@ -60,7 +60,7 @@ class CommentAddForm extends Model
       }
       $offerComment = new OfferComment();
 
-      $offerComment->offer_id = $id;
+      $offerComment->offer_id = $offerId;
       $offerComment->comment_id = $comment->comment_id;
 
       $offerComment->save();

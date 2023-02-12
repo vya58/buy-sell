@@ -38,10 +38,10 @@ class OfferSearchForm extends Model
    * Метод автозаполнения поискового поля формы редактирования объявления данными из БД
    *
    * @param object $form - форма настройки профиля пользователя
-   * @param string|null $search - сохраненный поисковый запрос
+   * @param string|null $searchQuery - сохраненный поисковый запрос
    */
-  public function autocompleteForm($form, $search = null): void
+  public function autocompleteForm($form, $searchQuery = null): void
   {
-    $form->search = $search;
+    $form->search = $searchQuery;
   }
 }

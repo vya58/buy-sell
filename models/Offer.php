@@ -205,11 +205,11 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Метод получения объявлений, отсортированных по дате добавления комментариев (в начале - объявления с новыми комментариями)
    *
-   * @param int $id - id пользователя, чьи объявления выводятся
+   * @param int $userId - id пользователя, чьи объявления выводятся
    *
    * @return array|null массив объектов класса app\models\Offer либо null, если нет объявлений с комментариями
    */
-  public static function getWithNewCommentsOffers(int $id): ?array
+  public static function getWithNewCommentsOffers(int $userId): ?array
   {
     return Offer::find()
       ->with('owner', 'comments')
@@ -222,7 +222,7 @@ class Offer extends \yii\db\ActiveRecord
         true,
         'INNER JOIN'
       )
-      ->where(['owner_id' => $id])
+      ->where(['owner_id' => $userId])
       ->all();
   }
 
@@ -261,29 +261,29 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Метод запроса всех объявлений отдельной категории для датапровайдера
    *
-   * @param int $id - id категории, чьи объявления выводятся
+   * @param int $categoryId - id категории, чьи объявления выводятся
    *
    * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
    */
-  public static function getCategoryOffers($id): ?ActiveQuery
+  public static function getCategoryOffers($categoryId): ?ActiveQuery
   {
     return Offer::find()
       ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
       ->with('offerCategories', 'categories')
-      ->where(['oc.category_id' => $id]);
+      ->where(['oc.category_id' => $categoryId]);
   }
 
   /**
    * Метод поиска объявлений по наименованию
    *
-   * @param string $query - строка с фразой поиска
+   * @param string $searchQuery - строка с фразой поиска
    *
    * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
    */
-  public static function searchOffers($query): ?ActiveQuery
+  public static function searchOffers($searchQuery): ?ActiveQuery
   {
     return Offer::find()
       ->with('categories')
-      ->where(['like', 'offer_title', $query]);
+      ->where(['like', 'offer_title', $searchQuery]);
   }
 }

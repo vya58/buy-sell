@@ -36,12 +36,12 @@ class CommentsController extends Controller
   /**
    * Страница просмотра комментариев к объявлениям пользователя
    *
-   * @param int $id - id пользователя
+   * @param int $userId - id пользователя
    * @return Response|string - код страницы просмотра страницы комментариев
    */
-  public function actionIndex(int $id): Response|string
+  public function actionIndex(int $userId): Response|string
   {
-    $offers = Offer::getWithNewCommentsOffers($id);
+    $offers = Offer::getWithNewCommentsOffers($userId);
 
     return $this->render('index', compact('offers'));
   }

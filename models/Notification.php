@@ -49,21 +49,21 @@ class Notification extends Model
   /**
    * Метод сортировки массива с сообщениями по id получателя
    *
-   * @param array $array Сортируемый массив
+   * @param array $unreadMessages Сортируемый массив с непрочтенными сообщениями
    *
-   * @return array $groups Многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
+   * @return array $groups Многомерный массив, где ключ первого уровня вложенности, $addresseeId - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
    */
-  public static function sortMessagesByRecipients(array $array): array
+  public static function sortMessagesByRecipients(array $unreadMessages): array
   {
     $groups = [];
-    foreach ($array as $element) {
-      $id = $element[Notification::SORTED_VALUE];
+    foreach ($unreadMessages as $element) {
+      $addresseeId = $element[Notification::SORTED_VALUE];
 
-      if (!array_key_exists($id, $groups)) {
-        $groups[$id] = [];
+      if (!array_key_exists($addresseeId, $groups)) {
+        $groups[$addresseeId] = [];
       }
 
-      $groups[$id][] = $element;
+      $groups[$addresseeId][] = $element;
     }
     return $groups;
   }

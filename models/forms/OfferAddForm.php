@@ -76,15 +76,15 @@ class OfferAddForm extends Model
   /**
    * Метод сохранения данных из формы добавления публикации в БД
    *
-   * @param int|null $id - id публикации
+   * @param int|null $offerId - id публикации
    *
    * @throws DataSaveException
    * @throws FileExistException
    */
-  public function addOffer($id = null): ?int
+  public function addOffer($offerId = null): ?int
   {
-    if ($id) {
-      $offer = Offer::findOne($id);
+    if ($offerId) {
+      $offer = Offer::findOne($offerId);
     } else {
       $offer = new Offer;
     }

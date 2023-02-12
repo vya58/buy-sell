@@ -83,12 +83,12 @@ class Category extends ActiveRecord
   /**
    * Получение категории по её id
    *
-   * @param int $id - id категории
+   * @param int $categoryId - id категории
    *
    * @return Category|null
    */
-  public static function getCategory(int $id): ?Category
+  public static function getCategory(int $categoryId): ?Category
   {
-    return self::findOne($id);
+    return self::findOne($categoryId);
   }
 }

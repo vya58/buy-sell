@@ -162,12 +162,12 @@ class User extends ActiveRecord implements IdentityInterface
 
   /**
    * Создание нового пользователя через ВКонтакте
-   * @param array $attributes - атрибуты пользователя переданные ВКонтакте
+   * @param array $userAttributes - атрибуты пользователя переданные ВКонтакте
    */
-  public function createVkUser(array $attributes): void
+  public function createVkUser(array $userAttributes): void
   {
-    $this->name = $attributes['first_name'] . $attributes['last_name'];
-    $this->email = $attributes['email'];
+    $this->name = $userAttributes['first_name'] . $userAttributes['last_name'];
+    $this->email = $userAttributes['email'];
     // Присваиваем рандомный пароль пользователю для заполнения обязательного поля 'password' в таблиwе 'user'
     // Сохраняется только его хеш, но не сам пароль, т.к. по условию ТЗ 'пользователь, зарегистрированный через ВК, не имеет пароля, а значит не может поменять его'
     $this->password = Yii::$app->getSecurity()->generatePasswordHash(md5(microtime(true)));

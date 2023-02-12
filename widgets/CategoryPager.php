@@ -19,7 +19,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
-class MyLinkPager extends LinkPager
+class CategoryPager extends LinkPager
 {
   /**
    * Renders a page button.
