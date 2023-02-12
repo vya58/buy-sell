@@ -1,3 +1,5 @@
+Инструкция по запуску проекта находится в файле INSTALL.md
+
 
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
