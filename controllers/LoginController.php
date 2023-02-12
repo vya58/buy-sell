@@ -96,7 +96,7 @@ class LoginController extends Controller
       throw new BadRequestHttpException('Email отсутствует');
     }
     // Пытаемся найти пользователя в базе по почте из соц. сети
-    $user = User::findOne(['email' => $email]);
+    $user = User::findOne(['email' => (string) $email]);
 
     if (!$user) {
       $user = new User;
