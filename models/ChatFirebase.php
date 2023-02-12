@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\exceptions\DataSaveException;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database\Reference;
 
@@ -67,21 +68,25 @@ class ChatFirebase extends Model
       return '';
     }
 
+    $offerId = (string) $this->offerId;
+
     if (!$this->buyerId) {
-      return $this->offerId;
+      return $offerId;
     }
-    return $this->offerId . '/' . $this->buyerId;
+    $buyerId = (string) $this->buyerId;
+
+    return $offerId . '/' . $buyerId;
   }
 
   /**
    * Получение данных чата
    *
-   * @return array|null
+   * @return null|array
    */
   public function getValueChat(): ?array
   {
     if (!$this->database) {
-      return false;
+      return null;
     }
     return $this->database->getReference($this->getQuery())->getValue();
   }
@@ -102,16 +107,16 @@ class ChatFirebase extends Model
   /**
    * Запись сообщения в Firebase
    *
-   * @return null|Reference
+   * @return false|Reference
    */
-  public function sendMessage(User $addressee, ?string $message = null): ?Reference
+  public function sendMessage(User $addressee, ?string $message = null): false|Reference
   {
     if (!$this->database || !$message) {
       return false;
     }
 
     $query = $this->getQuery();
-    $count = self::getSnapshotChat()->numChildren();
+    $count = (string) self::getSnapshotChat()->numChildren();
 
     $query = $query . '/' . $count;
     return $this->database->getReference($query)
@@ -129,9 +134,9 @@ class ChatFirebase extends Model
   /**
    * Отметка сообщения как прочитанного
    *
-   * @return null|Reference
+   * @return bool
    */
-  public function readMessage(int $messageNumber): Reference
+  public function readMessage(int $messageNumber): bool
   {
     if (!$this->database) {
       return false;
@@ -139,20 +144,35 @@ class ChatFirebase extends Model
 
     $query = $this->getQuery() . '/' . $messageNumber;
 
-    return $this->database->getReference($query)
-      ->update([
-        'read' => true,
-      ]);
+    try {
+      $this->database->getReference($query)
+        ->update([
+          'read' => true,
+        ]);
+    } catch (DataSaveException $exception) {
+      throw new DataSaveException('Не удалось отметить сообщение прочитанным');
+    }
+    return true;
   }
 
-  public function deleteChat(): Reference
+  /**
+   * Удаление чата
+   *
+   * @return bool
+   */
+  public function deleteChat(): bool
   {
     if (!$this->database) {
       return false;
     }
     $query = $this->getQuery();
 
-    return $this->database->getReference($query)
-      ->remove();
+    try {
+      $this->database->getReference($query)
+        ->remove();
+    } catch (DataSaveException $exception) {
+      throw new DataSaveException('Не удалось удалить чат');
+    }
+    return true;
   }
 }

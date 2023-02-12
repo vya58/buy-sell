@@ -63,7 +63,9 @@ class CommentAddForm extends Model
       $offerComment->offer_id = $offerId;
       $offerComment->comment_id = $comment->comment_id;
 
-      $offerComment->save();
+      if (!$offerComment->save()) {
+        throw new DataSaveException('Не удалось сохранить комментарий');
+      }
 
       $transaction->commit();
     } catch (DataSaveException $exception) {

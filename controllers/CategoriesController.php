@@ -16,12 +16,12 @@ class CategoriesController extends Controller
   /**
    * Страница просмотра объявлений соответствующей категории
    *
-   * @param int $categoryId - id категории
+   * @param int $id - id категории
    * @return Response|string - код страницы
    */
-  public function actionIndex(int $categoryId): Response|string
+  public function actionIndex(int $id): Response|string
   {
-    $query = Offer::getCategoryOffers($categoryId);
+    $query = Offer::getCategoryOffers($id);
 
     $countOffers = $query->count();
 
@@ -45,7 +45,7 @@ class CategoriesController extends Controller
     $offerCategories = OfferCategory::getOfferCategories();
 
     // Категории для section class="tickets-list"
-    $category = Category::getCategory($categoryId);
+    $category = Category::getCategory($id);
 
     return $this->render('index', compact('offerCategories', 'dataProvider', 'category', 'countOffers'));
   }
