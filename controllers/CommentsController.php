@@ -55,16 +55,16 @@ class CommentsController extends Controller
   public function actionRemove($commentId): Response|string
   {
     $comment = Comment::find()
-      ->with('offers')
+      ->with('offer')
       ->where(['comment_id' => $commentId])
       ->one();
 
-    $offer = $comment->offers;
-    $ownerId = $offer[0]['owner_id'];
+    $offer = $comment->offer;
+    $ownerId = $offer->owner_id;
 
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
     // то в случае попытки удаления, сервер возвращает код 403 без удаления комментария
-    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $comment]) || !\Yii::$app->user->can('updateOwnContent', ['resource' => $offer[0]])) {
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $comment]) || !\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
       throw new ForbiddenHttpException();
     }
 

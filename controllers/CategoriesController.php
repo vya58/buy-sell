@@ -23,7 +23,7 @@ class CategoriesController extends Controller
   {
     $query = Offer::getCategoryOffers($id);
 
-    $countOffers = $query->count();
+    $countOffers = (int) $query->count();
 
     if (!$countOffers) {
       return $this->goHome();
