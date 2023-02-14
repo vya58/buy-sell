@@ -14,7 +14,7 @@ use yii\widgets\ListView;
   <h1 class="visually-hidden">Результаты поиска</h1>
   <div class="search-results__wrapper">
     <?php if (isset($dataProvider->totalCount)) : ?>
-      <?php if ($dataProvider->totalCount === 0) : ?>
+      <?php if (!$dataProvider->totalCount) : ?>
         <div class="search-results__message">
           <p>Не найдено <br>ни&nbsp;одной публикации</p>
         </div>
@@ -54,5 +54,5 @@ use yii\widgets\ListView;
 <section class="tickets-list">
   <h2 class="visually-hidden">Самые новые предложения</h2>
   <div class="tickets-list__wrapper">
-    <?= NewTicketWidget::widget(['dataProvider' => $newOffersdataProvider]) ?>
+    <?= $newOffersdataProvider ? NewTicketWidget::widget(['dataProvider' => $newOffersdataProvider]) : '' ?>
 </section>

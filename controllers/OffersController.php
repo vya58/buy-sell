@@ -22,7 +22,7 @@ class OffersController extends Controller
    *
    * @param int $id - id объявления
    * @param int|null $buyerId - id покупателя, null - если страница продавца
-   * @return Response|string - код страницы просмотра объявления
+   * @return Response|string - Переадресация на страницу просмотра объявления|рендеринг страницы просмотра объявления
    * @throws NotFoundHttpException
    */
   public function actionIndex(int $id, int $buyerId = null, $currentPage = null): Response|string
@@ -130,7 +130,7 @@ class OffersController extends Controller
   /**
    * Страница с формой добавления объявления
    *
-   * @return Response|string - код страницы с формой создания задания
+   * @return Response|string - Переадресация на страницу объявлений пользователя|Рендеринг страницы с формой добавления объявления
    */
   public function actionAdd(): Response|string
   {
@@ -147,7 +147,7 @@ class OffersController extends Controller
       $offerId = $offerAddForm->addOffer();
 
       if ($offerId) {
-        return $this->redirect(['/site/search']);
+        return $this->redirect(['/my-offers']);
       }
     }
     return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
@@ -157,6 +157,8 @@ class OffersController extends Controller
    * Страница с формой редактирования объявления
    *
    * @param int $id - id объявления
+   * 
+   * @return Response|string - Переадресация на страницы: входа, объявления|Рендеринг страницы с формой добавления объявления
    * @throws NotFoundHttpException
    */
   public function actionEdit($id): Response|string

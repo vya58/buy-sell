@@ -16,7 +16,7 @@ use yii\helpers\Url;
       <a href="<?= Url::to(['offers/add']) ?>" class="tickets-list__btn btn btn--big"><span>Новая публикация</span></a>
     </div>
     <ul>
-      <?php if ($offers) : ?>
+      <?php if (count($offers)) : ?>
         <?php foreach ($offers as $offer) : ?>
           <li class="tickets-list__item js-card">
             <div class="ticket-card ticket-card--color06">

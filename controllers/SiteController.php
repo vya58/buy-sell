@@ -15,9 +15,9 @@ class SiteController extends Controller
   /**
    * Displays homepage.
    *
-   * @return Response|string
+   * @return string Рендеринг главной страницы
    */
-  public function actionIndex(): Response|string
+  public function actionIndex(): string
   {
     // Категории для section class="categories-list"
     $offerCategories = OfferCategory::find()
@@ -77,9 +77,9 @@ class SiteController extends Controller
   /**
    * Страница результатов поиска объявлений
    *
-   * @return Response|string
+   * @return string Рендеринг страницы с результатами поиска
    */
-  public function actionSearch(): Response|string
+  public function actionSearch(): string
   {
     $foundOffers = null;
     $model = new OfferSearchForm();

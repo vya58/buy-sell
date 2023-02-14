@@ -10,7 +10,7 @@ use yii\widgets\ListView;
 
 <section class="categories-list">
   <h1 class="visually-hidden">Сервис объявлений "Куплю - продам"</h1>
-  <?= $offerCategories ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
+  <?= count($offerCategories) ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
 </section>
 <section class="tickets-list">
   <h2 class="visually-hidden">Предложения из категории <?= ($category && isset($category->category_name)) ? Html::encode($category->category_name) : '' ?></h2>

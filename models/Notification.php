@@ -24,17 +24,23 @@ class Notification extends Model
   {
     $recipient = User::findOne($toUserId);
 
-    if ($recipient) {
+    if ($recipient && isset($recipient->email)) {
       //Адрес email для отправки писем с сервера
       $emailSendServer = Yii::$app->params['buysellEmail'];
       $transport = Transport::fromDsn(Yii::$app->params['mailerDsn']);
       $countMessages = (string) $countMessages;
 
+      if (!isset($recipient->name)) {
+        $recipientName = 'Уважаемый пользователь';
+      }
+
+      $recipientName = $recipient->name;
+
       $message = [
         'from' => Yii::$app->params['buysellEmail'],
         'to' => $recipient->email,
         'subject' => 'Уведомление сервиса BuySell',
-        'text' => $recipient->name . ', у вас ' . $countMessages . ' непрочитанных сообщений от пользователей сервиса BuySell',
+        'text' => $recipientName . ', у вас ' . $countMessages . ' непрочитанных сообщений от пользователей сервиса BuySell',
       ];
 
       $mail = new Email();
@@ -62,7 +68,9 @@ class Notification extends Model
     $groups = [];
 
     foreach ($unreadMessages as $element) {
-      $addresseeId = $element[Notification::SORTED_VALUE];
+      if (array_key_exists(Notification::SORTED_VALUE, $element)) {
+        $addresseeId = $element[Notification::SORTED_VALUE];
+      }
 
       if (!array_key_exists($addresseeId, $groups)) {
         $groups[$addresseeId] = [];

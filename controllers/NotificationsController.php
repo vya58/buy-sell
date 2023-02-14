@@ -44,7 +44,7 @@ class NotificationsController extends Controller
   /**
    * Действие по получению непрочитанных сообщений в Firebase и e-mail-рассылке писем их получателям с количеством непрочтенных сообщений
    *
-   * @return Response|string - код страницы
+   * @return string - результат рендеринга страницы рассылки
    */
   public function actionIndex(): Response|string
   {

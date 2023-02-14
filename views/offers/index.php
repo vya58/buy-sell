@@ -46,7 +46,7 @@ FirebaseAsset::register($this);
             <a href="mailto:<?= isset($owner->email) ? Html::encode($owner->email) : '' ?>"><?= isset($owner->email) ? Html::encode($owner->email) : '' ?></a>
           </p>
         </div>
-        <?= ($offerCategories && $this->context->id) ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
+        <?= (count($offerCategories) && $this->context->id) ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
       </div>
     </div>
     <div class="ticket__comments">
@@ -82,7 +82,7 @@ FirebaseAsset::register($this);
           <?php ActiveForm::end(); ?>
         </div>
       <?php endif; ?>
-      <?php if ($comments) : ?>
+      <?php if (count($comments)) : ?>
         <div class="ticket__comments-list">
           <ul class="comments-list">
             <?php foreach ($comments as $comment) : ?>
@@ -114,7 +114,7 @@ FirebaseAsset::register($this);
       <?php endif; ?>
     </div>
     <?php if (!Yii::$app->user->isGuest) : ?>
-      <?php if ($dataProvider && $dataProvider->count !== 0) : ?>
+      <?php if ($dataProvider->count) : ?>
         <?= ListView::widget([
           'dataProvider' => $dataProvider,
           'itemView' => '_chat',
@@ -144,17 +144,17 @@ FirebaseAsset::register($this);
 
 <?php if (!Yii::$app->user->isGuest) : ?>
   <section class="chat visually-hidden">
+    <?php
+    $addresseeName = '';
+    if (isset($addressee->name)) {
+      $addresseeName = $addressee->name;
+    };
+    $addresseeId = null;
+    if (isset($addressee->user_id)) {
+      $addresseeId = $addressee->user_id;
+    };
+    ?>
     <?php if (isset($owner->user_id) && Yii::$app->user->id === $owner->user_id) : ?>
-      <?php
-      $addresseeName = '';
-      if (isset($addressee->name)) {
-        $addresseeName = $addressee->name;
-      };
-      $addresseeId = '';
-      if (isset($addressee->user_id)) {
-        $addresseeId = $addressee->user_id;
-      };
-      ?>
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">
         Чат с покупателем
         <?= (isset($owner->user_id) && $addresseeId === $owner->user_id)  ? '' : Html::encode($addresseeName) ?>
@@ -163,7 +163,7 @@ FirebaseAsset::register($this);
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">Чат с продавцом <?= Html::encode($addresseeName) ?></h2>
     <?php endif; ?>
     <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
-      <?php if ($messages) : ?>
+      <?php if (count($messages)) : ?>
         <?php foreach ($messages as $key => $message) : ?>
           <!-- Подсветка непрочитанных сообщений class="unread" -->
           <li class="chat__message <?= !isset($message['read']) ? 'unread' : '' ?>">

@@ -111,7 +111,7 @@ class ChatFirebase extends Model
    */
   public function sendMessage(User $addressee, ?string $message = null): ?Reference
   {
-    if (!$this->database || !$message) {
+    if (!$this->database || !$message || !isset($addressee->user_id)) {
       return null;
     }
 

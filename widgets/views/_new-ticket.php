@@ -13,7 +13,7 @@ use yii\helpers\Url;
   <div class="ticket-card__info">
     <span class="ticket-card__label"><?= isset($model->offer_type) ? Html::encode($model->offer_type) : '' ?></span>
     <div class="ticket-card__categories">
-      <?php if (isset($model->categories)) : ?>
+      <?php if (isset($model->categories) && count($model->categories)) : ?>
         <?php foreach ($model->categories as $category) : ?>
           <a href="<?= isset($category->category_id) ? Url::to(['/categories/index', 'id' => $category->category_id]) : '' ?>"><?= isset($category->category_name) ? Html::encode($category->category_name) : '' ?></a>
         <?php endforeach; ?>

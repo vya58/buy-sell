@@ -168,9 +168,9 @@ class Offer extends \yii\db\ActiveRecord
   /**
    * Получение объявлений, отсортированных по дате добавления (в начале - самые новые)
    *
-   * @return ActiveQuery|null ActiveQuery либо null, если объявлений нет
+   * @return ActiveQuery
    */
-  public static function getNewOffers(): ?ActiveQuery
+  public static function getNewOffers(): ActiveQuery
   {
     return Offer::find()
       ->with('categories');
@@ -232,7 +232,7 @@ class Offer extends \yii\db\ActiveRecord
     }
 
     // Получение чатов, связанных с этим объявлением
-    if ($offer->offer_id) {
+    if (isset($offer->offer_id)) {
       $firebase = new ChatFirebase($offer->offer_id);
     }
 
@@ -240,7 +240,7 @@ class Offer extends \yii\db\ActiveRecord
 
     try {
       //Удаление комментариев к объявлению
-      if ($comments) {
+      if (count($comments)) {
         foreach ($comments as $comment) {
           $comment->delete();
         }
@@ -263,9 +263,9 @@ class Offer extends \yii\db\ActiveRecord
    *
    * @param int $categoryId - id категории, чьи объявления выводятся
    *
-   * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
+   * @return ActiveQuery
    */
-  public static function getCategoryOffers($categoryId): ?ActiveQuery
+  public static function getCategoryOffers($categoryId): ActiveQuery
   {
     return Offer::find()
       ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
@@ -278,9 +278,9 @@ class Offer extends \yii\db\ActiveRecord
    *
    * @param string $searchQuery - строка с фразой поиска
    *
-   * @return ActiveQuery|null объект класса yii\db\ActiveQuery либо null, если нет объявлений данной категории
+   * @return ActiveQuery
    */
-  public static function searchOffers($searchQuery): ?ActiveQuery
+  public static function searchOffers($searchQuery): ActiveQuery
   {
     return Offer::find()
       ->with('categories')

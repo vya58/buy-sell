@@ -9,7 +9,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 ?>
-<?php if (!$mostTalkedOffers) : ?>
+<?php if (!count($mostTalkedOffers)) : ?>
   <!-- Блок выводится, если нет объявлений.  -->
   <div class="message">
     <div class="message__text">
@@ -23,12 +23,12 @@ use yii\helpers\Url;
   <!-- Блок выводится, если объявления есть.  -->
   <section class="categories-list">
     <h1 class="visually-hidden">Сервис объявлений "Куплю - продам"</h1>
-    <?= CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) ?>
+    <?= count($offerCategories) ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
   </section>
   <section class="tickets-list">
     <h2 class="visually-hidden">Самые новые предложения</h2>
     <div class="tickets-list__wrapper">
-      <?= NewTicketWidget::widget(['dataProvider' => $newOffersdataProvider]) ?>
+      <?= $newOffersdataProvider ? NewTicketWidget::widget(['dataProvider' => $newOffersdataProvider]): '' ?>
     </div>
   </section>
   <section class="tickets-list">
@@ -38,6 +38,7 @@ use yii\helpers\Url;
         <p class="tickets-list__title">Самые обсуждаемые</p>
       </div>
       <ul>
+        <?php if (count($mostTalkedOffers)) : ?>
         <?php foreach ($mostTalkedOffers as $mostTalkedOffer) : ?>
           <li class="tickets-list__item">
             <div class="ticket-card ticket-card--color09">
@@ -67,6 +68,7 @@ use yii\helpers\Url;
             </div>
           </li>
         <?php endforeach; ?>
+        <?php endif; ?>
       </ul>
     </div>
   </section>

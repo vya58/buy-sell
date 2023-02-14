@@ -66,11 +66,25 @@ class OfferAddForm extends Model
       $form->offerImage = $offer->offer_image;
     }
 
-    $form->offerTitle = $offer->offer_title;
-    $form->offerText = $offer->offer_text;
-    $form->categories = $offer->categories;
-    $form->offerPrice = $offer->offer_price;
-    $form->offerType = $offer->offer_type;
+    if (isset($offer->offer_title)) {
+      $form->offerTitle = $offer->offer_title;
+    }
+
+    if (isset($offer->offer_text)) {
+      $form->offerText = $offer->offer_text;
+    }
+
+    if (isset($offer->categories)) {
+      $form->categories = $offer->categories;
+    }
+
+    if (isset($offer->offer_price)) {
+      $form->offerPrice = $offer->offer_price;
+    }
+
+    if (isset($offer->offer_type)) {
+      $form->offerType = $offer->offer_type;
+    }
   }
 
   /**

@@ -10,9 +10,9 @@ use yii\helpers\Url;
 
 <section class="comments">
   <div class="comments__wrapper">
-    <?= !$offers ? Html::tag('p', 'У ваших публикаций еще нет комментариев.', ['class' => 'comments__message']) : '' ?>
+    <?= !count($offers) ? Html::tag('p', 'У ваших публикаций еще нет комментариев.', ['class' => 'comments__message']) : '' ?>
     <h1 class="visually-hidden">Страница комментариев</h1>
-    <?php if ($offers) : ?>
+    <?php if (count($offers)) : ?>
       <?php foreach ($offers as $offer) : ?>
         <div class="comments__block">
           <div class="comments__header">

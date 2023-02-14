@@ -39,7 +39,7 @@ class CommentsController extends Controller
    * @param int $id - id пользователя
    * @return string - результат рендеринга страницы просмотра страницы комментариев
    */
-  public function actionIndex(int $id): Response|string
+  public function actionIndex(int $id): string
   {
     $offers = Offer::getWithNewCommentsOffers($id);
 
