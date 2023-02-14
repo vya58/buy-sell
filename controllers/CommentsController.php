@@ -37,7 +37,7 @@ class CommentsController extends Controller
    * Страница просмотра комментариев к объявлениям пользователя
    *
    * @param int $id - id пользователя
-   * @return Response|string - код страницы просмотра страницы комментариев
+   * @return string - результат рендеринга страницы просмотра страницы комментариев
    */
   public function actionIndex(int $id): Response|string
   {
@@ -50,9 +50,9 @@ class CommentsController extends Controller
    * Удаление комментария к объявлению пользователя
    *
    * @param int $commentId - id комментария
-   * @return Response|string - код страницы просмотра страницы комментариев
+   * @return Response - Объект Response
    */
-  public function actionRemove($commentId): Response|string
+  public function actionRemove($commentId): Response
   {
     $comment = Comment::find()
       ->with('offer')

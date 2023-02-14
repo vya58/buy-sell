@@ -64,7 +64,7 @@ class Offer extends \yii\db\ActiveRecord
       [['offer_date_create'], 'safe'],
       [['offer_title'], 'string', 'max' => self::MAX_LENGTH_TICKET_NAME],
       [['offer_image'], 'string', 'max' => self::MAX_LENGTH_OFFER_IMAGE_UPLOAD_PATH],
-      [['offer_type'], 'string', 'max' => self::MAX_OFFER_TYPE],
+      [['offer_type'], 'in', 'range' => self::OFFER_TYPE],
       [['offer_image'], 'unique'],
       [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['owner_id' => 'user_id']],
     ];
