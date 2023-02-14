@@ -24,26 +24,30 @@ class Notification extends Model
   {
     $recipient = User::findOne($toUserId);
 
-    //Адрес email для отправки писем с сервера
-    $emailSendServer = Yii::$app->params['buysellEmail'];
-    $transport = Transport::fromDsn(Yii::$app->params['mailerDsn']);
-    $message = [
-      'from' => Yii::$app->params['buysellEmail'],
-      'to' => $recipient->email,
-      'subject' => 'Уведомление сервиса BuySell',
-      'text' => $recipient->name . ', у вас ' . $countMessages . ' непрочитанных сообщений от пользователей сервиса BuySell',
-    ];
+    if ($recipient) {
+      //Адрес email для отправки писем с сервера
+      $emailSendServer = Yii::$app->params['buysellEmail'];
+      $transport = Transport::fromDsn(Yii::$app->params['mailerDsn']);
+      $countMessages = (string) $countMessages;
 
-    $mail = new Email();
+      $message = [
+        'from' => Yii::$app->params['buysellEmail'],
+        'to' => $recipient->email,
+        'subject' => 'Уведомление сервиса BuySell',
+        'text' => $recipient->name . ', у вас ' . $countMessages . ' непрочитанных сообщений от пользователей сервиса BuySell',
+      ];
 
-    $mail->to($message['to']);
-    $mail->from($emailSendServer);
-    $mail->subject($message['subject']);
-    $mail->html($message['text']);
+      $mail = new Email();
 
-    // Отправка сообщения
-    $mailer = new Mailer($transport);
-    $mailer->send($mail);
+      $mail->to($message['to']);
+      $mail->from($emailSendServer);
+      $mail->subject($message['subject']);
+      $mail->html($message['text']);
+
+      // Отправка сообщения
+      $mailer = new Mailer($transport);
+      $mailer->send($mail);
+    }
   }
 
   /**
@@ -56,6 +60,7 @@ class Notification extends Model
   public static function sortMessagesByRecipients(array $unreadMessages): array
   {
     $groups = [];
+
     foreach ($unreadMessages as $element) {
       $addresseeId = $element[Notification::SORTED_VALUE];
 

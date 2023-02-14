@@ -59,17 +59,17 @@ class CommentsController extends Controller
       ->where(['comment_id' => $commentId])
       ->one();
 
-    $offer = $comment->offer;
-    $ownerId = $offer->owner_id;
+    if ($comment) {
+      $offer = $comment->offer;
+      $ownerId = $offer->owner_id;
 
-    // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
-    // то в случае попытки удаления, сервер возвращает код 403 без удаления комментария
-    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $comment]) || !\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-      throw new ForbiddenHttpException();
+      // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
+      // то в случае попытки удаления, сервер возвращает код 403 без удаления комментария
+      if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $comment]) || !\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+        throw new ForbiddenHttpException();
+      }
+      $comment->delete();
     }
-
-    $comment->delete();
-
     return $this->redirect(['comments/', 'id' => $ownerId]);
   }
 }

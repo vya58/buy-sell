@@ -81,7 +81,7 @@ class SiteController extends Controller
    */
   public function actionSearch(): Response|string
   {
-    $foundOffers = false;
+    $foundOffers = null;
     $model = new OfferSearchForm();
 
     if (Yii::$app->request->getIsGet()) {

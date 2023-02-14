@@ -155,7 +155,7 @@ class User extends ActiveRecord implements IdentityInterface
    * @param string $password password to validate
    * @return bool if password provided is valid for current user
    */
-  public function validatePassword($password): bool
+  public function validatePassword(string $password): bool
   {
     return Yii::$app->security->validatePassword($password, $this->password);
   }

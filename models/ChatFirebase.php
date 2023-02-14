@@ -94,12 +94,12 @@ class ChatFirebase extends Model
   /**
    * Получение snapshot'а чата
    *
-   * @return false|\Kreait\Firebase\Database\Snapshot
+   * @return null|\Kreait\Firebase\Database\Snapshot
    */
-  public function getSnapshotChat(): false|\Kreait\Firebase\Database\Snapshot
+  public function getSnapshotChat(): ?\Kreait\Firebase\Database\Snapshot
   {
     if (!$this->database) {
-      return false;
+      return null;
     }
     return $this->database->getReference($this->getQuery())->getSnapshot();
   }
@@ -107,18 +107,20 @@ class ChatFirebase extends Model
   /**
    * Запись сообщения в Firebase
    *
-   * @return false|Reference
+   * @return null|Reference
    */
-  public function sendMessage(User $addressee, ?string $message = null): false|Reference
+  public function sendMessage(User $addressee, ?string $message = null): ?Reference
   {
     if (!$this->database || !$message) {
-      return false;
+      return null;
     }
 
     $query = $this->getQuery();
-    $count = (string) self::getSnapshotChat()->numChildren();
 
-    $query = $query . '/' . $count;
+    $countMessages = (string) self::getSnapshotChat()->numChildren();
+
+    $query = $query . '/' . $countMessages;
+
     return $this->database->getReference($query)
       ->set([
         'date' => date('d M Y H:i:s'),
@@ -141,6 +143,8 @@ class ChatFirebase extends Model
     if (!$this->database) {
       return false;
     }
+
+    $messageNumber = (string) $messageNumber;
 
     $query = $this->getQuery() . '/' . $messageNumber;
 

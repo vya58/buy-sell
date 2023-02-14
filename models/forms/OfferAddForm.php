@@ -62,7 +62,7 @@ class OfferAddForm extends Model
    */
   public function autocompleteForm($form, $offer): void
   {
-    if ($offer->offer_image) {
+    if (isset($offer->offer_image)) {
       $form->offerImage = $offer->offer_image;
     }
 
@@ -83,10 +83,10 @@ class OfferAddForm extends Model
    */
   public function addOffer($offerId = null): ?int
   {
+    $offer = new Offer;
+
     if ($offerId) {
       $offer = Offer::findOne($offerId);
-    } else {
-      $offer = new Offer;
     }
 
     $offerImage = UploadedFile::getInstance($this, 'offerImage');

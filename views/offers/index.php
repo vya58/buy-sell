@@ -21,32 +21,32 @@ FirebaseAsset::register($this);
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-        <img src="<?= $offer->offer_image ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
+        <img src="<?= isset($offer->offer_image) ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
       </div>
       <div class="ticket__info">
-        <h2 class="ticket__title" data-attr="<?= Html::encode($offer->offer_id) ?>"><?= Html::encode($offer->offer_title) ?></h2>
+        <h2 class="ticket__title" data-attr="<?= isset($offer->offer_id) ? Html::encode($offer->offer_id) : '' ?>"><?= isset($offer->offer_title) ? Html::encode($offer->offer_title) : '' ?></h2>
         <div class="ticket__header">
-          <p class="ticket__price"><span class="js-sum"><?= Html::encode($offer->offer_price) ?></span> ₽</p>
-          <p class="ticket__action"><?= Html::encode($offer->offer_type) ?></p>
+          <p class="ticket__price"><span class="js-sum"><?= isset($offer->offer_price) ? Html::encode($offer->offer_price) : '' ?></span> ₽</p>
+          <p class="ticket__action"><?= isset($offer->offer_type) ? Html::encode($offer->offer_type) : '' ?></p>
         </div>
         <div class="ticket__desc">
-          <p><?= Html::encode($offer->offer_text) ?></p>
+          <p><?= isset($offer->offer_text) ? Html::encode($offer->offer_text) : '' ?></p>
         </div>
         <div class="ticket__data">
           <p>
             <b>Дата добавления:</b>
-            <span><?= Html::encode(Yii::$app->formatter->asDate($offer->offer_date_create, 'php:j F Y')) ?></span>
+            <span><?= isset($offer->offer_date_create) ? Html::encode(Yii::$app->formatter->asDate($offer->offer_date_create, 'php:j F Y')) : '' ?></span>
           </p>
           <p>
             <b>Автор:</b>
-            <a href="<?= Url::to(['user/index', 'id' => $owner->user_id]) ?>"><?= Html::encode($owner->name) ?></a>
+            <a href="<?= isset($owner->user_id) ? Url::to(['user/index', 'id' => $owner->user_id]) : '#' ?>"><?= isset($owner->name) ? Html::encode($owner->name) : '' ?></a>
           </p>
           <p>
             <b>Контакты:</b>
-            <a href="mailto:<?= Html::encode($owner->email) ?>"><?= Html::encode($owner->email) ?></a>
+            <a href="mailto:<?= isset($owner->email) ? Html::encode($owner->email) : '' ?>"><?= isset($owner->email) ? Html::encode($owner->email) : '' ?></a>
           </p>
         </div>
-        <?= CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) ?>
+        <?= ($offerCategories && $this->context->id) ? CategoryWidget::widget(['offerCategories' => $offerCategories, 'contextId' => $this->context->id]) : '' ?>
       </div>
     </div>
     <div class="ticket__comments">
@@ -59,7 +59,6 @@ FirebaseAsset::register($this);
       <h2 class="ticket__subtitle">Коментарии</h2>
       <?php if (!Yii::$app->user->isGuest) : ?>
         <div class="ticket__comment-form">
-
           <?php $form = ActiveForm::begin([
             'id' => 'comment-add-form',
             'method' => 'post',
@@ -69,7 +68,7 @@ FirebaseAsset::register($this);
           ]); ?>
           <div class="comment-form__header">
             <a href="#" class="comment-form__avatar avatar">
-              <img src="<?= Yii::$app->user->identity->avatar ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= Yii::$app->user->identity->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+              <img src="<?= isset(Yii::$app->user->identity->avatar) ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . Yii::$app->user->identity->avatar) : '/img/avatar.jpg' ?>" srcset="<?= isset(Yii::$app->user->identity->avatar) ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
             </a>
             <p class="comment-form__author">Вам слово</p>
           </div>
@@ -87,17 +86,21 @@ FirebaseAsset::register($this);
         <div class="ticket__comments-list">
           <ul class="comments-list">
             <?php foreach ($comments as $comment) : ?>
-              <?php $user = User::findOne($comment->owner_id); ?>
+              <?php
+              if (isset($comment->owner_id)) {
+                $user = User::findOne($comment->owner_id);
+              }
+              ?>
               <li>
                 <div class="comment-card">
                   <div class="comment-card__header">
                     <a href="#" class="comment-card__avatar avatar">
-                      <img src="<?= $user->avatar ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . $user->avatar) : '/img/avatar.jpg' ?>" srcset="<?= $user->avatar ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
+                      <img src="<?= isset($user->avatar) ? Html::encode(User::USER_AVATAR_UPLOAD_PATH . $user->avatar) : '/img/avatar.jpg' ?>" srcset="<?= isset($user->avatar) ? '' : '/img/avatar@2x.jpg 2x' ?>" alt="Аватар пользователя">
                     </a>
-                    <p class="comment-card__author"><?= Html::encode($user->name) ?></p>
+                    <p class="comment-card__author"><?= isset($user->name) ? Html::encode($user->name) : '' ?></p>
                   </div>
                   <div class="comment-card__content">
-                    <?= Html::tag('p', Html::encode($comment->comment_text), ['style' => ['word-wrap' => 'break-word']]) ?>
+                    <?= isset($comment->comment_text) ? Html::tag('p', Html::encode($comment->comment_text), ['style' => ['word-wrap' => 'break-word']]) : Html::tag('p', '', ['style' => ['word-wrap' => 'break-word']]) ?>
                   </div>
                 </div>
               </li>
@@ -134,31 +137,46 @@ FirebaseAsset::register($this);
         ])
         ?>
       <?php endif; ?>
-      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (!$buyerId && Yii::$app->user->id === $owner->user_id) ? 'disabled' : '' ?>></button>
+      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (isset($owner->user_id) && !$buyerId && Yii::$app->user->id === $owner->user_id) ? 'disabled' : '' ?>></button>
     <?php endif; ?>
   </div>
 </section>
 
 <?php if (!Yii::$app->user->isGuest) : ?>
   <section class="chat visually-hidden">
-    <?php if (Yii::$app->user->id === $owner->user_id) : ?>
-      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addressee->user_id) ?>" data-receiver-name="<?= Html::encode($addressee->name) ?>">
-        Чат с покупателем <?= $addressee->user_id === $owner->user_id ? '' : Html::encode($addressee->name) ?>
+    <?php if (isset($owner->user_id) && Yii::$app->user->id === $owner->user_id) : ?>
+      <?php
+      $addresseeName = '';
+      if (isset($addressee->name)) {
+        $addresseeName = $addressee->name;
+      };
+      $addresseeId = '';
+      if (isset($addressee->user_id)) {
+        $addresseeId = $addressee->user_id;
+      };
+      ?>
+      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">
+        Чат с покупателем
+        <?= (isset($owner->user_id) && $addresseeId === $owner->user_id)  ? '' : Html::encode($addresseeName) ?>
       </h2>
     <?php else : ?>
-      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addressee->user_id) ?>" data-receiver-name="<?= Html::encode($addressee->name) ?>">Чат с продавцом <?= Html::encode($addressee->name) ?></h2>
+      <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">Чат с продавцом <?= Html::encode($addresseeName) ?></h2>
     <?php endif; ?>
     <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
-      <?php if (isset($messages)) : ?>
+      <?php if ($messages) : ?>
         <?php foreach ($messages as $key => $message) : ?>
           <!-- Подсветка непрочитанных сообщений class="unread" -->
-          <li class="chat__message <?= !$message['read'] ? 'unread' : '' ?>">
+          <li class="chat__message <?= !isset($message['read']) ? 'unread' : '' ?>">
             <div class="chat__message-title">
-              <span class="chat__message-author"><?= $message['fromUserId'] !== $addressee->user_id ? 'Вы' : Html::encode($addressee->name) ?></span>
-              <time class="chat__message-time" datetime="2021-11-18T21:15"><?= Yii::$app->formatter->asDate($message['date'], 'php:j F Y') === Yii::$app->formatter->asDate('now', 'php:j F Y') ? Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:H:i')) : Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:j F Y H:i')) ?></time>
+              <?php if (isset($message['fromUserId'])) : ?>
+                <span class="chat__message-author"><?= $message['fromUserId'] !== $addresseeId ? 'Вы' : Html::encode($addresseeName) ?></span>
+              <?php endif; ?>
+              <?php if (isset($message['date'])) : ?>
+                <time class="chat__message-time" datetime="2021-11-18T21:15"><?= Yii::$app->formatter->asDate($message['date'], 'php:j F Y') === Yii::$app->formatter->asDate('now', 'php:j F Y') ? Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:H:i')) : Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:j F Y H:i')) ?></time>
+              <?php endif; ?>
             </div>
             <div class="chat__message-content">
-              <p><?= Html::encode($message['message']) ?></p>
+              <p><?= isset($message['message']) ? Html::encode($message['message']) : '' ?></p>
             </div>
           </li>
         <?php endforeach; ?>

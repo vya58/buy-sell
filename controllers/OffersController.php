@@ -38,8 +38,8 @@ class OffersController extends Controller
 
     $owner = $offer->owner;
     $categories = $offer->categories;
-    $comments = $offer->comments;
     $offerCategories = $offer->offerCategories;
+    $comments = $offer->comments;
 
     ArrayHelper::multisort($comments, ['comment_id'], [SORT_DESC]);
 
@@ -56,7 +56,7 @@ class OffersController extends Controller
 
     $buyers = null;
 
-    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что страница покупателя.
+    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что открытая страница - страница покупателя.
     $addressee = $owner;
     $dataProvider = null;
     // Если пользователь - владелец объявления
@@ -76,7 +76,7 @@ class OffersController extends Controller
         }
       }
 
-      // Установка начала пагинации, чтобы в меню выбора пользователя для чата отображался выбранный
+      // Установка начала пагинации, чтобы в меню выбора пользователя для чата отображался выбранный пользователь
       if (isset(Yii::$app->request->queryParams['page'])) {
         $currentPage = Yii::$app->request->queryParams['page'] - 1;
       }
@@ -134,11 +134,11 @@ class OffersController extends Controller
    */
   public function actionAdd(): Response|string
   {
-    $ticketFormTitle = 'Новая публикация';
-
     if (Yii::$app->user->isGuest) {
       return $this->redirect(['/login']);
     }
+
+    $ticketFormTitle = 'Новая публикация';
 
     $offerAddForm = new OfferAddForm();
 
@@ -161,14 +161,18 @@ class OffersController extends Controller
    */
   public function actionEdit($id): Response|string
   {
-    if (Yii::$app->user->isGuest) {
-      return $this->redirect(['/login']);
-    }
-
     $offer = Offer::find()
       ->with('owner')
       ->where(['offer_id' => $id])
       ->one();
+
+    if (!$offer) {
+      throw new NotFoundHttpException();
+    }
+
+    if (Yii::$app->user->isGuest) {
+      return $this->redirect(['/login']);
+    }
 
     // Если пользователь не обладает правом редактирования объявления (не модератор и не автор объявления),
     // то он переадресуется на страницу просмотра объявления
@@ -177,10 +181,6 @@ class OffersController extends Controller
     }
 
     $ticketFormTitle = 'Редактировать публикацию';
-
-    if (!$offer) {
-      throw new NotFoundHttpException();
-    }
 
     $offerAddForm = new OfferAddForm();
     $offerAddForm->autocompleteForm($offerAddForm, $offer);

@@ -138,22 +138,24 @@ class Offer extends \yii\db\ActiveRecord
    */
   public static function getImageOfRandomOffers(OfferCategory $offerCategory): string
   {
-    // Вычисляем количество объявлений с данной категорией
-    $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id);
+    if (isset($offerCategory->category->category_id)) {
+      // Вычисляем количество объявлений с данной категорией
+      $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id);
 
-    // Получаем случайное число в диапазоне, не превышающем количество объявлений с данной категорией
-    $range = rand(0, $countOffersInCategory - 1);
+      // Получаем случайное число в диапазоне, не превышающем количество объявлений с данной категорией
+      $range = rand(0, $countOffersInCategory - 1);
 
-    // Выбираем по случайное объявление, соответствующее данной категории
-    $randomOffer = Offer::find()
-      ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
-      ->where(['oc.category_id' => $offerCategory->category->category_id])
-      ->limit(1)
-      ->offset($range)
-      ->all();
+      // Выбираем по случайное объявление, соответствующее данной категории
+      $randomOffer = Offer::find()
+        ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
+        ->where(['oc.category_id' => $offerCategory->category->category_id])
+        ->limit(1)
+        ->offset($range)
+        ->all();
 
-    // Получаем изображение объявления
-    $image = ArrayHelper::getValue($randomOffer, '0.offer_image');
+      // Получаем изображение объявления
+      $image = ArrayHelper::getValue($randomOffer, '0.offer_image');
+    }
 
     // Если объявление не имеет изображения, то повторяем процедуру
     if (!$image) {
@@ -225,20 +227,28 @@ class Offer extends \yii\db\ActiveRecord
   public static function deleteOffer(Offer $offer): bool
   {
     // Получение комментариев, связанных с этим объявлением
-    $comments = $offer->comments;
+    if (isset($offer->comments)) {
+      $comments = $offer->comments;
+    }
+
     // Получение чатов, связанных с этим объявлением
-    $firebase = new ChatFirebase($offer->offer_id);
+    if ($offer->offer_id) {
+      $firebase = new ChatFirebase($offer->offer_id);
+    }
 
     $transaction = Yii::$app->db->beginTransaction();
 
     try {
       //Удаление комментариев к объявлению
-      foreach ($comments as $comment) {
-        $comment->delete();
+      if ($comments) {
+        foreach ($comments as $comment) {
+          $comment->delete();
+        }
       }
-      $offer->delete();
-      //Удаление чатов объявления
-      $firebase->deleteChat();
+      if ($offer->delete() && $firebase) {
+        //Удаление чатов объявления
+        $firebase->deleteChat();
+      }
 
       $transaction->commit();
     } catch (DataSaveException $exception) {

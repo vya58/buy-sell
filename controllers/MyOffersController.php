@@ -7,6 +7,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class MyOffersController extends Controller
@@ -62,6 +63,10 @@ class MyOffersController extends Controller
       ->with('comments')
       ->where(['offer_id' => $offerId])
       ->one();
+
+    if (!$offer) {
+      throw new NotFoundHttpException();
+    }
 
     // Если пользователь не обладает правом удаления объявления (не модератор и не автор объявления),
     // то в случае попытки удаления, сервер возвращает код 403 без удаления объявления

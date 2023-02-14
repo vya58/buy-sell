@@ -13,39 +13,41 @@ use yii\widgets\ListView;
 <section class="search-results">
   <h1 class="visually-hidden">Результаты поиска</h1>
   <div class="search-results__wrapper">
-    <?php if ($dataProvider->totalCount === 0) : ?>
-      <div class="search-results__message">
-        <p>Не найдено <br>ни&nbsp;одной публикации</p>
-      </div>
-    <?php else : ?>
-      <p class="search-results__label"><?= $dataProvider->totalCount !== 1 ? 'Найдено ' : 'Найдена ' ?><span class="js-results"><?= Html::encode($dataProvider->totalCount) ?> публикации</span></p>
-      <?= ListView::widget(
-        [
-          'dataProvider' => $dataProvider,
-          'itemView' => '_search',
-          'layout' => "<div class='tickets-list__header'>{pager}</div>\n<ul class='search-results__list'>{items}</ul>",
-          'itemOptions' => [
-            'tag' => 'li',
-            'class' => 'tickets-list__item',
-          ],
-          'pager' => [
-            'prevPageLabel' => 'Предыдущие ' . Yii::$app->params['pageSize'],
-            'nextPageLabel' => 'Еще ' . CalculatePageHelper::numberModelsTheNextPage($dataProvider, 'page-search'),
-            'pageCssClass' => 'visually-hidden tickets-list__link',
-            'prevPageCssClass' => 'tickets-list__link',
-            'nextPageCssClass' => 'tickets-list__title',
-            'disableCurrentPageButton' => true,
-            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'visually-hidden'],
-            'linkContainerOptions' => [
-              'tag' => 'p',
-              'class' => 'tickets-list__title',
+    <?php if (isset($dataProvider->totalCount)) : ?>
+      <?php if ($dataProvider->totalCount === 0) : ?>
+        <div class="search-results__message">
+          <p>Не найдено <br>ни&nbsp;одной публикации</p>
+        </div>
+      <?php else : ?>
+        <p class="search-results__label"><?= $dataProvider->totalCount !== 1 ? 'Найдено ' : 'Найдена ' ?><span class="js-results"><?= Html::encode($dataProvider->totalCount) ?> публикации</span></p>
+        <?= ListView::widget(
+          [
+            'dataProvider' => $dataProvider,
+            'itemView' => '_search',
+            'layout' => "<div class='tickets-list__header'>{pager}</div>\n<ul class='search-results__list'>{items}</ul>",
+            'itemOptions' => [
+              'tag' => 'li',
+              'class' => 'tickets-list__item',
             ],
-            'options' => [
-              'tag' => false,
+            'pager' => [
+              'prevPageLabel' => 'Предыдущие ' . Yii::$app->params['pageSize'],
+              'nextPageLabel' => 'Еще ' . CalculatePageHelper::numberModelsTheNextPage($dataProvider, 'page-search'),
+              'pageCssClass' => 'visually-hidden tickets-list__link',
+              'prevPageCssClass' => 'tickets-list__link',
+              'nextPageCssClass' => 'tickets-list__title',
+              'disableCurrentPageButton' => true,
+              'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'visually-hidden'],
+              'linkContainerOptions' => [
+                'tag' => 'p',
+                'class' => 'tickets-list__title',
+              ],
+              'options' => [
+                'tag' => false,
+              ],
             ],
-          ],
-        ]
-      ) ?>
+          ]
+        ) ?>
+      <?php endif; ?>
     <?php endif; ?>
   </div>
 </section>

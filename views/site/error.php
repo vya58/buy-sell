@@ -8,8 +8,8 @@ use yii\helpers\Url;
 ?>
 
 <section class="error">
-  <h1 class="error__title"><?= Html::encode($statusCode) ?></h1>
-  <h2 class="error__subtitle"><?= Html::encode($message) ?></h2>
+  <h1 class="error__title"><?= $statusCode ? Html::encode($statusCode) : '' ?></h1>
+  <h2 class="error__subtitle"><?= $message ? Html::encode($message) : '' ?></h2>
   <ul class="error__list">
     <?php if (Yii::$app->user->isGuest) : ?>
       <li class="error__item">
@@ -18,7 +18,7 @@ use yii\helpers\Url;
     <?php endif; ?>
     <?php if (!Yii::$app->user->isGuest) : ?>
       <li class="error__item">
-        <a href="<?= Url::to(['offers/add']) ?>">Новая публикация</a>
+        <a href="<?= Url::to(['/offers/add']) ?>">Новая публикация</a>
       </li>
     <?php endif; ?>
     <li class="error__item">

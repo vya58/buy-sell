@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
 <section class="ticket-form">
   <div class="ticket-form__wrapper">
-    <h1 class="ticket-form__title"><?= $ticketFormTitle ?></h1>
+    <h1 class="ticket-form__title"><?= $ticketFormTitle ? Html::encode($ticketFormTitle) : '' ?></h1>
     <div class="ticket-form__tile">
       <?php $form = ActiveForm::begin([
         'id' => 'offer-add-form',
@@ -25,24 +25,26 @@ use yii\widgets\ActiveForm;
           'autocomplete' => 'off',
         ],
       ]); ?>
-      <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage ? 'uploaded' : '' ?>">
-        <div class="ticket-form__avatar js-preview">
-          <img src="<?= $offerAddForm->offerImage ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offerAddForm->offerImage) : '' ?>" srcset="" alt="">
+      <?php if (isset($offerAddForm->offerImage)) : ?>
+        <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage  ? 'uploaded' : '' ?>">
+          <div class="ticket-form__avatar js-preview">
+            <img src="<?= $offerAddForm->offerImage ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offerAddForm->offerImage) : '' ?>" srcset="" alt="">
+          </div>
+          <div class="ticket-form__field-avatar">
+            <?= $form->field($offerAddForm, 'offerImage')->fileInput(['class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить фото…'])->label('<span class="ticket-form__text-upload">Загрузить фото…</span><span class="ticket-form__text-another">Загрузить другое фото…</span>') ?>
+          </div>
         </div>
-        <div class="ticket-form__field-avatar">
-          <?= $form->field($offerAddForm, 'offerImage')->fileInput(['class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить фото…'])->label('<span class="ticket-form__text-upload">Загрузить фото…</span><span class="ticket-form__text-another">Загрузить другое фото…</span>') ?>
-        </div>
-      </div>
+      <?php endif; ?>
       <div class="ticket-form__content">
         <div class="ticket-form__row">
           <div class="form__field">
-            <?= $form->field($offerAddForm, 'offerTitle')->textInput(['class' => 'js-field', 'placeholder' => 'Название'])->label(false) ?>
+            <?= $form->field($offerAddForm, 'offerTitle')->textInput(['class' => 'js-field'])->label('Название') ?>
             <span>Обязательное поле</span>
           </div>
         </div>
         <div class="ticket-form__row">
           <div class="form__field">
-            <?= $form->field($offerAddForm, 'offerText')->textarea(['cols' => 30, 'rows' => 10, 'class' => 'js-field', 'placeholder' => 'Описание'])->label(false) ?>
+            <?= $form->field($offerAddForm, 'offerText')->textarea(['cols' => 30, 'rows' => 10, 'class' => 'js-field'])->label('Описание') ?>
             <span>Обязательное поле</span>
           </div>
         </div>

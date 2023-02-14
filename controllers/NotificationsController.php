@@ -54,17 +54,20 @@ class NotificationsController extends Controller
     $unreadMessages = [];
 
     // Выборка всех сообщений из Firebase, у которых ключ 'read' = false, т.е. сообщение не прочитано
-    CalculateHelper::searchKey('read', $firebaseAllOffersChats, $unreadMessages);
-
-    // Сортировка всех непрочитанных сообщений в многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
-    $users = Notification::sortMessagesByRecipients($unreadMessages);
-
-    //Отправка писем пользователям с количеством непрочтенных сообщений
-    foreach ($users as $key => $value) {
-      $countMessages = count($users[$key]);
-      Notification::sendEmail($key, $countMessages);
+    if ($firebaseAllOffersChats) {
+      CalculateHelper::searchKey('read', $firebaseAllOffersChats, $unreadMessages);
     }
 
+    // Сортировка всех непрочитанных сообщений в многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
+    $addressees = Notification::sortMessagesByRecipients($unreadMessages);
+
+    //Отправка писем пользователям с количеством непрочтенных сообщений
+    foreach ($addressees as $key => $value) {
+      $countMessages = count($addressees[$key]);
+      if (isset($key)) {
+        Notification::sendEmail($key, $countMessages);
+      }
+    }
     return $this->render('index');
   }
 }
