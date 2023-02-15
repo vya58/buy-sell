@@ -4,6 +4,8 @@ use app\models\Offer;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\widgets\OfferImageWidget;
+
 
 ?>
 
@@ -18,7 +20,7 @@ use yii\helpers\Url;
             <a href="<?= Url::to(['categories/', 'id' => $offerCategory->category->category_id]) ?>" class="category-tile category-tile--<?= $contextId === 'offers' ? 'small' : 'default' ?>">
               <span class="category-tile__image">
                 <!-- ТЗ: "Для изображений категорий отображаются случайные изображения" -->
-                <img src="<?= Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . Offer::getImageOfRandomOffers($offerCategory)) ?>" alt="Иконка категории">
+                <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
               </span>
               <span class="category-tile__label"><?= isset($offerCategory->category->category_name) ? Html::encode($offerCategory->category->category_name) : '' ?>
                 <?php if ($contextId !== 'offers') : ?>

@@ -1,15 +1,15 @@
 <?php
 
-use app\models\Offer;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\widgets\OfferImageWidget;
 use app\widgets\TrimmingStringWidget;
 
 ?>
 
 <div class="ticket-card ticket-card--color06">
   <div class="ticket-card__img">
-    <img src="<?= isset($model->offer_image) ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $model->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
+  <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
   </div>
   <div class="ticket-card__info">
     <span class="ticket-card__label"><?= isset($model->offer_type) ? Html::encode($model->offer_type) : '' ?></span>

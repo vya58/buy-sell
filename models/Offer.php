@@ -38,6 +38,7 @@ class Offer extends \yii\db\ActiveRecord
   public const MIN_TICKET_PRICE = 100;
   public const MAX_OFFER_TYPE = 10;
   public const OFFER_IMAGE_UPLOAD_PATH = '/uploads/img/';
+  public const OFFER_IMAGE_STAB_PATH = '/img/blank.png';
   public const MAX_LENGTH_OFFER_IMAGE_UPLOAD_PATH = 255;
 
   /**

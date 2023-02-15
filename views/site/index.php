@@ -2,9 +2,9 @@
 
 /** @var yii\web\View $this */
 
-use app\models\Offer;
 use app\widgets\CategoryWidget;
 use app\widgets\NewTicketWidget;
+use app\widgets\OfferImageWidget;
 use app\widgets\TrimmingStringWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -44,7 +44,7 @@ use yii\helpers\Url;
           <li class="tickets-list__item">
             <div class="ticket-card ticket-card--color09">
               <div class="ticket-card__img">
-                <img src="<?= isset($mostTalkedOffer->offer_image) ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $mostTalkedOffer->offer_image) : Html::encode('../img/blank.png') ?>" alt="Изображение товара">
+              <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
               </div>
               <div class="ticket-card__info">
                 <span class="ticket-card__label"><?= isset($mostTalkedOffer->offer_type) ? Html::encode($mostTalkedOffer->offer_type) : '' ?></span>

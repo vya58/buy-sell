@@ -6,6 +6,7 @@ use app\models\forms\OfferAddForm;
 use yii\helpers\ArrayHelper;
 use \yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\widgets\OfferImageWidget;
 
 /** @var yii\web\View $this */
 /** @var OfferAddForm $offerAddForm */
@@ -28,7 +29,7 @@ use yii\widgets\ActiveForm;
       <?php if (isset($offerAddForm->offerImage)) : ?>
         <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage  ? 'uploaded' : '' ?>">
           <div class="ticket-form__avatar js-preview">
-            <img src="<?= $offerAddForm->offerImage ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offerAddForm->offerImage) : '' ?>" srcset="" alt="">
+          <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
           </div>
           <div class="ticket-form__field-avatar">
             <?= $form->field($offerAddForm, 'offerImage')->fileInput(['class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить фото…'])->label('<span class="ticket-form__text-upload">Загрузить фото…</span><span class="ticket-form__text-another">Загрузить другое фото…</span>') ?>

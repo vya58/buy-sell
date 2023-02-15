@@ -8,7 +8,6 @@ use app\models\OfferCategory;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\Response;
 
 class CategoriesController extends Controller
 {

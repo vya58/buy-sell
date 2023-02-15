@@ -12,6 +12,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
+use app\widgets\OfferImageWidget;
 
 FirebaseAsset::register($this);
 
@@ -22,7 +23,7 @@ FirebaseAsset::register($this);
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-        <img src="<?= isset($offer->offer_image) ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('/img/blank.png') ?>" alt="Изображение товара">
+      <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
       </div>
       <div class="ticket__info">
         <h2 class="ticket__title" data-attr="<?= isset($offer->offer_id) ? Html::encode($offer->offer_id) : '' ?>"><?= isset($offer->offer_title) ? Html::encode($offer->offer_title) : '' ?></h2>

@@ -2,9 +2,9 @@
 
 /** @var yii\web\View $this */
 
-use app\models\Offer;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
+use app\widgets\OfferImageWidget;
 use yii\helpers\Url;
 
 ?>
@@ -21,7 +21,7 @@ use yii\helpers\Url;
           <li class="tickets-list__item js-card">
             <div class="ticket-card ticket-card--color06">
               <div class="ticket-card__img">
-                <img src="<?= isset($offer->offer_image) ? Html::encode(Offer::OFFER_IMAGE_UPLOAD_PATH . $offer->offer_image) : Html::encode('../img/blank.png') ?>" alt="Изображение товара">
+              <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
               </div>
               <div class="ticket-card__info">
                 <span class="ticket-card__label"><?= isset($offer->offer_type) ? Html::encode($offer->offer_type) : '' ?></span>
