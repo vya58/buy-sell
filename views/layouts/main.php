@@ -8,6 +8,7 @@ use app\models\forms\OfferSearchForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use app\widgets\SearchWidget;
 
 AppAsset::register($this);
 
@@ -27,7 +28,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 
 <body>
-
   <?php $this->beginBody() ?>
   <header class="header <?= !Yii::$app->user->isGuest ? 'header--logged' : '' ?>">
     <div class="header__wrapper">
@@ -45,26 +45,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </ul>
       </nav>
 
-      <?php
-      $model = new OfferSearchForm();
-
-      if (isset($this->params['query'])) {
-        $model->autocompleteForm($model, $this->params['query']);
-      }
-
-      $form = ActiveForm::begin([
-        'method' => 'get',
-        'action' => ['site/search'],
-        'options' => [
-          'class' => 'search',
-          'autocomplete' => 'off',
-        ],
-      ]); ?>
-      <?= $form->field($model, 'search')->input(['placeholder' => 'Поиск'])->label(false) ?>
-      <div class="search__icon"></div>
-      <div class="search__close-btn"></div>
-      <?php ActiveForm::end();
-      ?>
+      <?= SearchWidget::widget() ?>
 
       <a class="<?= 'header__avatar avatar' ?>" href="#">
         <?php if (!Yii::$app->user->isGuest) : ?>

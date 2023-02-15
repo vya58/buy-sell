@@ -5,6 +5,7 @@
 use app\models\Offer;
 use app\widgets\CategoryWidget;
 use app\widgets\NewTicketWidget;
+use app\widgets\TrimmingStringWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -57,11 +58,7 @@ use yii\helpers\Url;
                 <div class="ticket-card__desc">
                   <p>
                     <!-- ТЗ:" Анонс, не более 55 символов." -->
-                    <?php if (isset($mostTalkedOffer->offer_text) && (mb_strlen($mostTalkedOffer->offer_text) > Yii::$app->params['offerTextLength'])) : ?>
-                      <?= isset($mostTalkedOffer->offer_text) ? Html::encode(mb_substr($mostTalkedOffer->offer_text, 0, Yii::$app->params['offerTextLength']) . '...') : '' ?>
-                    <?php else : ?>
-                      <?= isset($mostTalkedOffer->offer_text) ? Html::encode($mostTalkedOffer->offer_text) : '' ?>
-                    <?php endif; ?>
+                    <?= TrimmingStringWidget::widget(['text' => $mostTalkedOffer->offer_text, 'textLength' => Yii::$app->params['offerTextLength']]) ?>
                   </p>
                 </div>
               </div>

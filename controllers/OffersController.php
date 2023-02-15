@@ -22,10 +22,11 @@ class OffersController extends Controller
    *
    * @param int $id - id объявления
    * @param int|null $buyerId - id покупателя, null - если страница продавца
-   * @return Response|string - Переадресация на страницу просмотра объявления|рендеринг страницы просмотра объявления
+   * @param int|string $currentPage - номер текущей страницы пагинатора
+   * 
    * @throws NotFoundHttpException
    */
-  public function actionIndex(int $id, int $buyerId = null, $currentPage = null): Response|string
+  public function actionIndex(int $id, int $buyerId = null, $currentPage = null)
   {
     $offer = Offer::find()
       ->with('owner', 'categories', 'offerCategories', 'comments')
@@ -130,9 +131,8 @@ class OffersController extends Controller
   /**
    * Страница с формой добавления объявления
    *
-   * @return Response|string - Переадресация на страницу объявлений пользователя|Рендеринг страницы с формой добавления объявления
    */
-  public function actionAdd(): Response|string
+  public function actionAdd()
   {
     if (Yii::$app->user->isGuest) {
       return $this->redirect(['/login']);
@@ -157,11 +157,10 @@ class OffersController extends Controller
    * Страница с формой редактирования объявления
    *
    * @param int $id - id объявления
-   * 
-   * @return Response|string - Переадресация на страницы: входа, объявления|Рендеринг страницы с формой добавления объявления
+   *
    * @throws NotFoundHttpException
    */
-  public function actionEdit($id): Response|string
+  public function actionEdit($id)
   {
     $offer = Offer::find()
       ->with('owner')

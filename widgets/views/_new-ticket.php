@@ -3,6 +3,7 @@
 use app\models\Offer;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use app\widgets\TrimmingStringWidget;
 
 ?>
 
@@ -26,11 +27,7 @@ use yii\helpers\Url;
     <div class="ticket-card__desc">
       <p>
         <!-- ТЗ:" Анонс, не более 55 символов." -->
-        <?php if (isset($model->offer_text) && (mb_strlen($model->offer_text) > Yii::$app->params['offerTextLength'])) : ?>
-          <?= isset($model->offer_text) ? Html::encode(mb_substr($model->offer_text, 0, Yii::$app->params['offerTextLength']) . '...') : '' ?>
-        <?php else : ?>
-          <?= isset($model->offer_text) ? Html::encode($model->offer_text) : '' ?>
-        <?php endif; ?>
+        <?= TrimmingStringWidget::widget(['text' => $model->offer_text, 'textLength' => Yii::$app->params['offerTextLength']]) ?>
       </p>
     </div>
   </div>

@@ -38,9 +38,8 @@ class MyOffersController extends Controller
   /**
    * Страница просмотра объявления бъявлений пользователя
    *
-   * @return string - результат рендеринга страницы просмотра объявлений пользователя 
    */
-  public function actionIndex(): string
+  public function actionIndex()
   {
     $offers = Offer::find()
       ->with('categories')
@@ -55,9 +54,8 @@ class MyOffersController extends Controller
    * Удаление объявления пользователя
    *
    * @param int $offerId - id объявления
-   * @return Response - Переадресация на страницу просмотра объявлений пользователя
    */
-  public function actionRemove($offerId): Response
+  public function actionRemove($offerId)
   {
     $offer = Offer::find()
       ->with('comments')

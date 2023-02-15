@@ -44,9 +44,8 @@ class NotificationsController extends Controller
   /**
    * Действие по получению непрочитанных сообщений в Firebase и e-mail-рассылке писем их получателям с количеством непрочтенных сообщений
    *
-   * @return string - результат рендеринга страницы рассылки
    */
-  public function actionIndex(): Response|string
+  public function actionIndex()
   {
     $firebase = new ChatFirebase();
     $firebaseAllOffersChats = $firebase->getValueChat();

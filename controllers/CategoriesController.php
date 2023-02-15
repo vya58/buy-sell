@@ -16,9 +16,8 @@ class CategoriesController extends Controller
    * Страница просмотра объявлений соответствующей категории
    *
    * @param int $id - id категории
-   * @return Response|string - код страницы
    */
-  public function actionIndex(int $id): Response|string
+  public function actionIndex(int $id)
   {
     $query = Offer::getCategoryOffers($id);
 

@@ -37,9 +37,8 @@ class RegistrationController extends Controller
   /**
    * Страница с формой регистрации нового пользователя
    *
-   * @return Response|string Переадресация на страницу входа|Рендеринг страницы с формой регистрации
    */
-  public function actionIndex(): Response|string
+  public function actionIndex()
   {
     $registrationForm = new RegistrationForm();
 

@@ -42,9 +42,8 @@ class LoginController extends Controller
   /**
    * Страница входа.
    *
-   * @return Response|string Переадресация на главную страницу|результат рендеринга страницы входа
    */
-  public function actionIndex(): Response|string
+  public function actionIndex()
   {
     $loginForm = new LoginForm();
 
@@ -83,10 +82,9 @@ class LoginController extends Controller
    *
    * @param ClientInterface $client - социальная сеть, через которую происходит авторизация
    *
-   * @return Response Переадресация на главную страницу
    * @throws BadRequestHttpException
    */
-  public function onAuthSuccess(ClientInterface $client): Response
+  public function onAuthSuccess(ClientInterface $client)
   {
     $attributes = $client->getUserAttributes();
 

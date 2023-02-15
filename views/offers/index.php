@@ -6,6 +6,7 @@ use app\assets\FirebaseAsset;
 use app\models\Offer;
 use app\models\User;
 use app\widgets\CategoryWidget;
+use app\widgets\TimeFormattWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -114,7 +115,7 @@ FirebaseAsset::register($this);
       <?php endif; ?>
     </div>
     <?php if (!Yii::$app->user->isGuest) : ?>
-      <?php if ($dataProvider->count) : ?>
+      <?php if ($dataProvider) : ?>
         <?= ListView::widget([
           'dataProvider' => $dataProvider,
           'itemView' => '_chat',
@@ -163,7 +164,7 @@ FirebaseAsset::register($this);
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">Чат с продавцом <?= Html::encode($addresseeName) ?></h2>
     <?php endif; ?>
     <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
-      <?php if (count($messages)) : ?>
+      <?php if (isset($messages)) : ?>
         <?php foreach ($messages as $key => $message) : ?>
           <!-- Подсветка непрочитанных сообщений class="unread" -->
           <li class="chat__message <?= !isset($message['read']) ? 'unread' : '' ?>">
@@ -172,7 +173,7 @@ FirebaseAsset::register($this);
                 <span class="chat__message-author"><?= $message['fromUserId'] !== $addresseeId ? 'Вы' : Html::encode($addresseeName) ?></span>
               <?php endif; ?>
               <?php if (isset($message['date'])) : ?>
-                <time class="chat__message-time" datetime="2021-11-18T21:15"><?= Yii::$app->formatter->asDate($message['date'], 'php:j F Y') === Yii::$app->formatter->asDate('now', 'php:j F Y') ? Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:H:i')) : Html::encode(Yii::$app->formatter->asDate($message['date'], 'php:j F Y H:i')) ?></time>
+                <?= TimeFormattWidget::widget(['date' => $message['date']]) ?>
               <?php endif; ?>
             </div>
             <div class="chat__message-content">

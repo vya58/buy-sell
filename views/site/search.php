@@ -46,7 +46,7 @@ use yii\widgets\ListView;
               ],
             ],
           ]
-        ) ?>
+        )?>
       <?php endif; ?>
     <?php endif; ?>
   </div>
@@ -55,4 +55,5 @@ use yii\widgets\ListView;
   <h2 class="visually-hidden">Самые новые предложения</h2>
   <div class="tickets-list__wrapper">
     <?= $newOffersdataProvider ? NewTicketWidget::widget(['dataProvider' => $newOffersdataProvider]) : '' ?>
+  </div>
 </section>

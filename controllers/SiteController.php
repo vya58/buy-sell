@@ -15,9 +15,8 @@ class SiteController extends Controller
   /**
    * Displays homepage.
    *
-   * @return string Рендеринг главной страницы
    */
-  public function actionIndex(): string
+  public function actionIndex()
   {
     // Категории для section class="categories-list"
     $offerCategories = OfferCategory::find()
@@ -45,10 +44,9 @@ class SiteController extends Controller
   /**
    * Logout action.
    *
-   * @return Response|string
    */
 
-  public function actionLogout(): Response|string
+  public function actionLogout()
   {
     Yii::$app->user->logout();
 
@@ -58,15 +56,15 @@ class SiteController extends Controller
   public function actionError()
   {
     $this->layout = 'error';
-    $this->view->params['htmlClass'] = 'html-not-found';
-    $this->view->params['bodyClass'] = 'body-not-found';
+    //$this->view->params['htmlClass'] = 'html-not-found';
+    //$this->view->params['bodyClass'] = 'body-not-found';
     $exception = Yii::$app->errorHandler->exception;
     $statusCode = $exception->statusCode;
     $message = 'Страница не найдена';
 
     if ($exception->statusCode >= 500) {
-      $this->view->params['htmlClass'] = 'html-server';
-      $this->view->params['bodyClass'] = 'body-server';
+     // $this->view->params['htmlClass'] = 'html-server';
+      //$this->view->params['bodyClass'] = 'body-server';
       $message = 'Ошибка cервера';
 
       return $this->render('error', compact('statusCode', 'message'));
@@ -77,9 +75,8 @@ class SiteController extends Controller
   /**
    * Страница результатов поиска объявлений
    *
-   * @return string Рендеринг страницы с результатами поиска
    */
-  public function actionSearch(): string
+  public function actionSearch()
   {
     $foundOffers = null;
     $model = new OfferSearchForm();
