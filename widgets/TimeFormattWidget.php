@@ -5,7 +5,7 @@ namespace app\widgets;
 use yii\base\Widget;
 
 /**
- * Отображает секцию самых новых предложений
+ * Выводит дату в требуемом формате
  *
  */
 class TimeFormattWidget extends Widget

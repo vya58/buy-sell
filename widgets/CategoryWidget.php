@@ -5,7 +5,7 @@ namespace app\widgets;
 use yii\base\Widget;
 
 /**
- * Отображает секцию самых новых предложений
+ * Отображает секцию категорий
  *
  */
 class CategoryWidget extends Widget

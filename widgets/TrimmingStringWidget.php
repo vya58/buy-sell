@@ -5,7 +5,7 @@ namespace app\widgets;
 use yii\base\Widget;
 
 /**
- * Отображает секцию самых новых предложений
+ * Выводит обрезанный текст, если длиннее чем 'textLength'
  *
  */
 class TrimmingStringWidget extends Widget
