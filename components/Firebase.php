@@ -1,10 +1,11 @@
 <?php
 
-namespace app\models;
+namespace app\components;
 
 use Yii;
-use yii\base\Model;
-use app\models\exceptions\DataSaveException;
+use yii\base\Component;
+use app\models\User;
+use app\src\exceptions\DataSaveException;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Database\Reference;
 
@@ -44,7 +45,7 @@ use Kreait\Firebase\Database\Reference;
  *
  * @property $database - \Kreait\Firebase\Contract\Database
  */
-class ChatFirebase extends Model
+class Firebase extends Component
 {
   private $database;
 

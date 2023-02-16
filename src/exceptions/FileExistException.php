@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\exceptions;
+namespace app\src\exceptions;
 
 class FileExistException extends \Exception
 {

@@ -1,6 +1,6 @@
 <?php
 
-use app\models\helpers\CalculatePageHelper;
+use app\src\helpers\CalculatePageHelper;
 use yii\widgets\ListView;
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\helpers;
+namespace app\src\helpers;
 
 use yii\data\ActiveDataProvider;
 use Yii;

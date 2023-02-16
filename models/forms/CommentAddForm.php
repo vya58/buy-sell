@@ -3,7 +3,7 @@
 namespace app\models\forms;
 
 use app\models\Comment;
-use app\models\exceptions\DataSaveException;
+use app\src\exceptions\DataSaveException;
 use Yii;
 use yii\base\Model;
 

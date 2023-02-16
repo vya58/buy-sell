@@ -2,7 +2,7 @@
 
 namespace app\models\forms;
 
-use app\models\ChatFirebase;
+use app\components\Firebase;
 use app\models\User;
 use yii\base\Model;
 
@@ -36,12 +36,12 @@ class ChatForm extends Model
    * Метод сохранения данных из формы добавления публикации в БД
    *
    * @param User $addressee - объект класса User - адресат отправляемого сообщения
-   * @param ChatFirebase|null $chatFirebase объект класса ChatFirebase или null
+   * @param Firebase|null $chatFirebase объект класса Firebase или null
    *
    * @return bool
    */
 
-  public function addMessage(User $addressee, ?ChatFirebase $chatFirebase = null): bool
+  public function addMessage(User $addressee, ?Firebase $chatFirebase = null): bool
   {
     if (!$this->message || !$chatFirebase) {
       return false;

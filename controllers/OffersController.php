@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\ChatFirebase;
+use app\components\Firebase;
 use app\models\Offer;
 use app\models\User;
 use app\models\forms\ChatForm;
@@ -66,7 +66,7 @@ class OffersController extends Controller
         $addressee = User::findOne($buyerId);
       }
       // Выборка всех сообщений объявления с данным id
-      $firebase = new ChatFirebase($id);
+      $firebase = new Firebase($id);
       $firebaseChats = $firebase->getValueChat();
 
       $userIds = [];
@@ -102,7 +102,7 @@ class OffersController extends Controller
 
     // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
     if ($buyerId) {
-      $chatFirebase = new ChatFirebase($id, $buyerId);
+      $chatFirebase = new Firebase($id, $buyerId);
 
       $messages = $chatFirebase->getValueChat();
 

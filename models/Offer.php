@@ -2,7 +2,8 @@
 
 namespace app\models;
 
-use app\models\exceptions\DataSaveException;
+use app\components\Firebase;
+use app\src\exceptions\DataSaveException;
 use Yii;
 use \yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
@@ -235,7 +236,7 @@ class Offer extends \yii\db\ActiveRecord
 
     // Получение чатов, связанных с этим объявлением
     if (isset($offer->offer_id)) {
-      $firebase = new ChatFirebase($offer->offer_id);
+      $firebase = new Firebase($offer->offer_id);
     }
 
     $transaction = Yii::$app->db->beginTransaction();

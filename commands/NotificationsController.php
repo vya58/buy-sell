@@ -2,9 +2,9 @@
 
 namespace app\commands;
 
-use app\models\ChatFirebase;
+use app\components\Firebase;
 use app\models\Notification;
-use app\models\helpers\CalculateHelper;
+use app\src\helpers\CalculateHelper;
 use yii\console\Controller;
 
 /*
@@ -22,7 +22,7 @@ class NotificationsController extends Controller
    */
   public function actionIndex()
   {
-    $firebase = new ChatFirebase();
+    $firebase = new Firebase();
     $firebaseAllOffersChats = $firebase->getValueChat();
 
     $unreadMessages = [];

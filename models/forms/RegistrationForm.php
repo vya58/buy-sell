@@ -3,8 +3,8 @@
 namespace app\models\forms;
 
 use app\models\User;
-use app\models\exceptions\DataSaveException;
-use app\models\exceptions\FileExistException;
+use app\src\exceptions\DataSaveException;
+use app\src\exceptions\FileExistException;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;

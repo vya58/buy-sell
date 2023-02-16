@@ -2,7 +2,7 @@
 
 /** @var yii\web\View $this */
 
-use app\models\helpers\CalculatePageHelper;
+use app\src\helpers\CalculatePageHelper;
 use app\widgets\NewTicketWidget;
 use yii\helpers\Html;
 use yii\widgets\ListView;

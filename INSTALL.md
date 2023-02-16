@@ -20,7 +20,7 @@
 — Со стороны php необходимо будет написать код, который подключается к этой БД и отправляет юзеру email уведомление, если у него есть непрочитанное сообщение в чате". Таким образом использование SDK PHP обязательно, но в тоже время работы в режиме “in realtime” с помощью PHP мне не удалось, т.к. "API базы данных реального времени не поддерживает прослушиватели событий в реальном времени". Использовался Pjax Yii2, отправка без перезагрузки идёт, а вот получение - нет.
 Если использвать подключение без SDK JS, то оберните всю форму чата в offers/index.php (сразу после section.chat visually-hidden) в виджет Pjax. Если с SDK JS, то только поле ввода textarea.chat__form-message с кнопкой button.chat__form-button
 
-9) Инициализация Firebase Realtime Database при использовании Firebase SDK для PHP происходит в конструкторе ChatFirebase.php:
+9) Инициализация Firebase Realtime Database при использовании Firebase SDK для PHP происходит в конструкторе Firebase.php:
 
 $this->database = (new Kreait\Firebase\Factory)
       ->withServiceAccount(Yii::$app->params['firebaseServiceAccountShape'] . '.json')

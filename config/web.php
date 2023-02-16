@@ -42,6 +42,9 @@ $config = [
       'identityClass' => 'app\models\User',
       'enableAutoLogin' => true,
     ],
+    'firebase' => [
+      'class' => 'yii\components\Firebase',
+    ],
     'errorHandler' => [
       'errorAction' => 'site/error',
     ],
