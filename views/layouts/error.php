@@ -12,26 +12,19 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => 'Доска объявлений — современный веб-сайт, упрощающий продажу или покупку абсолютно любых вещей.']);
 $this->registerMetaTag(['http-equiv' => 'X-UA-Compatible', 'content' => 'ie=edge']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/img/favicon.ico')]);
-//$errorCode = $this->context->module->errorHandler->exception->statusCode;
-$errorCode = Yii::$app->errorHandler->exception->statusCode;
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<!--
-<html lang="ru" class="<?= /* $this->params['htmlClass']*/ '' ?>">
--->
-<html lang="ru" class="<?= $errorCode >= 500 ? 'html-server' : 'html-not-found' ?>">
+
+<html lang="ru" class="<?= $this->params['statusCode'] >= 500 ? 'html-server' : 'html-not-found' ?>">
 
 <head>
   <title>Куплю Продам</title>
   <?php $this->head() ?>
 </head>
 
-<!--
-<body class="<?= /* $this->params['bodyClass']*/ '' ?>">
--->
-
-<body class="<?= $errorCode >= 500 ? 'body-server' : 'body-not-found' ?>">
+<body class="<?= $this->params['statusCode'] >= 500 ? 'body-server' : 'body-not-found' ?>">
 
   <?php $this->beginBody() ?>
 

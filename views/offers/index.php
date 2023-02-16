@@ -23,7 +23,7 @@ FirebaseAsset::register($this);
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-      <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
+      <?= OfferImageWidget::widget(['offerImage' => $offer->offer_image]) ?>
       </div>
       <div class="ticket__info">
         <h2 class="ticket__title" data-attr="<?= isset($offer->offer_id) ? Html::encode($offer->offer_id) : '' ?>"><?= isset($offer->offer_title) ? Html::encode($offer->offer_title) : '' ?></h2>

@@ -44,7 +44,7 @@ use yii\helpers\Url;
           <li class="tickets-list__item">
             <div class="ticket-card ticket-card--color09">
               <div class="ticket-card__img">
-              <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
+              <?= OfferImageWidget::widget(['offerImage' => $mostTalkedOffer->offer_image]) ?>
               </div>
               <div class="ticket-card__info">
                 <span class="ticket-card__label"><?= isset($mostTalkedOffer->offer_type) ? Html::encode($mostTalkedOffer->offer_type) : '' ?></span>

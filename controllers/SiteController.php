@@ -55,16 +55,13 @@ class SiteController extends Controller
 
   public function actionError()
   {
-    $this->layout = 'error';
-    //$this->view->params['htmlClass'] = 'html-not-found';
-    //$this->view->params['bodyClass'] = 'body-not-found';
     $exception = Yii::$app->errorHandler->exception;
     $statusCode = $exception->statusCode;
     $message = 'Страница не найдена';
+    $this->layout = 'error';
+    $this->view->params['statusCode'] = $statusCode;
 
     if ($exception->statusCode >= 500) {
-     // $this->view->params['htmlClass'] = 'html-server';
-      //$this->view->params['bodyClass'] = 'body-server';
       $message = 'Ошибка cервера';
 
       return $this->render('error', compact('statusCode', 'message'));

@@ -21,7 +21,7 @@ use yii\helpers\Url;
           <li class="tickets-list__item js-card">
             <div class="ticket-card ticket-card--color06">
               <div class="ticket-card__img">
-              <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
+              <?= OfferImageWidget::widget(['offerImage' => $offer->offer_image]) ?>
               </div>
               <div class="ticket-card__info">
                 <span class="ticket-card__label"><?= isset($offer->offer_type) ? Html::encode($offer->offer_type) : '' ?></span>
