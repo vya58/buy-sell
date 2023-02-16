@@ -8,7 +8,6 @@ use app\models\forms\OfferSearchForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\Response;
 
 class SiteController extends Controller
 {

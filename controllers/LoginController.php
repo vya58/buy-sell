@@ -11,8 +11,6 @@ use yii\helpers\ArrayHelper;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\BadRequestHttpException;
-use yii\web\Response;
-
 
 class LoginController extends Controller
 {

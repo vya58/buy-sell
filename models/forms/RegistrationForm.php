@@ -105,7 +105,7 @@ class RegistrationForm extends Model
    * @return bool
    * @throws DataSaveException
    */
-  public function uploadAvatar($user, $avatar): bool
+  public function uploadAvatar(User $user, UploadedFile $avatar): bool
   {
     if ($this->validate() && $this->avatar) {
       // Уникальное имя файла в БД

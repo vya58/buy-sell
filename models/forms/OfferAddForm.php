@@ -60,7 +60,7 @@ class OfferAddForm extends Model
    * @param object $form - форма настройки профиля пользователя
    * @param Offer $offer - объект класса Offer
    */
-  public function autocompleteForm($form, $offer): void
+  public function autocompleteForm(object $form, Offer $offer): void
   {
     if (isset($offer->offer_image)) {
       $form->offerImage = $offer->offer_image;
@@ -153,7 +153,7 @@ class OfferAddForm extends Model
    * @return bool
    * @throws DataSaveException
    */
-  public function uploadImage($offer, $offerImage): bool
+  public function uploadImage(Offer $offer, UploadedFile $offerImage): bool
   {
     if ($this->validate() && $this->offerImage) {
       // Создаем уникальное имя файла в БД

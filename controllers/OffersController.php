@@ -13,7 +13,6 @@ use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class OffersController extends Controller
 {
@@ -23,7 +22,7 @@ class OffersController extends Controller
    * @param int $id - id объявления
    * @param int|null $buyerId - id покупателя, null - если страница продавца
    * @param int|string $currentPage - номер текущей страницы пагинатора
-   * 
+   *
    * @throws NotFoundHttpException
    */
   public function actionIndex(int $id, int $buyerId = null, $currentPage = null)

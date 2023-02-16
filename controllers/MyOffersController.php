@@ -8,7 +8,6 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class MyOffersController extends Controller
 {
@@ -54,6 +53,9 @@ class MyOffersController extends Controller
    * Удаление объявления пользователя
    *
    * @param int $offerId - id объявления
+   *
+   * @throws NotFoundHttpException;
+   * @throws ForbiddenHttpException;
    */
   public function actionRemove($offerId)
   {

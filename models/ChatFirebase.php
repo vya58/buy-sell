@@ -60,7 +60,7 @@ class ChatFirebase extends Model
   /**
    * Получение параметра запроса для Kreait\Firebase\Database\Reference в зависимости от наличия и значений id объявления и покупателя
    *
-   * @return string $path
+   * @return string $path - Строка с путём к запрашиваемому значению в Firebase (Например: 'id объявления'/'id покупателя')
    */
   private function getQuery(): string
   {
@@ -135,8 +135,10 @@ class ChatFirebase extends Model
 
   /**
    * Отметка сообщения как прочитанного
+   * @param int $messageNumber номер сообщения (ключ индексированного массива, значение которого - сообщение в виде ассоциативного массива)
    *
    * @return bool
+   * @throws DataSaveException
    */
   public function readMessage(int $messageNumber): bool
   {
@@ -163,6 +165,7 @@ class ChatFirebase extends Model
    * Удаление чата
    *
    * @return bool
+   * @throws DataSaveException
    */
   public function deleteChat(): bool
   {

@@ -7,7 +7,6 @@ use app\models\Notification;
 use app\models\helpers\CalculateHelper;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 
 /*
 * Запуск сбора неполученных сообщений пользователям в чате и отправка им e-mail-уведомлений об этом
@@ -51,10 +50,13 @@ class NotificationsController extends Controller
     $firebaseAllOffersChats = $firebase->getValueChat();
 
     $unreadMessages = [];
+    // Ищем в чатах Firebase ключи 'read' со значением false (непрочтённые)
+    $searchKey = 'read';
+    $referenceValue = false;
 
     // Выборка всех сообщений из Firebase, у которых ключ 'read' = false, т.е. сообщение не прочитано
     if ($firebaseAllOffersChats) {
-      CalculateHelper::searchKey('read', $firebaseAllOffersChats, $unreadMessages);
+      CalculateHelper::searchKey($searchKey, $firebaseAllOffersChats, $unreadMessages, $referenceValue);
     }
 
     // Сортировка всех непрочитанных сообщений в многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю

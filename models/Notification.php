@@ -13,6 +13,7 @@ use yii\base\Model;
  */
 class Notification extends Model
 {
+  // id пользователя, которому производится отправка
   private const SORTED_VALUE = 'toUserId';
 
   /**

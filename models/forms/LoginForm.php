@@ -46,10 +46,8 @@ class LoginForm extends Model
    * Метод валидации пароля при входе пользователя
    *
    * @param string $password - строка из поля 'password' формы входа
-   *
-   * @return void
    */
-  public function validatePassword($password): void
+  public function validatePassword(string $password): void
   {
     if (!$this->hasErrors()) {
       $user = $this->getUser();

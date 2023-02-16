@@ -7,7 +7,6 @@ use app\models\Offer;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
-use yii\web\Response;
 
 class CommentsController extends Controller
 {

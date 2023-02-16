@@ -40,7 +40,7 @@ class OfferSearchForm extends Model
    * @param object $form - форма настройки профиля пользователя
    * @param string|null $searchQuery - сохраненный поисковый запрос
    */
-  public function autocompleteForm($form, $searchQuery = null): void
+  public function autocompleteForm(object $form, string $searchQuery = null): void
   {
     $form->search = $searchQuery;
   }

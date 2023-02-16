@@ -29,7 +29,7 @@ use app\widgets\OfferImageWidget;
       <?php if (isset($offerAddForm->offerImage)) : ?>
         <div class="ticket-form__avatar-container js-preview-container <?= $offerAddForm->offerImage  ? 'uploaded' : '' ?>">
           <div class="ticket-form__avatar js-preview">
-          <?= OfferImageWidget::widget(['offerImage' => $model->offer_image]) ?>
+          <?= OfferImageWidget::widget(['offerImage' => $offerAddForm->offerImage]) ?>
           </div>
           <div class="ticket-form__field-avatar">
             <?= $form->field($offerAddForm, 'offerImage')->fileInput(['class' => 'visually-hidden js-file-field', 'placeholder' => 'Загрузить фото…'])->label('<span class="ticket-form__text-upload">Загрузить фото…</span><span class="ticket-form__text-another">Загрузить другое фото…</span>') ?>

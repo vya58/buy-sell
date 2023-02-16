@@ -26,6 +26,7 @@ use yii\helpers\ArrayHelper;
  */
 class Offer extends \yii\db\ActiveRecord
 {
+  // Тип объявления
   public const OFFER_TYPE = [
     'buy' => 'КУПЛЮ',
     'sell' => 'ПРОДАМ',
@@ -36,7 +37,6 @@ class Offer extends \yii\db\ActiveRecord
   public const MIN_LENGTH_TICKET_COMMENT = 50;
   public const MAX_LENGTH_TICKET_COMMENT = 1000;
   public const MIN_TICKET_PRICE = 100;
-  public const MAX_OFFER_TYPE = 10;
   public const OFFER_IMAGE_UPLOAD_PATH = '/uploads/img/';
   public const OFFER_IMAGE_STAB_PATH = '/img/blank.png';
   public const MAX_LENGTH_OFFER_IMAGE_UPLOAD_PATH = 255;
@@ -135,7 +135,7 @@ class Offer extends \yii\db\ActiveRecord
    *
    * @param OfferCategory $offerCategory модель класса OfferCategory
    *
-   * @return string $image - изображение случайного объявления
+   * @return string $image - путь к изображению случайного объявления
    */
   public static function getImageOfRandomOffers(OfferCategory $offerCategory): string
   {
@@ -221,6 +221,7 @@ class Offer extends \yii\db\ActiveRecord
 
   /**
    * Метод удаления объявления с комментариями к нему
+   * @param Offer $offer - модель класса Offer (Объявление)
    *
    * @return bool
    * @throws DataSaveException
