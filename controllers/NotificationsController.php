@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use Yii;
-use app\components\Firebase;
 use app\models\Notification;
 use app\src\helpers\CalculateHelper;
 use yii\filters\AccessControl;
@@ -20,7 +19,7 @@ class NotificationsController extends Controller
 {
   /**
    * {@inheritdoc}
-   *//*
+   */
   public function behaviors()
   {
     return [
@@ -40,17 +39,14 @@ class NotificationsController extends Controller
       ]
     ];
   }
-*/
+
   /**
    * Действие по получению непрочитанных сообщений в Firebase и e-mail-рассылке писем их получателям с количеством непрочтенных сообщений
    *
    */
   public function actionIndex()
   {
-    $firebase = new Firebase();
-    $firebaseAllOffersChats = $firebase->getValueChat();
-
-    //$firebaseAllOffersChats = Yii::$app->firebase->getValueChat();
+    $firebaseAllOffersChats = Yii::$app->firebase->getValueChat();
 
     $unreadMessages = [];
     // Ищем в чатах Firebase ключи 'read' со значением false (непрочтённые)

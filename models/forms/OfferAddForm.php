@@ -153,7 +153,7 @@ class OfferAddForm extends Model
    * @return bool
    * @throws DataSaveException
    */
-  public function uploadImage(Offer $offer, UploadedFile $offerImage): bool
+  public function uploadImage(Offer $offer, $offerImage): bool
   {
     if ($this->validate() && $this->offerImage) {
       // Создаем уникальное имя файла в БД

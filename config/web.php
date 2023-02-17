@@ -33,7 +33,6 @@ $config = [
     ],
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
-      //'cache' => 'cache',
     ],
     'cache' => [
       'class' => 'yii\caching\FileCache',
@@ -43,7 +42,7 @@ $config = [
       'enableAutoLogin' => true,
     ],
     'firebase' => [
-      'class' => 'yii\components\Firebase',
+      'class' => 'app\components\Firebase',
     ],
     'errorHandler' => [
       'errorAction' => 'site/error',

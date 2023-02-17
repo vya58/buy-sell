@@ -1,10 +1,10 @@
 <?php
 
+/** @var yii\web\View $this */
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\widgets\SearchWidget;
-
-/** @var yii\web\View $this */
 
 ?>
 

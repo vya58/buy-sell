@@ -3,7 +3,6 @@
 /** @var yii\web\View $this */
 
 use app\assets\FirebaseAsset;
-use app\models\Offer;
 use app\models\User;
 use app\widgets\CategoryWidget;
 use app\widgets\TimeFormattWidget;
@@ -23,7 +22,7 @@ FirebaseAsset::register($this);
     <h1 class="visually-hidden">Карточка объявления</h1>
     <div class="ticket__content">
       <div class="ticket__img">
-      <?= OfferImageWidget::widget(['offerImage' => $offer->offer_image]) ?>
+        <?= OfferImageWidget::widget(['offerImage' => $offer->offer_image]) ?>
       </div>
       <div class="ticket__info">
         <h2 class="ticket__title" data-attr="<?= isset($offer->offer_id) ? Html::encode($offer->offer_id) : '' ?>"><?= isset($offer->offer_title) ? Html::encode($offer->offer_title) : '' ?></h2>
@@ -121,6 +120,7 @@ FirebaseAsset::register($this);
           'dataProvider' => $dataProvider,
           'itemView' => '_chat',
           'layout' => "{items}\n{pager}",
+          'emptyText' => false,
           'viewParams' => [
             'offer' => $offer,
             'dataProvider' => $dataProvider,

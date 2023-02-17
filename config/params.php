@@ -3,9 +3,6 @@ $config = parse_ini_file('/OpenServ/domains/config/buysell_config.ini', true);
 
 return [
   'buysellEmail' => 'admin@buysell.com',
-  //'adminEmail' => 'admin@example.com',
-  //'senderEmail' => 'noreply@example.com',
-  //'senderName' => 'Example.com mailer',
 
   // Количество выводимых карточек новых объявлений
   'newOffersCount' => 8,

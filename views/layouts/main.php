@@ -4,10 +4,8 @@
 /** @var string $content */
 
 use app\assets\AppAsset;
-use app\models\forms\OfferSearchForm;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\ActiveForm;
 use app\widgets\SearchWidget;
 
 AppAsset::register($this);

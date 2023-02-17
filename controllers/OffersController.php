@@ -2,14 +2,13 @@
 
 namespace app\controllers;
 
-use app\components\Firebase;
+use app\src\Chat;
 use app\models\Offer;
 use app\models\User;
 use app\models\forms\ChatForm;
 use app\models\forms\CommentAddForm;
 use app\models\forms\OfferAddForm;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,11 +20,11 @@ class OffersController extends Controller
    *
    * @param int $id - id объявления
    * @param int|null $buyerId - id покупателя, null - если страница продавца
-   * @param int|string $currentPage - номер текущей страницы пагинатора
+   * @param int|null $currentPage - номер текущей страницы пагинатора для провайдера данных чата продавца
    *
    * @throws NotFoundHttpException
    */
-  public function actionIndex(int $id, int $buyerId = null, $currentPage = null)
+  public function actionIndex(int $id, int $buyerId = null, int $currentPage = null)
   {
     $offer = Offer::find()
       ->with('owner', 'categories', 'offerCategories', 'comments')
@@ -46,84 +45,42 @@ class OffersController extends Controller
     $commentAddForm = new CommentAddForm();
 
     // Добавление нового комментария. Доступно только зарегистрированным пользователям.
-    if (!Yii::$app->user->isGuest && $commentAddForm->load(Yii::$app->request->post())) {
-      if ($commentAddForm->addComment($id)) {
-        return $this->redirect(['/offers', 'id' => $id]);
-      }
+    if (!Yii::$app->user->isGuest && $commentAddForm->load(Yii::$app->request->post()) && $commentAddForm->addComment($id)) {
+      return $this->redirect(['/offers', 'id' => $id]);
     }
 
-    $chatForm = new ChatForm();
-
-    $buyers = null;
-
-    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что открытая страница - страница покупателя.
-    $addressee = $owner;
     $dataProvider = null;
+
     // Если пользователь - владелец объявления
     if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-      // Если страница продавца, то адресат сообщения - покупатель с id = $buyerId
-      if ($buyerId) {
-        $addressee = User::findOne($buyerId);
-      }
-      // Выборка всех сообщений объявления с данным id
-      $firebase = new Firebase($id);
-      $firebaseChats = $firebase->getValueChat();
-
-      $userIds = [];
-      if ($firebaseChats) {
-        foreach ($firebaseChats as $key => $value) {
-          $userIds[] = $key;
-        }
-      }
-
-      // Установка начала пагинации, чтобы в меню выбора пользователя для чата отображался выбранный пользователь
-      if (isset(Yii::$app->request->queryParams['page'])) {
-        $currentPage = Yii::$app->request->queryParams['page'] - 1;
-      }
-
-      $query = User::find()
-        ->having(['in', 'user_id', $userIds]);
-
-      $dataProvider = new ActiveDataProvider([
-        'query' => $query,
-        'pagination' => [
-          'pageSize' => 1,
-          'page' => $currentPage,
-        ],
-      ]);
-    }
-
-    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+      // Провайдера данных для вывода окна выбора чата продавца с покупателями
+      $dataProvider = Chat::getDataProviderForChat($id, $currentPage);
+    } else {
+      // Иначе, текущий пользователь - покупатель
       $buyerId = \Yii::$app->user->id;
     }
 
+    $chatForm = new ChatForm();
     $messages = null;
-    $chatFirebase = null;
 
+    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что открытая страница - страница покупателя.
+    $addressee = $owner;
     // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
     if ($buyerId) {
-      $chatFirebase = new Firebase($id, $buyerId);
-
-      $messages = $chatFirebase->getValueChat();
-
-      if ($messages) {
-        foreach ($messages as $key => $message) {
-          if ($message['fromUserId'] !== Yii::$app->user->id) {
-            $chatFirebase->readMessage($key);
-          }
-        }
-      }
+      // Если страница владельца объявления, то адресат сообщения - покупатель с id = $buyerId
+      $addressee = User::findOne($buyerId);
+      $chat = new Chat($id, $buyerId);
+      $messages = $chat->getBuyerChat();
     }
 
     // Добавление нового cообщения в чат. Доступно только зарегистрированным пользователям при наличии заполненного поля ввода сообщения.
-    if (\Yii::$app->user->id !== $addressee->user_id && $chatFirebase && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
+    if (\Yii::$app->user->id !== $addressee->user_id && $chat && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
+      $messages = $chat->sendingMessage($addressee, $chatForm);
 
-      $send = $chatForm->addMessage($addressee, $chatFirebase);
-      $messages = $chatFirebase->getValueChat();
-
-      //обнуляем модель, чтобы очистить форму
+      // Обнуляем форму чата
       $chatForm = new ChatForm();
     }
+
     return $this->render('index', compact('offer', 'offerCategories', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyerId', 'addressee', 'dataProvider'));
   }
 
@@ -141,13 +98,8 @@ class OffersController extends Controller
 
     $offerAddForm = new OfferAddForm();
 
-    if (Yii::$app->request->getIsPost()) {
-      $offerAddForm->load(Yii::$app->request->post());
-      $offerId = $offerAddForm->addOffer();
-
-      if ($offerId) {
-        return $this->redirect(['/my-offers']);
-      }
+    if (Yii::$app->request->getIsPost() && $offerAddForm->load(Yii::$app->request->post()) && $offerAddForm->addOffer()) {
+      return $this->redirect(['/my-offers']);
     }
     return $this->render('add', compact('offerAddForm', 'ticketFormTitle'));
   }
@@ -185,8 +137,7 @@ class OffersController extends Controller
     $offerAddForm = new OfferAddForm();
     $offerAddForm->autocompleteForm($offerAddForm, $offer);
 
-    if (Yii::$app->request->getIsPost()) {
-      $offerAddForm->load(Yii::$app->request->post());
+    if (Yii::$app->request->getIsPost() && $offerAddForm->load(Yii::$app->request->post())) {
       $offerId = $offerAddForm->addOffer($id);
 
       if ($offerId) {

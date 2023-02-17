@@ -221,6 +221,21 @@ class Offer extends \yii\db\ActiveRecord
   }
 
   /**
+   * Метод запроса всех объявлений отдельной категории для датапровайдера
+   *
+   * @param int $categoryId - id категории, чьи объявления выводятся
+   *
+   * @return ActiveQuery
+   */
+  public static function getCategoryOffers($categoryId): ActiveQuery
+  {
+    return Offer::find()
+      ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
+      ->with('offerCategories', 'categories')
+      ->where(['oc.category_id' => $categoryId]);
+  }
+
+  /**
    * Метод удаления объявления с комментариями к нему
    * @param Offer $offer - модель класса Offer (Объявление)
    *
@@ -259,21 +274,6 @@ class Offer extends \yii\db\ActiveRecord
       throw new DataSaveException($exception->getMessage('Ошибка удаления объявления'));
     }
     return true;
-  }
-
-  /**
-   * Метод запроса всех объявлений отдельной категории для датапровайдера
-   *
-   * @param int $categoryId - id категории, чьи объявления выводятся
-   *
-   * @return ActiveQuery
-   */
-  public static function getCategoryOffers($categoryId): ActiveQuery
-  {
-    return Offer::find()
-      ->rightJoin('offer_category oc', '`oc`.`offer_id` = `offer`.`offer_id`')
-      ->with('offerCategories', 'categories')
-      ->where(['oc.category_id' => $categoryId]);
   }
 
   /**
