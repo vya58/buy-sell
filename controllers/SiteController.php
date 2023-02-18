@@ -2,8 +2,6 @@
 
 namespace app\controllers;
 
-use app\models\Offer;
-use app\models\OfferCategory;
 use app\models\forms\OfferSearchForm;
 use app\src\service\OfferCategoryService;
 use app\src\service\OfferService;

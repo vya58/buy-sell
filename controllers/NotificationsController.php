@@ -19,7 +19,7 @@ class NotificationsController extends Controller
 {
   /**
    * {@inheritdoc}
-   *//*
+   */
   public function behaviors()
   {
     return [
@@ -38,7 +38,7 @@ class NotificationsController extends Controller
         ]
       ]
     ];
-  }*/
+  }
 
   /**
    * Действие по получению непрочитанных сообщений в Firebase и e-mail-рассылке писем их получателям с количеством непрочтенных сообщений
