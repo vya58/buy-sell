@@ -1,5 +1,9 @@
 Инструкция по запуску проекта находится в файле INSTALL.md
 
+Отправка уведомлений пользователям о количестве непрочитанных ими сообщений реализована двумя способами:
+1) Через консоль контроллером app\commands\NotificationsController
+2) Через web-интерфейс контроллером app\controllers\NotificationsController
+
 
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
