@@ -3,7 +3,7 @@
 namespace app\commands;
 
 use Yii;
-use app\models\Notification;
+use app\src\service\NotificationService;
 use app\src\helpers\CalculateHelper;
 use yii\console\Controller;
 
@@ -35,13 +35,13 @@ class NotificationsController extends Controller
     }
 
     // Сортировка всех непрочитанных сообщений в многомерный массив, где ключ первого уровня вложенности - id пользователя, которому адресовано непрочтённое сообщение. Значения, соответствующие этим ключам - массив с непрочитанными сообщениями этому пользователю
-    $addressees = CalculateHelper::sortArrayByKeyValue($unreadMessages, Notification::SORTED_VALUE);
+    $addressees = CalculateHelper::sortArrayByKeyValue($unreadMessages, NotificationService::SORTED_VALUE);
 
     //Отправка писем пользователям с количеством непрочтенных сообщений
     foreach ($addressees as $key => $value) {
       $countMessages = count($addressees[$key]);
       if (isset($key)) {
-        Notification::sendEmail($key, $countMessages);
+        NotificationService::sendEmail($key, $countMessages);
       }
     }
   }

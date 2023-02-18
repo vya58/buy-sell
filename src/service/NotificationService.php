@@ -1,17 +1,17 @@
 <?php
 
-namespace app\models;
+namespace app\src\service;
 
+use app\models\User;
 use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Email;
 use Yii;
-use yii\base\Model;
 
 /**
  * Класс модели уведомления пользователя о непрочитанных сообщениях
  */
-class Notification extends Model
+class NotificationService
 {
   // id пользователя, которому производится отправка
   public const SORTED_VALUE = 'toUserId';
