@@ -139,12 +139,12 @@ FirebaseAsset::register($this);
         ])
         ?>
       <?php endif; ?>
-      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= (isset($owner->user_id) && !$buyerId && Yii::$app->user->id === $owner->user_id) ? 'disabled' : '' ?>></button>
+      <button class="chat-button" type="button" aria-label="Открыть окно чата" <?= !$chat ? 'disabled' : '' ?>></button>
     <?php endif; ?>
   </div>
 </section>
 
-<?php if (!Yii::$app->user->isGuest) : ?>
+<?php if (!Yii::$app->user->isGuest && $chat) : ?>
   <section class="chat visually-hidden">
     <?php
     $addresseeName = '';
@@ -159,12 +159,12 @@ FirebaseAsset::register($this);
     <?php if (isset($owner->user_id) && Yii::$app->user->id === $owner->user_id) : ?>
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">
         Чат с покупателем
-        <?= (isset($owner->user_id) && $addresseeId === $owner->user_id)  ? '' : Html::encode($addresseeName) ?>
+        <?= ($addresseeId === $chat->getBuyerId())  ? '' : Html::encode($addresseeName) ?>
       </h2>
     <?php else : ?>
       <h2 class="chat__subtitle" data-receiver-id="<?= Html::encode($addresseeId) ?>" data-receiver-name="<?= Html::encode($addresseeName) ?>">Чат с продавцом <?= Html::encode($addresseeName) ?></h2>
     <?php endif; ?>
-    <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($buyerId) ?>">
+    <ul id="chat__conversation" class="chat__conversation" data-buyer-id="<?= Html::encode($chat->getBuyerId()) ?>">
       <?php if (isset($messages)) : ?>
         <?php foreach ($messages as $key => $message) : ?>
           <!-- Подсветка непрочитанных сообщений class="unread" -->

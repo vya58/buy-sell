@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use app\src\Chat;
 use app\models\Offer;
-use app\models\User;
 use app\models\forms\ChatForm;
 use app\models\forms\CommentAddForm;
 use app\models\forms\OfferAddForm;
@@ -49,39 +48,37 @@ class OffersController extends Controller
       return $this->redirect(['/offers', 'id' => $id]);
     }
 
-    $dataProvider = null;
+    $dataProvider = Chat::getDataProviderForChat($offer, $currentPage);
 
-    // Если пользователь - владелец объявления
-    if (\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
-      // Провайдера данных для вывода окна выбора чата продавца с покупателями
-      $dataProvider = Chat::getDataProviderForChat($id, $currentPage);
-    } else {
-      // Иначе, текущий пользователь - покупатель
+    // Если пользователь - не владелец объявления, значит он покупатель
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
       $buyerId = \Yii::$app->user->id;
     }
 
     $chatForm = new ChatForm();
+    $chat = null;
     $messages = null;
+    $addressee = null;
 
-    // По умолчанию, адресат сообщения - владелец объявления. Это значит, что открытая страница - страница покупателя.
-    $addressee = $owner;
-    // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
+    // Если есть покупатель, создаётся чат
     if ($buyerId) {
       // Если страница владельца объявления, то адресат сообщения - покупатель с id = $buyerId
-      $addressee = User::findOne($buyerId);
       $chat = new Chat($id, $buyerId);
+      $addressee = $chat->getAddresse($owner);
+
+      // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id
       $messages = $chat->getBuyerChat();
     }
 
     // Добавление нового cообщения в чат. Доступно только зарегистрированным пользователям при наличии заполненного поля ввода сообщения.
-    if (\Yii::$app->user->id !== $addressee->user_id && $chat && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
-      $messages = $chat->sendingMessage($addressee, $chatForm);
+    if ($chat && $chatForm->load(Yii::$app->request->post()) && !Yii::$app->user->isGuest && Yii::$app->request->isAjax) {
+      $messages = $chat->sendMessage($addressee, $chatForm);
 
       // Обнуляем форму чата
       $chatForm = new ChatForm();
     }
 
-    return $this->render('index', compact('offer', 'offerCategories', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'buyerId', 'addressee', 'dataProvider'));
+    return $this->render('index', compact('offer', 'offerCategories', 'owner', 'categories', 'comments', 'commentAddForm', 'chatForm', 'messages', 'addressee', 'dataProvider', 'chat'));
   }
 
   /**

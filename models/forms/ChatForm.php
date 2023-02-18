@@ -2,9 +2,6 @@
 
 namespace app\models\forms;
 
-use app\components\Firebase;
-use app\src\Chat;
-use app\models\User;
 use yii\base\Model;
 
 class ChatForm extends Model

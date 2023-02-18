@@ -5,9 +5,16 @@ namespace app\src;
 use app\components\Firebase;
 use yii\data\ActiveDataProvider;
 use app\models\User;
+use app\models\Offer;
 use app\models\forms\ChatForm;
 use Yii;
 
+/**
+ * @property int $offerId - id публикации
+ * @property int $buyerId - id покупателя
+ *
+ * @property $database - \Kreait\Firebase\Contract\Database
+ */
 class Chat
 {
   // Ключ выборки сообщений отправителя
@@ -16,24 +23,28 @@ class Chat
   private $firebase;
 
   public function __construct(
-    private readonly int $id,
+    private readonly int $offerId,
     private readonly int $buyerId
   ) {
-    $this->firebase = new Firebase($id, $buyerId);
+    $this->firebase = new Firebase($offerId, $buyerId);
   }
 
   /**
    * Метод получения провайдера данных для окна выбора чата продавца с покупателями
    *
-   * @param  int $id - id объявления на странице которого открыт чат
+   * @param Offer $offer - объявление, на странице которого открыт чат. Объект класса app\models\Offer
    * @param int|null $currentPage - номер текущей страницы пагинатора
    *
-   * @return ActiveDataProvider $dataProvider - провайдер данных чата
+   * @return ActiveDataProvider|null $dataProvider - провайдер данных чата
    */
-  public static function getDataProviderForChat(int $id, int $currentPage = null): ActiveDataProvider
+  public static function getDataProviderForChat(Offer $offer, int $currentPage = null): ?ActiveDataProvider
   {
+    // Если пользователь не является владельцем объявления, то больше одного собеседника в чате объявления у него не будет. Значит постраничная разбивка собеседников не нужна
+    if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
+      return null;
+    }
     // Выборка всех сообщений объявления с данным id
-    $firebase = new Firebase($id);
+    $firebase = new Firebase($offer->offer_id);
     $firebaseChats = $firebase->getValueChat();
 
     $userIds = [];
@@ -58,6 +69,33 @@ class Chat
         'page' => $currentPage,
       ],
     ]);
+  }
+
+  /**
+   * Метод получения id покупателя  в чате
+   *
+   * @return int $this->buyerId - id покупателя в чате
+   */
+  public function getBuyerId(): int
+  {
+    return $this->buyerId;
+  }
+
+  /**
+   * Метод получения адресата сообщения в чате
+   *
+   * @param User $owner - владелец объявления
+   *
+   * @return User $addressee - адресат сообщения
+   */
+  public function getAddresse(User $owner): User
+  {
+    // Если страница не владельца объявления, то адресат сообщения - продавец
+    if (\Yii::$app->user->id !== $owner->user_id) {
+      return $owner;
+    }
+    // Иначе, адресат сообщения - покупатель с id === buyerId
+    return User::findOne($this->buyerId);
   }
 
   /**
@@ -89,7 +127,7 @@ class Chat
    *
    * @return array|null $messages - массив с сообщениями чата или null
    */
-  public function sendingMessage(User $addressee, ChatForm $chatForm): ?array
+  public function sendMessage(User $addressee, ChatForm $chatForm): ?array
   {
     if (!$chatForm->getMessage()) {
       return null;
