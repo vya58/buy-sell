@@ -75,30 +75,4 @@ class OfferCategory extends \yii\db\ActiveRecord
   {
     return $this->hasOne(Offer::class, ['offer_id' => 'offer_id']);
   }
-
-  /**
-   * Метод получения количества записей (т.е. объявлений), относящихся к категории с id, равным $categoryId
-   *
-   * @param int $categoryId - id категории
-   *
-   * @return int - количество записей
-   */
-  public static function getCountOffersInCategory(int $categoryId): int
-  {
-    return self::find()
-      ->where(['category_id' => $categoryId])
-      ->count();
-  }
-
-  /**
-   * Метод получения всех записей OfferCategory с "жадной" загрузкой Category
-   *
-   * @return array - OfferCategory
-   */
-  public static function getOfferCategories(): array
-  {
-    return self::find()
-      ->with('category')
-      ->all();
-  }
 }

@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Offer;
 use app\models\OfferCategory;
 use app\models\forms\OfferSearchForm;
+use app\src\service\OfferCategoryService;
 use app\src\service\OfferService;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -19,9 +20,7 @@ class SiteController extends Controller
   public function actionIndex()
   {
     // Категории для section class="categories-list"
-    $offerCategories = OfferCategory::find()
-      ->with('category')
-      ->all();
+    $offerCategories = OfferCategoryService::getOfferCategories();
 
     // Самые новые предложения
     $newOffersdataProvider = new ActiveDataProvider([

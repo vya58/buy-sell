@@ -3,8 +3,8 @@
 namespace app\controllers;
 
 use app\models\Category;
+use app\src\service\OfferCategoryService;
 use app\src\service\OfferService;
-use app\models\OfferCategory;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -38,11 +38,11 @@ class CategoriesController extends Controller
       ],
     ]);
 
-    // Категории для section class="categories-list"
-    $offerCategories = OfferCategory::getOfferCategories();
-
     // Категории для section class="tickets-list"
-    $category = Category::getCategory($id);
+    $category = Category::findOne($id);
+
+    // Категории для section class="categories-list"
+    $offerCategories = OfferCategoryService::getOfferCategories();
 
     return $this->render('index', compact('offerCategories', 'dataProvider', 'category', 'countOffers'));
   }

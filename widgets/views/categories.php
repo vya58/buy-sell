@@ -4,6 +4,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\src\service\OfferService;
+use app\src\service\OfferCategoryService;
 use app\widgets\OfferImageWidget;
 
 ?>
@@ -14,7 +15,7 @@ use app\widgets\OfferImageWidget;
     <?php foreach ($offerCategories as $offerCategory) : ?>
       <?php if (isset($offerCategory->category->category_id)) : ?>
         <?php if (!ArrayHelper::isIn($offerCategory->category->category_id, $categoryIds)) : ?>
-          <?php $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id); ?>
+          <?php $countOffersInCategory = OfferCategoryService::getCountOffersInCategory($offerCategory->category->category_id); ?>
           <li class="<?= $contextId === 'offers' ? '' : 'categories-list__item' ?>">
             <a href="<?= Url::to(['categories/', 'id' => $offerCategory->category->category_id]) ?>" class="category-tile category-tile--<?= $contextId === 'offers' ? 'small' : 'default' ?>">
               <span class="category-tile__image">

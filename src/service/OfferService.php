@@ -38,7 +38,7 @@ class OfferService
   {
     if (isset($offerCategory->category->category_id)) {
       // Вычисляем количество объявлений с данной категорией
-      $countOffersInCategory = $offerCategory->getCountOffersInCategory($offerCategory->category->category_id);
+      $countOffersInCategory = OfferCategoryService::getCountOffersInCategory($offerCategory->category->category_id);
 
       // Получаем случайное число в диапазоне, не превышающем количество объявлений с данной категорией
       $range = rand(0, $countOffersInCategory - 1);
