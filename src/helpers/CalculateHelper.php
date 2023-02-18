@@ -29,4 +29,30 @@ class CalculateHelper
       }
     }
   }
+
+  /**
+   * Метод сортировки многомерного массива по значению ключей второго уровня вложенности
+   *
+   * @param array $sortableArray - сортируемый массив
+   * @param $sortedValue - значение ключей второго уровня вложенности массива $sortableArray, по которым происходит сортировка
+   *
+   * @return array $groups - массив, где ключи первого уровня вложенности - уникальные значения ключей второго уровня вложенности массива $sortableArray, а их значения - индексированные массивы со всеми значениями, соответствующими значению $sortedValue, найденные в сортируемом массиве $sortableArray
+   */
+  public static function sortArrayByKeyValue(array $sortableArray, $sortedValue): array
+  {
+    $groups = [];
+
+    foreach ($sortableArray as $element) {
+      if (array_key_exists($sortedValue, $element)) {
+        $key = $element[$sortedValue];
+      }
+
+      if (!array_key_exists($key, $groups)) {
+        $groups[$key] = [];
+      }
+
+      $groups[$key][] = $element;
+    }
+    return $groups;
+  }
 }
