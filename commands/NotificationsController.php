@@ -2,7 +2,7 @@
 
 namespace app\commands;
 
-use app\components\Firebase;
+use Yii;
 use app\models\Notification;
 use app\src\helpers\CalculateHelper;
 use yii\console\Controller;
@@ -22,8 +22,7 @@ class NotificationsController extends Controller
    */
   public function actionIndex()
   {
-    $firebase = new Firebase();
-    $firebaseAllOffersChats = $firebase->getValueChat();
+    $firebaseAllOffersChats = Yii::$app->firebase->getValueChat();
 
     $unreadMessages = [];
     // Ищем в чатах Firebase ключи 'read' со значением false (непрочтённые)
