@@ -29,6 +29,9 @@ $config = [
     'authManager' => [
       'class' => 'yii\rbac\DbManager',
     ],
+    'firebase' => [
+      'class' => 'app\components\Firebase',
+    ],
   ],
   'params' => $params,
 ];
