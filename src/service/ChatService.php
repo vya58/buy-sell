@@ -1,6 +1,6 @@
 <?php
 
-namespace app\src;
+namespace app\src\service;
 
 use app\components\Firebase;
 use yii\data\ActiveDataProvider;
@@ -15,7 +15,7 @@ use Yii;
  *
  * @property $database - \Kreait\Firebase\Contract\Database
  */
-class Chat
+class ChatService
 {
   // Ключ выборки сообщений отправителя
   private const SENDER_MESSAGE_SELECTION_KEY = 'fromUserId';

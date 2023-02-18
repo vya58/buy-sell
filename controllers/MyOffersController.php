@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Offer;
+use app\src\service\OfferService;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -73,7 +74,8 @@ class MyOffersController extends Controller
     if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
       throw new ForbiddenHttpException();
     }
-    $offer->deleteOffer($offer);
+
+    OfferService::deleteOffer($offer);
 
     return $this->redirect(['/my-offers']);
   }

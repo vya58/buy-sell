@@ -52,7 +52,7 @@ use yii\helpers\Url;
                   <a href="#">Дом</a>
                 </div>
                 <div class="ticket-card__header">
-                  <h3 class="ticket-card__title"><a href="#"><?= isset($mostTalkedOffer->offer_title) ? Html::encode($mostTalkedOffer->offer_title) : '' ?></a></h3>
+                  <h3 class="ticket-card__title"><a href="<?= isset($mostTalkedOffer->offer_id) ? Url::to(['offers/index', 'id' => $mostTalkedOffer->offer_id]) : '' ?>"><?= isset($mostTalkedOffer->offer_title) ? Html::encode($mostTalkedOffer->offer_title) : '' ?></a></h3>
                   <p class="ticket-card__price"><span class="js-sum"><?= Html::encode($mostTalkedOffer->offer_price) ?></span> ₽</p>
                 </div>
                 <div class="ticket-card__desc">

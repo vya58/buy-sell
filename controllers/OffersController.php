@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\src\Chat;
+use app\src\service\ChatService;
 use app\models\Offer;
 use app\models\forms\ChatForm;
 use app\models\forms\CommentAddForm;
@@ -48,7 +48,7 @@ class OffersController extends Controller
       return $this->redirect(['/offers', 'id' => $id]);
     }
 
-    $dataProvider = Chat::getDataProviderForChat($offer, $currentPage);
+    $dataProvider = ChatService::getDataProviderForChat($offer, $currentPage);
 
     // Если пользователь - не владелец объявления, значит он покупатель
     if (!\Yii::$app->user->can('updateOwnContent', ['resource' => $offer])) {
@@ -63,7 +63,7 @@ class OffersController extends Controller
     // Если есть покупатель, создаётся чат
     if ($buyerId) {
       // Если страница владельца объявления, то адресат сообщения - покупатель с id = $buyerId
-      $chat = new Chat($id, $buyerId);
+      $chat = new ChatService($id, $buyerId);
       $addressee = $chat->getAddresse($owner);
 
       // Выборка всех сообщений покупателя с id = $buyerId объявления с данным id

@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\Comment;
-use app\models\Offer;
+use app\src\service\OfferService;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -39,7 +39,7 @@ class CommentsController extends Controller
    */
   public function actionIndex(int $id)
   {
-    $offers = Offer::getWithNewCommentsOffers($id);
+    $offers = OfferService::getWithNewCommentsOffers($id);
 
     return $this->render('index', compact('offers'));
   }

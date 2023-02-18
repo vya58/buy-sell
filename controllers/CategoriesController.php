@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\Category;
-use app\models\Offer;
+use app\src\service\OfferService;
 use app\models\OfferCategory;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -18,7 +18,7 @@ class CategoriesController extends Controller
    */
   public function actionIndex(int $id)
   {
-    $query = Offer::getCategoryOffers($id);
+    $query = OfferService::getCategoryOffers($id);
 
     $countOffers = (int) $query->count();
 

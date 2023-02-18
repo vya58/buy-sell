@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Offer;
 use app\models\OfferCategory;
 use app\models\forms\OfferSearchForm;
+use app\src\service\OfferService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -24,7 +25,7 @@ class SiteController extends Controller
 
     // Самые новые предложения
     $newOffersdataProvider = new ActiveDataProvider([
-      'query' => Offer::getNewOffers(),
+      'query' => OfferService::getNewOffers(),
       'pagination' => [
         'pageSize' => Yii::$app->params['newOffersCount'],
       ],
@@ -35,7 +36,7 @@ class SiteController extends Controller
       ],
     ]);
     // Самые обсуждаемые предложения
-    $mostTalkedOffers = Offer::getMostTalkedOffers();
+    $mostTalkedOffers = OfferService::getMostTalkedOffers();
 
     return $this->render('index', compact('offerCategories', 'newOffersdataProvider', 'mostTalkedOffers'));
   }
@@ -82,7 +83,7 @@ class SiteController extends Controller
       $model->load($search);
       $query = $model->search;
       $this->view->params['query'] = $query;
-      $foundOffers = Offer::searchOffers($query);
+      $foundOffers = OfferService::searchOffers($query);
     }
 
     $dataProvider = new ActiveDataProvider([
@@ -100,7 +101,7 @@ class SiteController extends Controller
 
     // Самые новые предложения
     $newOffersdataProvider = new ActiveDataProvider([
-      'query' => Offer::getNewOffers(),
+      'query' => OfferService::getNewOffers(),
       'pagination' => [
         'pageParam' => 'page-new',
         'pageSize' => Yii::$app->params['newOffersCount'],
