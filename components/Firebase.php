@@ -118,7 +118,7 @@ class Firebase extends Component
 
     $query = $this->getQuery();
 
-    // Получение соличества сообщений для определения порядкового номера добавляемого сообщения
+    // Получение количества сообщений для определения порядкового номера добавляемого сообщения
     $countMessages = (string) self::getSnapshotChat()->numChildren();
 
     $query = $query . '/' . $countMessages;
