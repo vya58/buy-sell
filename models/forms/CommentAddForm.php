@@ -10,6 +10,7 @@ use yii\base\Model;
 class CommentAddForm extends Model
 {
   public string $commentText = '';
+  public int $offerId;
 
   /**
    * @inheritDoc
@@ -19,6 +20,7 @@ class CommentAddForm extends Model
   public function rules(): array
   {
     return [
+      [['offerId'], 'each', 'rule' => ['exist', 'skipOnError' => true, 'targetClass' => Offer::class, 'targetAttribute' => ['offerId' => 'offer_id']]],
       [['commentText'], 'required', 'message' => 'Обязательное поле'],
       [['commentText'], 'string', 'min' => Comment::MIN_LENGTH_COMMENT],
     ];

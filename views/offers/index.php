@@ -77,6 +77,8 @@ FirebaseAsset::register($this);
             <div class="form__field">
               <?= $form->field($commentAddForm, 'commentText')->textarea(['cols' => 30, 'rows' => 10, 'options' => ['class' => 'js-field']])->label('Текст комментария') ?>
               <span>Обязательное поле</span>
+              <?= $form->field($commentAddForm, 'offerId', ['template' => '{input}'])
+                ->hiddenInput(['value' => $offer->offer_id]); ?>
             </div>
           </div>
           <button class="comment-form__button btn btn--white js-button" type="submit">Отправить</button>
